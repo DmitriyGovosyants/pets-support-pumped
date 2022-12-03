@@ -1,0 +1,95 @@
+[
+  {
+    "name": "Dmitriy",
+    "position": "Teamlead",
+    "imageMember": "https://avatars.githubusercontent.com/u/91630215?v=4",
+    "socialLinkGit": "https://github.com/DmitriyGovosyants",
+    "socialLinkedLn": "https://www.linkedin.com/in/dmitro-govosyants-53b8a4156/"
+  },
+  {
+    "name": "Maksym",
+    "position": "Scrum master",
+    "imageMember": "https://media-exp1.licdn.com/dms/image/D4E35AQHActkzx7XH1Q/profile-framedphoto-shrink_800_800/0/1663317942916?e=1670112000&v=beta&t=CyvGjEPreMFlnbWRcL-fCSozdoo0Y1bvUnZouKH9yXM",
+    "socialLinkGit": "https://github.com/MaksymPavlichenko",
+    "socialLinkedLn": "https://www.linkedin.com/in/maksym-pavlichenko-346b60191/"
+  },
+
+  {
+    "name": "Maksim",
+    "position": "Developer",
+    "imageMember": "https://media-exp1.licdn.com/dms/image/C4E03AQGTJXSkAbIDqw/profile-displayphoto-shrink_800_800/0/1660428343377?e=1674691200&v=beta&t=yzQVlELdymeDsMnIRHUV4oHSO9wJQNrBXEH_DMUpqXs",
+    "socialLinkGit": "https://github.com/Maxstr75",
+    "socialLinkedLn": "http://linkedin.com/in/maxim-strybailo"
+  },
+  {
+    "name": "Vladimir",
+    "position": "Developer",
+    "imageMember": "https://avatars.githubusercontent.com/u/91782115?v=4",
+    "socialLinkGit": "https://github.com/Popeye80",
+    "socialLinkedLn": "https://linkedin.com/in/pavlovvladimir"
+  },
+  {
+    "name": "Viktor",
+    "position": "Developer",
+    "imageMember": "https://media-exp1.licdn.com/dms/image/C5603AQFb-F4_xvNrBA/profile-displayphoto-shrink_800_800/0/1657567155695?e=1674691200&v=beta&t=DKDfpC3mxXMNdXn8XMt31a-Eow-2AjBkt0K80ZbhSKU",
+    "socialLinkGit": "https://github.com/ViktorTyt",
+    "socialLinkedLn": "https://www.linkedin.com/in/viktor-tytenko/"
+  },
+  {
+    "name": "Mykhailo",
+    "position": "Developer",
+    "imageMember": "https://avatars.githubusercontent.com/u/97763883?v=4",
+    "socialLinkGit": "https://github.com/MKuzich",
+    "socialLinkedLn": "https://www.linkedin.com/in/mykhailo-kuzich/"
+  },
+  {
+    "name": "Nikita",
+    "position": "Developer",
+    "imageMember": "https://media-exp1.licdn.com/dms/image/D4D35AQGrPMTDkAWQ6w/profile-framedphoto-shrink_800_800/0/1657212773011?e=1670112000&v=beta&t=uqp1Qhubr8ed3CeDrdu_xv3wwaZnS_w72mCKcNyXX8Y",
+    "socialLinkGit": "https://github.com/NickDurnev",
+    "socialLinkedLn": "https://www.linkedin.com/in/nikita-durnev-2291b3244/"
+  },
+  {
+    "name": "Yurij",
+    "position": "Developer",
+    "imageMember": "https://media-exp1.licdn.com/dms/image/D4E35AQHZQl0ixKbZ5Q/profile-framedphoto-shrink_800_800/0/1660218496052?e=1670112000&v=beta&t=W9vDp0r-PYX7T5QMe7eYYhc5xxNzmYwBltuxfGKe0n0",
+    "socialLinkGit": "https://github.com/YurijKovbasyuk",
+    "socialLinkedLn": "https://www.linkedin.com/in/yurijkovbasyuk/"
+  },
+
+  {
+    "name": "Max",
+    "position": "Developer",
+    "imageMember": "https://media-exp1.licdn.com/dms/image/D5635AQH02bkbAVNrlg/profile-framedphoto-shrink_800_800/0/1660748827499?e=1670112000&v=beta&t=VqpT9sIC5_0ID_M2qnR1B_aCNyWUJ71TGZyZy4hLLqU",
+    "socialLinkGit": "https://github.com/MaxVidom",
+    "socialLinkedLn": "https://www.linkedin.com/in/max-vidom/"
+  },
+  {
+    "name": "Ihor",
+    "position": "Developer",
+    "imageMember": "https://avatars.githubusercontent.com/u/92684157?v=4",
+    "socialLinkGit": "https://github.com/Ihor-Melnyk",
+    "socialLinkedLn": "https://www.linkedin.com/in/ihor-melnyk/"
+  },
+  {
+    "name": "Snizhana",
+    "position": "Developer",
+    "imageMember": "https://media-exp1.licdn.com/dms/image/C4E03AQHogDkw3xAInQ/profile-displayphoto-shrink_800_800/0/1667914627181?e=1675296000&v=beta&t=QjfCMhVN2Cqr0FLPlbQHTUuymj1G8ip2Mk9CfA9Ke30",
+    "socialLinkGit": "https://github.com/Snizhana15",
+    "socialLinkedLn": "https://www.linkedin.com/in/snizhana-tkachuk-655b1719a"
+  },
+  {
+    "name": "Oleg",
+    "position": "Developer",
+    "imageMember": "https://media-exp1.licdn.com/dms/image/C4D03AQEi5tFrj8S99w/profile-displayphoto-shrink_800_800/0/1660307530599?e=1675296000&v=beta&t=lBLNC57JF7Rj7PC56s-XFnWsU8ajkuWBom4l-Q0fhK4",
+    "socialLinkGit": "https://github.com/OlehKulyk2710",
+    "socialLinkedLn": "https://www.linkedin.com/in/oleh-kulyk-79a2b8a9/"
+  },
+   {
+     "name": "Oleksandr",
+     "position": "Developer",
+     "imageMember": "https://avatars.githubusercontent.com/u/92689909?v=4",
+     "socialLinkGit": "https://github.com/bragynator",
+     "socialLinkedLn": "https://www.linkedin.com/in/"
+   }
+]
