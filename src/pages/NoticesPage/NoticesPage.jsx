@@ -35,19 +35,19 @@ const NoticesPage = () => {
         <MainTitle>Find your favorite pet</MainTitle>
         <NoticesSearch
           keyWord={keyWord}
-          setKeyWord={value => setKeyWord(value)}
-          setPage={value => setPage(value)}
+          setKeyWord={setKeyWord}
+          setPage={setPage}
           setPets={notices => setPets(notices)}
         />
         <Wrapper>
-          <NoticesCategoriesNav setKeyWord={value => setKeyWord(value)} />
+          <NoticesCategoriesNav setKeyWord={setKeyWord} />
           <AddNoticeButton />
         </Wrapper>
         <NoticesCategoriesList
           page={page}
-          setPage={value => setPage(value)}
+          setPage={setPage}
           pets={pets}
-          setPets={notices => setPets(notices)}
+          setPets={setPets}
         />
       </Container>
     </Section>
