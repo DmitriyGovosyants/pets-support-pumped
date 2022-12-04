@@ -15,12 +15,14 @@ const isValidDomain = (email) => {
   return false;
 }
 
-export const signInSchemaPageOne = Yup.object({
-  email: Yup.string()
+const email = Yup.string()
     .required("E-mail is required")
     .matches(emailRegEx, 'email must contain @ and domain name')
     .test('domain-match', 'domain must contain only .com, .net, .org, .ua, .ru, .gov, .ca', (value) => isValidDomain(value))
-    .max(255),
+    .max(255)
+
+export const signInSchemaPageOne = Yup.object({
+  email,
   password: Yup.string()
     .required('password is required')
     .max(32)

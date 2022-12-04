@@ -35,31 +35,38 @@ export const Title = styled.h2`
   }
 `;
 
-export const Input = styled.input`
-  width: 100%;
-  padding: 9px 59px 10px 13px;
+export const Form = styled.form`
+  & input {
+    width: 100%;
+    padding: 9px 59px 10px 13px;
 
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.35;
-  color: ${p => p.theme.colors.textMain};
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.35;
+    color: ${p => p.theme.colors.textMain};
 
-  background-color: ${p => p.theme.colors.bgMain};
-  border: 1px solid rgba(245, 146, 86, 0.5);
-  border-radius: 40px;
+    background-color: ${p => p.theme.colors.bgMain};
+    border: 1px solid rgba(245, 146, 86, 0.5);
+    border-radius: 40px;
 
-  :hover,
-  :focus {
-    outline: none;
+    :hover,
+    :focus {
+      outline: none;
+    }
+
+    ${device.tablet} {
+      padding: 13px 59px 12px 31px;
+
+      font-size: 18px;
+      line-height: 1.38;
+    }
   }
+`
 
-  ${device.tablet} {
-    padding: 13px 59px 12px 31px;
-
-    font-size: 18px;
-    line-height: 1.38;
-  }
-`;
+export const InputWrapper = styled.div`
+  position: relative;
+  margin-bottom: ${p => p.last ? '40px' : '16px'};
+`
 
 export const ErrorBox = styled.p`
   padding: 0 15px;
@@ -69,18 +76,22 @@ export const ErrorBox = styled.p`
   line-height: 1.35;
   color: ${p => p.theme.colors.accent};
 
-  :not(:last-of-type) {
-    margin-bottom: 16px;
-  }
-  :last-of-type {
-    margin-bottom: 40px;
-  }
-
   ${device.tablet} {
     font-size: 18px;
     line-height: 1.38;
   }
 `
+
+export const EyeBtn = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+
+  ${device.tablet} {
+    top: 15px;
+  }
+`;
 
 export const BtnWrapper = styled.div`
   display: grid;
@@ -103,26 +114,3 @@ export const FormNavLink = styled(NavLink)`
   color: ${p => p.theme.colors.textLink};
   text-decoration: underline;
 `;
-
-// export const Wrapper = styled.div`
-//   margin-top: 40px;
-// `;
-
-// export const InputWrapper = styled.div`
-//   position: relative;
-// `
-
-// export const Button = styled.div`
-//   margin-top: 16px;
-// `;
-
-// export const EyeBtn = styled.button`
-//   position: absolute;
-//   top: 10px;
-//   right: 20px;
-//   cursor: pointer;
-
-//   ${device.tablet} {
-//     top: 15px;
-//   }
-// `;

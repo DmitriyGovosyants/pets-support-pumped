@@ -17,8 +17,8 @@ export const Footer = () => {
   useEffect(() => {
     if (
       pathname === '/' ||
-      pathname === `/${routesPath.login}` ||
-      pathname === `/${routesPath.register}`
+      pathname === routesPath.login ||
+      pathname === routesPath.register
     ) {
       setIsShow(false);
       return;

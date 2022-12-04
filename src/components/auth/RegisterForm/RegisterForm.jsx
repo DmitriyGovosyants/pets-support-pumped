@@ -24,9 +24,16 @@ export const RegisterForm = () => {
 
   const onSubmit = async ({ name, city, phone }) => {
     const { email, password } = registerData;
+    const phoneWithoutMask = phone.split(/[-()]+/).join('');
 
     try {
-      await signUp({ email, password, name, city, phone }).unwrap();
+      await signUp({
+        email,
+        password,
+        name,
+        city,
+        phone: phoneWithoutMask,
+      }).unwrap();
       toast.info(`${email} is registered`);
     } catch (error) {
       if (error.status === 400) {

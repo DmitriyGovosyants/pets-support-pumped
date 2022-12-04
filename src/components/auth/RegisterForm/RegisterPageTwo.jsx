@@ -2,7 +2,8 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signInSchemaPageTwo } from 'helpers';
 import { MainButton } from 'components';
-import { BtnWrapper, ErrorBox, Input } from './Auth.styled';
+import { BtnWrapper, ErrorBox, Form, InputWrapper } from './Auth.styled';
+import InputMask from 'comigo-tech-react-input-mask';
 
 export const RegisterPageTwo = ({
   registerData,
@@ -30,34 +31,47 @@ export const RegisterPageTwo = ({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Controller
-        name="name"
-        value={registerData?.name}
-        control={control}
-        render={({ field }) => (
-          <Input {...field} type="text" placeholder="Name*" />
-        )}
-      />
-      <ErrorBox>{errors?.name?.message}</ErrorBox>
-      <Controller
-        name="city"
-        value={registerData?.city}
-        control={control}
-        render={({ field }) => (
-          <Input {...field} type="text" placeholder="City, Region*" />
-        )}
-      />
-      <ErrorBox>{errors?.city?.message}</ErrorBox>
-      <Controller
-        name="phone"
-        value={registerData?.phone}
-        control={control}
-        render={({ field }) => (
-          <Input {...field} type="text" placeholder="Mobile phone*" />
-        )}
-      />
-      <ErrorBox>{errors?.phone?.message}</ErrorBox>
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <InputWrapper>
+        <Controller
+          name="name"
+          value={registerData?.name}
+          control={control}
+          render={({ field }) => (
+            <input {...field} type="text" placeholder="Name*" />
+          )}
+        />
+        <ErrorBox>{errors?.name?.message}</ErrorBox>
+      </InputWrapper>
+
+      <InputWrapper>
+        <Controller
+          name="city"
+          value={registerData?.city}
+          control={control}
+          render={({ field }) => (
+            <input {...field} type="text" placeholder="City, Region*" />
+          )}
+        />
+        <ErrorBox>{errors?.city?.message}</ErrorBox>
+      </InputWrapper>
+
+      <InputWrapper last>
+        <Controller
+          name="phone"
+          value={registerData?.phone}
+          control={control}
+          render={({ field }) => (
+            <InputMask
+              {...field}
+              mask={'+38(099)999-99-99'}
+              type="text"
+              alwaysShowMask={true}
+            />
+          )}
+        />
+        <ErrorBox>{errors?.phone?.message}</ErrorBox>
+      </InputWrapper>
 
       <BtnWrapper>
         <MainButton type={'submit'}>Register</MainButton>
@@ -65,6 +79,6 @@ export const RegisterPageTwo = ({
           Back
         </MainButton>
       </BtnWrapper>
-    </form>
+    </Form>
   );
 };
