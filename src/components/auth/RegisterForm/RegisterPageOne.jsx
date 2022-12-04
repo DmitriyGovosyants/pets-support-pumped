@@ -54,7 +54,7 @@ export const RegisterPageOne = ({ registerData, handlePageOne }) => {
         <ErrorBox>{errors?.password?.message}</ErrorBox>
         <EyeBtn type="button" onClick={() => setShowPassword(!showPassword)}>
           <img
-            src={showPassword ? eyeClosedImg : eyeImg}
+            src={showPassword ? eyeImg : eyeClosedImg}
             alt="eye"
             width={20}
           />
@@ -77,7 +77,7 @@ export const RegisterPageOne = ({ registerData, handlePageOne }) => {
         <ErrorBox>{errors?.confirmPassword?.message}</ErrorBox>
         <EyeBtn type="button" onClick={() => setShowPassword(!showPassword)}>
           <img
-            src={showPassword ? eyeClosedImg : eyeImg}
+            src={showPassword ? eyeImg : eyeClosedImg}
             alt="eye"
             width={20}
           />

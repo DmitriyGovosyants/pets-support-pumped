@@ -85,7 +85,7 @@ export const LoginForm = () => {
           <ErrorBox>{errors?.password?.message}</ErrorBox>
           <EyeBtn type="button" onClick={() => setShowPassword(!showPassword)}>
             <img
-              src={showPassword ? eyeClosedImg : eyeImg}
+              src={showPassword ? eyeImg : eyeClosedImg}
               alt="eye"
               width={20}
             />
