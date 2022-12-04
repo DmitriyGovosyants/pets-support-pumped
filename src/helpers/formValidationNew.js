@@ -20,32 +20,47 @@ const email = Yup.string()
     .matches(emailRegEx, 'email must contain @ and domain name')
     .test('domain-match', 'domain must contain only .com, .net, .org, .ua, .ru, .gov, .ca', (value) => isValidDomain(value))
     .max(255)
-
-export const signInSchemaPageOne = Yup.object({
-  email,
-  password: Yup.string()
+    
+const password = Yup.string()
     .required('password is required')
     .max(32)
     .matches(
       passwordRegEx,
       "password must contain min 7 Characters, uppercase, lowercase, number and special case character"
-    ),
-  confirmPassword: Yup.string()
+    )
+    
+const confirmPassword = Yup.string()
     .test('passwords-match', 'passwords must match', function(value){
       return this.parent.password === value
-    }),
-});
+    })
 
-export const signInSchemaPageTwo = Yup.object({
-  name: Yup.string()
+const name = Yup.string()
     .required('Name is required')
     .min(2)
     .max(16)
-    .matches(textRegEx, "name can contain only letters"),
-  city: Yup.string()
+    .matches(textRegEx, "name can contain only letters")
+
+const city = Yup.string()
     .required('City, Region is required')
     .max(50)
-    .matches(cityRegEx, "You should type location in format: City, Region"),
-  phone: Yup.string()
-    .required('mobile phone is required'),
+    .matches(cityRegEx, "You should type location in format: City, Region")
+
+const phone = Yup.string()
+    .required('mobile phone is required')
+
+export const signInSchemaPageOne = Yup.object({
+  email,
+  password,
+  confirmPassword,
+});
+
+export const signInSchemaPageTwo = Yup.object({
+  name,
+  city,
+  phone,
+});
+
+export const loginSchema = Yup.object({
+  email,
+  password,
 });

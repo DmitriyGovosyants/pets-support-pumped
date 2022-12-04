@@ -6,11 +6,6 @@ export * from './header/UserNav/UserNav';
 
 export * from './auth/RegisterForm/RegisterForm';
 export * from './auth/LoginForm/LoginForm';
-export * from './auth/FormInput/FormInput';
-export * from './auth/MaskInput/MaskInput';
-export * from './auth/FormText/FormText';
-export * from './auth/FormTitle/FormTitle';
-export * from './auth/FormWrapper/FormWrapper';
 export * from './auth/FormContainer/FormContainer';
 
 export * from './notices/NoticesSearch/NoticesSearch';

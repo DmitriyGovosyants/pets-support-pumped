@@ -1,14 +1,15 @@
+import InputMask from 'comigo-tech-react-input-mask';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signInSchemaPageTwo } from 'helpers';
 import { MainButton } from 'components';
-import { BtnWrapper, ErrorBox, Form, InputWrapper } from './Auth.styled';
-import InputMask from 'comigo-tech-react-input-mask';
+import { BtnWrapper, ErrorBox, Form, InputWrapper } from '../Auth.styled';
 
 export const RegisterPageTwo = ({
   registerData,
   handleBackToPageOne,
   onSubmit,
+  isLoading,
 }) => {
   const {
     handleSubmit,
@@ -74,7 +75,9 @@ export const RegisterPageTwo = ({
       </InputWrapper>
 
       <BtnWrapper>
-        <MainButton type={'submit'}>Register</MainButton>
+        <MainButton type={'submit'} disabled={isLoading}>
+          Register
+        </MainButton>
         <MainButton option={'black'} onClick={handleSavePageTwoData}>
           Back
         </MainButton>

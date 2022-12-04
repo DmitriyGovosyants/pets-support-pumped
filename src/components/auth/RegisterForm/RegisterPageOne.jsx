@@ -5,7 +5,7 @@ import eyeImg from 'data/img/eye.png';
 import eyeClosedImg from 'data/img/eye-blocked.png';
 import { signInSchemaPageOne } from 'helpers';
 import { MainButton } from 'components';
-import { ErrorBox, Form, InputWrapper, EyeBtn } from './Auth.styled';
+import { ErrorBox, Form, InputWrapper, EyeBtn } from '../Auth.styled';
 
 export const RegisterPageOne = ({ registerData, handlePageOne }) => {
   const [showPassword, setShowPassword] = useState(false);

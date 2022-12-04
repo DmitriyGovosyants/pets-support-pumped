@@ -5,7 +5,7 @@ import { routesPath } from 'router';
 import { RegisterPageOne } from './RegisterPageOne';
 import { RegisterPageTwo } from './RegisterPageTwo';
 import { SpinnerFixed } from 'components';
-import { Wrapper, Title, Text, FormNavLink } from './Auth.styled';
+import { Wrapper, Title, Text, FormNavLink } from '../Auth.styled';
 
 export const RegisterForm = () => {
   const [signUp, { isLoading }] = useSignUpMutation();
@@ -39,7 +39,7 @@ export const RegisterForm = () => {
       if (error.status === 400) {
         toast.error(error.data.message);
       }
-      if (error.originalStatus === 404) {
+      if (error.status === 404) {
         toast.error('Resourses not found');
       }
       if (error.status === 500) {
@@ -47,8 +47,6 @@ export const RegisterForm = () => {
       }
     }
   };
-
-  console.log(registerData);
 
   return (
     <Wrapper>
@@ -64,6 +62,7 @@ export const RegisterForm = () => {
           registerData={registerData}
           handleBackToPageOne={handleBackToPageOne}
           onSubmit={onSubmit}
+          isLoading={isLoading}
         />
       )}
       <Text>

@@ -1,103 +1,88 @@
-import React, { useState, useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify';
-import { isPassword, dataFormConverter, isDomenName, isEmail } from 'helpers';
+import { useState } from 'react';
 import { useLogInMutation } from 'redux/authApi';
+import { routesPath } from 'router';
+import { loginSchema } from 'helpers';
 import eyeImg from 'data/img/eye.png';
 import eyeClosedImg from 'data/img/eye-blocked.png';
+import { MainButton, SpinnerFixed } from 'components';
 import {
-  FormTitle,
-  FormInput,
-  FormText,
-  FormWrapper,
-  MainButton,
-  SpinnerFixed,
-} from 'components';
-import { Wrapper, EyeBtn, InputWrapper } from './LoginForm.styled';
+  Wrapper,
+  Title,
+  Text,
+  FormNavLink,
+  ErrorBox,
+  Form,
+  InputWrapper,
+  EyeBtn,
+} from '../Auth.styled';
 
 export const LoginForm = () => {
-  const [login, { isError, isLoading }] = useLogInMutation();
+  const [login, { isLoading }] = useLogInMutation();
   const [showPassword, setShowPassword] = useState(false);
-  const [formState, setFormState] = useState({
-    email: {
-      value: '',
-      isValid: true,
-    },
-    password: {
-      value: '',
-      isValid: true,
+
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
     },
   });
 
-  useEffect(() => {
-    if (isError) {
-      toast.error('Wrong email or password!');
-    }
-  }, [isError]);
-
-  const handleChange = ({ target: { name, value, isValid = true } }) =>
-    setFormState(prev => ({ ...prev, [name]: { value, isValid } }));
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-
-    if (
-      !isEmail(formState.email.value) ||
-      !isDomenName(formState.email.value)
-    ) {
-      setFormState(prevState => ({
-        ...prevState,
-        email: {
-          ...prevState.email,
-          isValid: false,
-        },
-      }));
-      return;
-    }
-
-    if (!isPassword(formState.password.value)) {
-      setFormState(prevState => ({
-        ...prevState,
-        password: {
-          ...prevState.password,
-          isValid: false,
-        },
-      }));
-      return;
-    }
-
+  const onSubmit = async ({ email, password }) => {
     try {
-      const data = dataFormConverter(formState);
-      await login(data).unwrap();
-    } catch (err) {
-      if (err.status === 401) {
-        toast.error(err.data.message);
+      await login({
+        email,
+        password,
+      }).unwrap();
+      toast.info(`${email} is logined`);
+    } catch (error) {
+      if (error.status === 401) {
+        toast.error(error.data.message);
       }
-      console.log(err);
+      if (error.status === 404) {
+        toast.error('Resourses not found');
+      }
+      if (error.status === 500) {
+        toast.error('Server not response');
+      }
     }
-  }
+  };
 
   return (
-    <FormWrapper>
-      <form onSubmit={handleSubmit}>
-        <FormTitle title={'Login'} />
-        <FormInput
-          placeholder={'Email'}
-          type={'text'}
-          name={'email'}
-          onChange={handleChange}
-          isvalid={formState.email.isValid ? 1 : 0}
-          errorMessage="Invalid Email"
-        />
+    <Wrapper>
+      <Title>Login</Title>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <InputWrapper>
-          <FormInput
-            placeholder={'Password'}
-            type={showPassword ? 'text' : 'password'}
-            name={'password'}
-            id={'password'}
-            onChange={handleChange}
-            isvalid={formState.password.isValid ? 1 : 0}
-            errorMessage="Invalid Password"
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <input {...field} type="email" placeholder="Email*" />
+            )}
           />
+          <ErrorBox>{errors?.email?.message}</ErrorBox>
+        </InputWrapper>
+
+        <InputWrapper last>
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <input
+                {...field}
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Password*"
+              />
+            )}
+          />
+          <ErrorBox>{errors?.password?.message}</ErrorBox>
           <EyeBtn type="button" onClick={() => setShowPassword(!showPassword)}>
             <img
               src={showPassword ? eyeClosedImg : eyeImg}
@@ -106,18 +91,14 @@ export const LoginForm = () => {
             />
           </EyeBtn>
         </InputWrapper>
-        <Wrapper>
-          <MainButton type={'submit'} disabled={isLoading}>
-            Login
-          </MainButton>
-        </Wrapper>
-        <FormText
-          text={"Don't have an account?"}
-          routesPath={'/register'}
-          link={'Register'}
-        />
-      </form>
+
+        <MainButton type={'submit'}>Login</MainButton>
+      </Form>
+      <Text>
+        Don't have an account?
+        <FormNavLink to={routesPath.register}>Register</FormNavLink>
+      </Text>
       {isLoading && <SpinnerFixed />}
-    </FormWrapper>
+    </Wrapper>
   );
 };
