@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Container } from './FormContainer.styled';
+import { Container } from '../Auth.styled';
 
 export const FormContainer = ({ children }) => {
   return <Container>{children}</Container>;
