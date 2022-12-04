@@ -1,12 +1,14 @@
+import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from 'redux/useAuth';
+import { setWord } from 'redux/filterSlice';
 import { setCategory, selectCategory } from 'redux/categorySlice';
 import { categories, categoriesWithoutAuth } from 'constants/constants';
 import { NoticesCategoriesNavButton } from 'components';
 import { List, Item } from './NoticesCategoriesNav.styled';
 
-export const NoticesCategoriesNav = () => {
+export const NoticesCategoriesNav = ({ setKeyWord }) => {
   const dispatch = useDispatch();
   const selected = useSelector(selectCategory);
   const [navCategories, setNavCategories] = useState(categoriesWithoutAuth);
@@ -22,6 +24,8 @@ export const NoticesCategoriesNav = () => {
 
   const categoryToggler = category => {
     dispatch(setCategory(category));
+    dispatch(setWord(''));
+    setKeyWord('');
   };
   return (
     <List>
@@ -36,4 +40,8 @@ export const NoticesCategoriesNav = () => {
       ))}
     </List>
   );
+};
+
+NoticesCategoriesNav.propTypes = {
+  setKeyWord: PropTypes.func.isRequired,
 };

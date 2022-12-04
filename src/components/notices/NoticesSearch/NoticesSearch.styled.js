@@ -2,9 +2,10 @@ import styled from '@emotion/styled/macro';
 import { device } from 'styles/mediaquery';
 import { ReactComponent as SearchIcon } from 'data/img/search-icon.svg';
 
-export const Wrapper = styled.div`
+export const SearchForm = styled.form`
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-bottom: 28px;
   ${device.tablet} {
     margin-bottom: 40px;
@@ -13,15 +14,20 @@ export const Wrapper = styled.div`
 
 export const Label = styled.label`
   position: relative;
+  & > button {
+    position: absolute;
+    padding-top: 3px;
+    right: 5px;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    cursor: pointer;
+  }
 `;
 
 export const Icon = styled(SearchIcon)`
-  position: absolute;
-  top: 10px;
-  right: 10px;
   width: 20px;
   height: 20px;
-  pointer-events: none;
   fill: ${props => props.theme.colors.textMain};
   transition: fill ${p => p.theme.animation.cubicBezier};
   ${device.tablet} {

@@ -1,3 +1,4 @@
+import NoticesCategoriesList from 'components/notices/NoticesCategoriesList/NoticesCategoriesList';
 import {
   Section,
   Container,
@@ -6,14 +7,19 @@ import {
   AddNoticeButton,
   MainTitle,
 } from 'components';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Wrapper } from './NoticesPage.styled';
 import { selectCategory } from 'redux/categorySlice';
-import { useSelector } from 'react-redux';
+import { selectKeyWord } from '../../redux/filterSlice';
 import { fromCategoryToRoute } from 'helpers';
 
 const NoticesPage = () => {
+  const word = useSelector(selectKeyWord);
+  const [keyWord, setKeyWord] = useState(word);
+  const [page, setPage] = useState(1);
+  const [pets, setPets] = useState([]);
   const selected = useSelector(selectCategory);
   const [isFirstMount, setIsFirstMount] = useState(true);
   const navigate = useNavigate();
@@ -27,12 +33,22 @@ const NoticesPage = () => {
     <Section>
       <Container>
         <MainTitle>Find your favorite pet</MainTitle>
-        <NoticesSearch />
+        <NoticesSearch
+          keyWord={keyWord}
+          setKeyWord={value => setKeyWord(value)}
+          setPage={value => setPage(value)}
+          setPets={notices => setPets(notices)}
+        />
         <Wrapper>
-          <NoticesCategoriesNav />
+          <NoticesCategoriesNav setKeyWord={value => setKeyWord(value)} />
           <AddNoticeButton />
         </Wrapper>
-        <Outlet />
+        <NoticesCategoriesList
+          page={page}
+          setPage={value => setPage(value)}
+          pets={pets}
+          setPets={notices => setPets(notices)}
+        />
       </Container>
     </Section>
   );
