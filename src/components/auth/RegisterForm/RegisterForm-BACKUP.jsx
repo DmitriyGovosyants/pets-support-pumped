@@ -22,7 +22,7 @@ import {
   MainButton,
   SpinnerFixed,
 } from 'components';
-import { Wrapper, InputWrapper, Button, EyeBtn } from './RegisterForm.styled';
+import { Wrapper, InputWrapper, Button, EyeBtn } from './Auth.styled';
 
 export const RegisterForm = () => {
   const [signUp, { isLoading }] = useSignUpMutation();

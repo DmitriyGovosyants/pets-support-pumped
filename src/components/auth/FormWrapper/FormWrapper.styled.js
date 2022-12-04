@@ -15,6 +15,6 @@ export const Wrapper = styled.div`
     max-width: 608px;
   }
   ${device.desktop} {
-    width: 618px;
+    max-width: 618px;
   }
 `;

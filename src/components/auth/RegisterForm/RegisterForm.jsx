@@ -1,22 +1,33 @@
-import { useSignUpMutation } from 'redux/authApi';
-import { FormTitle, FormWrapper, SpinnerFixed } from 'components';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { useSignUpMutation } from 'redux/authApi';
+import { routesPath } from 'router';
 import { RegisterPageOne } from './RegisterPageOne';
 import { RegisterPageTwo } from './RegisterPageTwo';
-import { toast } from 'react-toastify';
+import { SpinnerFixed } from 'components';
+import { Wrapper, Title, Text, FormNavLink } from './Auth.styled';
 
 export const RegisterForm = () => {
   const [signUp, { isLoading }] = useSignUpMutation();
   const [step, setStep] = useState(1);
   const [registerData, setRegisterData] = useState({});
 
-  const onSubmit = async () => {
-    console.log(registerData);
-    const { email, password, name, city, phone } = registerData;
+  const handlePageOne = values => {
+    setRegisterData(p => ({ ...p, ...values }));
+    setStep(2);
+  };
+
+  const handleBackToPageOne = values => {
+    setRegisterData(p => ({ ...p, ...values }));
+    setStep(1);
+  };
+
+  const onSubmit = async ({ name, city, phone }) => {
+    const { email, password } = registerData;
 
     try {
       await signUp({ email, password, name, city, phone }).unwrap();
-      toast.info(`${name} is registered`);
+      toast.info(`${email} is registered`);
     } catch (error) {
       if (error.status === 400) {
         toast.error(error.data.message);
@@ -30,25 +41,29 @@ export const RegisterForm = () => {
     }
   };
 
+  console.log(registerData);
+
   return (
-    <FormWrapper>
-      <FormTitle title={'Registration'} />
+    <Wrapper>
+      <Title>Registration</Title>
       {step === 1 && (
         <RegisterPageOne
           registerData={registerData}
-          setStep={setStep}
-          setRegisterData={setRegisterData}
+          handlePageOne={handlePageOne}
         />
       )}
       {step === 2 && (
         <RegisterPageTwo
           registerData={registerData}
-          setStep={setStep}
-          setRegisterData={setRegisterData}
+          handleBackToPageOne={handleBackToPageOne}
           onSubmit={onSubmit}
         />
       )}
+      <Text>
+        Already have an account?
+        <FormNavLink to={routesPath.login}>Login</FormNavLink>
+      </Text>
       {isLoading && <SpinnerFixed />}
-    </FormWrapper>
+    </Wrapper>
   );
 };

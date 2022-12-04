@@ -1,15 +1,17 @@
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { MainButton } from 'components';
 import { signInSchemaPageOne } from 'helpers';
+import { MainButton } from 'components';
+import { ErrorBox, Input } from './Auth.styled';
 
-export const RegisterPageOne = ({ registerData, setStep, setRegisterData }) => {
+export const RegisterPageOne = ({ registerData, handlePageOne }) => {
   const {
     handleSubmit,
-    register,
+    control,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(signInSchemaPageOne),
+    mode: 'onBlur',
     defaultValues: {
       email: registerData.email || '',
       password: registerData.password || '',
@@ -17,36 +19,37 @@ export const RegisterPageOne = ({ registerData, setStep, setRegisterData }) => {
     },
   });
 
-  const handlePageOne = ({ email, password, confirmPassword }) => {
-    setRegisterData(p => ({ ...p, email, password, confirmPassword }));
-    setStep(2);
-  };
-
   return (
     <form onSubmit={handleSubmit(handlePageOne)}>
-      <input
-        type="email"
-        {...register('email')}
-        placeholder="Email*"
-        autoComplete="off"
+      <Controller
+        name="email"
+        value={registerData?.email}
+        control={control}
+        render={({ field }) => (
+          <Input {...field} type="email" placeholder="Email*" />
+        )}
       />
-      <div>{errors?.email?.message}</div>
+      <ErrorBox>{errors?.email?.message}</ErrorBox>
 
-      <input
-        type="password"
-        {...register('password')}
-        placeholder="Password*"
-        autoComplete="off"
+      <Controller
+        name="password"
+        value={registerData?.password}
+        control={control}
+        render={({ field }) => (
+          <Input {...field} type="password" placeholder="Password*" />
+        )}
       />
-      <div>{errors?.password?.message}</div>
+      <ErrorBox>{errors?.password?.message}</ErrorBox>
 
-      <input
-        type="password"
-        {...register('confirmPassword')}
-        placeholder="Confirm password*"
-        autoComplete="off"
+      <Controller
+        name="confirmPassword"
+        value={registerData?.confirmPassword}
+        control={control}
+        render={({ field }) => (
+          <Input {...field} type="password" placeholder="Confirm password*" />
+        )}
       />
-      <div>{errors?.confirmPassword?.message}</div>
+      <ErrorBox>{errors?.confirmPassword?.message}</ErrorBox>
 
       <MainButton type={'submit'}>Next</MainButton>
     </form>

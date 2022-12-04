@@ -1,20 +1,22 @@
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { MainButton } from 'components';
 import { signInSchemaPageTwo } from 'helpers';
+import { MainButton } from 'components';
+import { BtnWrapper, ErrorBox, Input } from './Auth.styled';
 
 export const RegisterPageTwo = ({
   registerData,
-  setStep,
-  setRegisterData,
+  handleBackToPageOne,
   onSubmit,
 }) => {
   const {
     handleSubmit,
-    register,
+    control,
+    getValues,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(signInSchemaPageTwo),
+    mode: 'onBlur',
     defaultValues: {
       name: registerData.name || '',
       city: registerData.city || '',
@@ -22,43 +24,47 @@ export const RegisterPageTwo = ({
     },
   });
 
-  const handleSaveData = ({ target: { name, value } }) => {
-    setRegisterData(p => ({ ...p, [name]: value }));
+  const handleSavePageTwoData = () => {
+    const values = getValues();
+    handleBackToPageOne(values);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input
-        type="text"
-        {...register('name')}
-        placeholder="Name*"
-        onChange={handleSaveData}
-        autoComplete={'disabled'}
+      <Controller
+        name="name"
+        value={registerData?.name}
+        control={control}
+        render={({ field }) => (
+          <Input {...field} type="text" placeholder="Name*" />
+        )}
       />
-      <div>{errors?.name?.message}</div>
-
-      <input
-        type="text"
-        {...register('city')}
-        placeholder="City, Region*"
-        onChange={handleSaveData}
-        autoComplete={'disabled'}
+      <ErrorBox>{errors?.name?.message}</ErrorBox>
+      <Controller
+        name="city"
+        value={registerData?.city}
+        control={control}
+        render={({ field }) => (
+          <Input {...field} type="text" placeholder="City, Region*" />
+        )}
       />
-      <div>{errors?.city?.message}</div>
-
-      <input
-        type="text"
-        {...register('phone')}
-        placeholder="Mobile phone*"
-        onChange={handleSaveData}
-        autoComplete={'disabled'}
+      <ErrorBox>{errors?.city?.message}</ErrorBox>
+      <Controller
+        name="phone"
+        value={registerData?.phone}
+        control={control}
+        render={({ field }) => (
+          <Input {...field} type="text" placeholder="Mobile phone*" />
+        )}
       />
-      <div>{errors?.phone?.message}</div>
+      <ErrorBox>{errors?.phone?.message}</ErrorBox>
 
-      <MainButton type={'submit'}>Register</MainButton>
-      <MainButton option={'black'} onClick={() => setStep(1)}>
-        Back
-      </MainButton>
+      <BtnWrapper>
+        <MainButton type={'submit'}>Register</MainButton>
+        <MainButton option={'black'} onClick={handleSavePageTwoData}>
+          Back
+        </MainButton>
+      </BtnWrapper>
     </form>
   );
 };
