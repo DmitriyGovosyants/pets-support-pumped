@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://petly-node-rest-api.onrender.com/api',
+    baseUrl: 'https://petly-node-js-rest-api-v2.onrender.com/api',
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
 
