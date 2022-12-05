@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.9f842b21.css",
-    "main.js": "/static/js/main.3d9e03a0.js",
+    "main.js": "/static/js/main.060d9d1f.js",
     "home-page.js": "/static/js/home-page.e2e7d8be.chunk.js",
     "register-page.js": "/static/js/register-page.ce153b6a.chunk.js",
     "login-page.js": "/static/js/login-page.bcff643c.chunk.js",
@@ -42,7 +42,7 @@
     "static/media/edit-icon.svg": "/static/media/edit-icon.f33e8538d882418b76070d5bd0a94a00.svg",
     "static/media/plus-icon.svg": "/static/media/plus-icon.65c74ef373dbf9e8a113c07965b48e3e.svg",
     "main.9f842b21.css.map": "/static/css/main.9f842b21.css.map",
-    "main.3d9e03a0.js.map": "/static/js/main.3d9e03a0.js.map",
+    "main.060d9d1f.js.map": "/static/js/main.060d9d1f.js.map",
     "home-page.e2e7d8be.chunk.js.map": "/static/js/home-page.e2e7d8be.chunk.js.map",
     "register-page.ce153b6a.chunk.js.map": "/static/js/register-page.ce153b6a.chunk.js.map",
     "login-page.bcff643c.chunk.js.map": "/static/js/login-page.bcff643c.chunk.js.map",
@@ -53,6 +53,6 @@
   },
   "entrypoints": [
     "static/css/main.9f842b21.css",
-    "static/js/main.3d9e03a0.js"
+    "static/js/main.060d9d1f.js"
   ]
 }
