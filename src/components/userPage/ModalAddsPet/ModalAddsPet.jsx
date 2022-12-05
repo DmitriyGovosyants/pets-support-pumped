@@ -246,7 +246,7 @@ export const ModalAddsPet = ({ toggleModal }) => {
           {step === 0 ? 'Cancel' : 'Back'}
         </MainButton>
       </BtnBox>
-      <ModalBtnClose toggleModal={toggleModal} />
+      <ModalBtnClose closeModal={toggleModal} />
       {isLoading && <SpinnerFixed />}
     </ModalWrap>
   );

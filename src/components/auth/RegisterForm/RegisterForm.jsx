@@ -10,20 +10,20 @@ import { Wrapper, Title, Text, FormNavLink } from '../Auth.styled';
 export const RegisterForm = () => {
   const [signUp, { isLoading }] = useSignUpMutation();
   const [step, setStep] = useState(1);
-  const [registerData, setRegisterData] = useState({});
+  const [formState, setFormState] = useState({});
 
   const handlePageOne = values => {
-    setRegisterData(p => ({ ...p, ...values }));
+    setFormState(p => ({ ...p, ...values }));
     setStep(2);
   };
 
   const handleBackToPageOne = values => {
-    setRegisterData(p => ({ ...p, ...values }));
+    setFormState(p => ({ ...p, ...values }));
     setStep(1);
   };
 
   const onSubmit = async ({ name, city, phone }) => {
-    const { email, password } = registerData;
+    const { email, password } = formState;
     const phoneWithoutMask = phone.split(/[-()]+/).join('');
 
     try {
@@ -52,14 +52,11 @@ export const RegisterForm = () => {
     <Wrapper>
       <Title>Registration</Title>
       {step === 1 && (
-        <RegisterPageOne
-          registerData={registerData}
-          handlePageOne={handlePageOne}
-        />
+        <RegisterPageOne formState={formState} handlePageOne={handlePageOne} />
       )}
       {step === 2 && (
         <RegisterPageTwo
-          registerData={registerData}
+          formState={formState}
           handleBackToPageOne={handleBackToPageOne}
           onSubmit={onSubmit}
           isLoading={isLoading}

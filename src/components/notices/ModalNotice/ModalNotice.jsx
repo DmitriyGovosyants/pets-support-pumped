@@ -122,7 +122,7 @@ export const ModalNotice = ({
           <HeartIcon />
         </ChangeFavoriteStatusBtn>
       </BtnWrapper>
-      <ModalBtnClose toggleModal={toggleModal} />
+      <ModalBtnClose closeModal={toggleModal} />
     </Container>
   );
 };

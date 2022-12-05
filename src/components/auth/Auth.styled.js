@@ -63,6 +63,7 @@ export const Title = styled.h2`
   font-size: 24px;
   line-height: 1.366;
   text-align: center;
+  color: ${p => p.theme.colors.textMain};
 
   ${device.tablet} {
     font-weight: 500;

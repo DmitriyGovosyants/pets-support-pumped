@@ -1,12 +1,12 @@
 import InputMask from 'comigo-tech-react-input-mask';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { signInSchemaPageTwo } from 'helpers';
+import { signInPageTwoSchema } from 'helpers';
 import { MainButton } from 'components';
 import { BtnWrapper, ErrorBox, Form, InputWrapper } from '../Auth.styled';
 
 export const RegisterPageTwo = ({
-  registerData,
+  formState,
   handleBackToPageOne,
   onSubmit,
   isLoading,
@@ -17,12 +17,12 @@ export const RegisterPageTwo = ({
     getValues,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(signInSchemaPageTwo),
+    resolver: yupResolver(signInPageTwoSchema),
     mode: 'onBlur',
     defaultValues: {
-      name: registerData.name || '',
-      city: registerData.city || '',
-      phone: registerData.phone || '',
+      name: formState.name || '',
+      city: formState.city || '',
+      phone: formState.phone || '',
     },
   });
 
@@ -36,7 +36,6 @@ export const RegisterPageTwo = ({
       <InputWrapper>
         <Controller
           name="name"
-          value={registerData?.name}
           control={control}
           render={({ field }) => (
             <input {...field} type="text" placeholder="Name*" />
@@ -48,7 +47,6 @@ export const RegisterPageTwo = ({
       <InputWrapper>
         <Controller
           name="city"
-          value={registerData?.city}
           control={control}
           render={({ field }) => (
             <input {...field} type="text" placeholder="City, Region*" />
@@ -60,7 +58,6 @@ export const RegisterPageTwo = ({
       <InputWrapper last>
         <Controller
           name="phone"
-          value={registerData?.phone}
           control={control}
           render={({ field }) => (
             <InputMask

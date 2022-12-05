@@ -74,9 +74,7 @@ const NoticesCategoriesList = () => {
         <List>
           {pets.map(itm => {
             let favorite;
-            if (
-              favoritesPets?.data.favoriteNotices.some(el => el._id === itm._id)
-            ) {
+            if (favoritesPets?.data.notices.some(el => el._id === itm._id)) {
               favorite = true;
             } else {
               favorite = false;

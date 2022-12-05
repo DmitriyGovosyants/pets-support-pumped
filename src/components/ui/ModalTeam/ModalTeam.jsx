@@ -45,7 +45,7 @@ export const ModalTeam = ({ toggleModal }) => {
           }
         )}
       </TeamList>
-      <ModalBtnClose toggleModal={toggleModal} />
+      <ModalBtnClose closeModal={toggleModal} />
     </>
   );
 };

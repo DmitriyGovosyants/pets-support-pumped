@@ -41,7 +41,7 @@ export const LoginForm = () => {
         email,
         password,
       }).unwrap();
-      toast.info(`${email} is logined`);
+      toast.info(`${email} is logged in`);
     } catch (error) {
       if (error.status === 401) {
         toast.error(error.data.message);
