@@ -24,7 +24,8 @@ export const Label = styled.label`
     width: 44px;
     height: 44px;
     border: 0;
-    cursor: pointer;
+    cursor: ${({ isDisabledSearch }) =>
+      isDisabledSearch ? 'default' : 'pointer'};
   }
 `;
 
@@ -49,7 +50,7 @@ export const Input = styled.input`
   font-size: 16px;
   line-height: 1.375;
   background: ${({ theme, isDisabledSearch }) =>
-    isDisabledSearch ? '#FFCEC3' : theme.colors.textSecond};
+    isDisabledSearch ? 'rgb(242,242,242)' : theme.colors.textSecond};
   box-shadow: 7px 4px 14px ${({ theme }) => theme.colors.shadow};
   outline: none;
   transition: outline-color ${({ theme }) => theme.animation.cubicBezier};

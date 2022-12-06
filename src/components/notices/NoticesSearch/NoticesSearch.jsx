@@ -28,7 +28,7 @@ export const NoticesSearch = ({
 }) => {
   const selected = useSelector(selectCategory);
   const [isDisabledSearch, setIsDisabledSearch] = useState(false);
-  const [selectValue, setSelectValue] = useState('false');
+  const [selectField, setSelectField] = useState('title');
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -44,9 +44,9 @@ export const NoticesSearch = ({
     if (keyWord === '') {
       return;
     }
+    setField(selectField);
     setPage(1);
     dispatch(setWord(keyWord));
-    setField(selectValue);
     setPets([]);
   };
 
@@ -54,6 +54,7 @@ export const NoticesSearch = ({
     const value = e.target.value;
     setKeyWord(value);
     if (value.length === 0) {
+      console.log(value);
       setPage(1);
       dispatch(setWord(''));
     }
@@ -61,7 +62,7 @@ export const NoticesSearch = ({
 
   return (
     <SearchForm onSubmit={handleSubmit}>
-      <Label>
+      <Label isDisabledSearch={isDisabledSearch}>
         <Input
           placeholder="Search"
           disabled={isDisabledSearch}
@@ -79,7 +80,8 @@ export const NoticesSearch = ({
           options={options}
           name={'fields'}
           defaultValue={options[0]}
-          onChange={choice => setSelectValue(choice.value)}
+          onChange={choice => setSelectField(choice.value)}
+          isDisabledSearch={isDisabledSearch}
         />
       </SelectWrap>
     </SearchForm>

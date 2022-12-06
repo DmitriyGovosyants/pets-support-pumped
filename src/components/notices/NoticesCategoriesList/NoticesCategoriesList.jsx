@@ -16,7 +16,13 @@ import {
   ErrorWrapper,
 } from './NoticesCategoriesList.styled';
 
-const NoticesCategoriesList = ({ page, field, setPage, pets, setPets }) => {
+const NoticesCategoriesList = ({
+  page,
+  field = 'title',
+  setPage,
+  pets,
+  setPets,
+}) => {
   const [skipFavorites, setSkipFavorites] = useState(true);
   const [skipByCategory, setSkipByCategory] = useState(true);
   const [pageCount, setPageCount] = useState(1);
@@ -69,6 +75,12 @@ const NoticesCategoriesList = ({ page, field, setPage, pets, setPets }) => {
       setPageCount(Math.ceil(data.total / 12));
     }
   }, [data, isSuccess]);
+
+  if (isError) {
+    setTimeout(() => {
+      setPets(data.data.notices);
+    }, 3000);
+  }
 
   const handlePageClick = event => {
     setPage(event.selected + 1);

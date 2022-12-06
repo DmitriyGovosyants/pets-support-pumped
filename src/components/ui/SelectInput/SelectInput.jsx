@@ -4,7 +4,13 @@ import makeAnimated from 'react-select/animated';
 
 const animatedComponents = makeAnimated();
 
-export const SelectInput = ({ options, name, defaultValue, onChange }) => (
+export const SelectInput = ({
+  options,
+  name,
+  defaultValue,
+  onChange,
+  isDisabledSearch = false,
+}) => (
   <Select
     styles={{
       control: baseStyles => ({
@@ -24,6 +30,7 @@ export const SelectInput = ({ options, name, defaultValue, onChange }) => (
         primary: '#F59256',
       },
     })}
+    isDisabled={isDisabledSearch}
     components={animatedComponents}
     options={options}
     name={name}
@@ -37,4 +44,5 @@ SelectInput.propTypes = {
   name: PropTypes.string.isRequired,
   defaultValue: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
+  isDisabledSearch: PropTypes.bool,
 };
