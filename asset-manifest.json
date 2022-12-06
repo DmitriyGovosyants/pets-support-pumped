@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/static/css/main.9f842b21.css",
-    "main.js": "/static/js/main.060d9d1f.js",
-    "home-page.js": "/static/js/home-page.e2e7d8be.chunk.js",
-    "register-page.js": "/static/js/register-page.ce153b6a.chunk.js",
-    "login-page.js": "/static/js/login-page.bcff643c.chunk.js",
-    "news-page.js": "/static/js/news-page.6a4f741a.chunk.js",
-    "notices-page.js": "/static/js/notices-page.51894f29.chunk.js",
-    "friends-page.js": "/static/js/friends-page.6779024d.chunk.js",
-    "user-page.js": "/static/js/user-page.579da3d7.chunk.js",
+    "main.js": "/static/js/main.4caf1d18.js",
+    "home-page.js": "/static/js/home-page.f2d90604.chunk.js",
+    "register-page.js": "/static/js/register-page.bd26e5d6.chunk.js",
+    "login-page.js": "/static/js/login-page.410a9e7d.chunk.js",
+    "news-page.js": "/static/js/news-page.49021fa4.chunk.js",
+    "notices-page.js": "/static/js/notices-page.5c676956.chunk.js",
+    "friends-page.js": "/static/js/friends-page.4e1731a4.chunk.js",
+    "user-page.js": "/static/js/user-page.33a90830.chunk.js",
     "static/media/hp-bckg-tablet@2x.png": "/static/media/hp-bckg-tablet@2x.bc98ab167ad7c72aa8b3.png",
     "static/media/hp-woman-tablet@2x.png": "/static/media/hp-woman-tablet@2x.62bb3752380c3d1ad1b7.png",
     "static/media/hp-woman-desktop@2x.png": "/static/media/hp-woman-desktop@2x.fe3423e665d3f171f4f1.png",
@@ -42,17 +42,17 @@
     "static/media/edit-icon.svg": "/static/media/edit-icon.f33e8538d882418b76070d5bd0a94a00.svg",
     "static/media/plus-icon.svg": "/static/media/plus-icon.65c74ef373dbf9e8a113c07965b48e3e.svg",
     "main.9f842b21.css.map": "/static/css/main.9f842b21.css.map",
-    "main.060d9d1f.js.map": "/static/js/main.060d9d1f.js.map",
-    "home-page.e2e7d8be.chunk.js.map": "/static/js/home-page.e2e7d8be.chunk.js.map",
-    "register-page.ce153b6a.chunk.js.map": "/static/js/register-page.ce153b6a.chunk.js.map",
-    "login-page.bcff643c.chunk.js.map": "/static/js/login-page.bcff643c.chunk.js.map",
-    "news-page.6a4f741a.chunk.js.map": "/static/js/news-page.6a4f741a.chunk.js.map",
-    "notices-page.51894f29.chunk.js.map": "/static/js/notices-page.51894f29.chunk.js.map",
-    "friends-page.6779024d.chunk.js.map": "/static/js/friends-page.6779024d.chunk.js.map",
-    "user-page.579da3d7.chunk.js.map": "/static/js/user-page.579da3d7.chunk.js.map"
+    "main.4caf1d18.js.map": "/static/js/main.4caf1d18.js.map",
+    "home-page.f2d90604.chunk.js.map": "/static/js/home-page.f2d90604.chunk.js.map",
+    "register-page.bd26e5d6.chunk.js.map": "/static/js/register-page.bd26e5d6.chunk.js.map",
+    "login-page.410a9e7d.chunk.js.map": "/static/js/login-page.410a9e7d.chunk.js.map",
+    "news-page.49021fa4.chunk.js.map": "/static/js/news-page.49021fa4.chunk.js.map",
+    "notices-page.5c676956.chunk.js.map": "/static/js/notices-page.5c676956.chunk.js.map",
+    "friends-page.4e1731a4.chunk.js.map": "/static/js/friends-page.4e1731a4.chunk.js.map",
+    "user-page.33a90830.chunk.js.map": "/static/js/user-page.33a90830.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9f842b21.css",
-    "static/js/main.060d9d1f.js"
+    "static/js/main.4caf1d18.js"
   ]
 }
