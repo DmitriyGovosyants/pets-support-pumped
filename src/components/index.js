@@ -50,3 +50,4 @@ export * from './ui/ValidationError/ValidationError';
 export * from './ui/ModalTeam/ModalTeam';
 export * from './ui/AnimationCat/AnimationCat';
 export * from './ui/AnimationBird/AnimationBird';
+export * from './ui/SelectInput/SelectInput';

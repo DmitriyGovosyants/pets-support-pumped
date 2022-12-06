@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { NoticeCategoryItem, Spinner } from 'components';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -15,10 +16,15 @@ import {
   ErrorWrapper,
 } from './NoticesCategoriesList.styled';
 
-const NoticesCategoriesList = () => {
-  const [pets, setPets] = useState([]);
-  const [skip, setSkip] = useState(true);
-  const [page, setPage] = useState(1);
+const NoticesCategoriesList = ({
+  page,
+  field = 'title',
+  setPage,
+  pets,
+  setPets,
+}) => {
+  const [skipFavorites, setSkipFavorites] = useState(true);
+  const [skipByCategory, setSkipByCategory] = useState(true);
   const [pageCount, setPageCount] = useState(1);
   const auth = useAuth();
   const { categoryName } = useParams();
@@ -26,42 +32,55 @@ const NoticesCategoriesList = () => {
 
   useRequest(categoryName, setRequest);
   const search = useFilter(categoryName);
-  const { data, isSuccess, isLoading, isError } = useGetNoticesQuery({
-    request,
-    page,
-    search,
-  });
+  const { data, isSuccess, isLoading, isError } = useGetNoticesQuery(
+    {
+      request,
+      page,
+      field,
+      search,
+    },
+    { skip: skipByCategory }
+  );
   const { data: favoritesPets, isSuccess: isSuccessFavorites } =
     useGetFavoritesQuery('', {
-      skip,
+      skip: skipFavorites,
     });
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
   useEffect(() => {
     if (!auth.user) {
-      setSkip(true);
-    } else {
-      setSkip(false);
+      return;
     }
+    setSkipFavorites(false);
   }, [auth]);
 
   useEffect(() => {
     if (data) {
-      setPets(data.data.notices || data.data.favoriteNotices);
-    } else {
-      setPets([]);
+      setPets(data.data.notices);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, favoritesPets]);
 
   useEffect(() => {
     setPage(1);
+    setPets([]);
+    if (categoryName) {
+      setSkipByCategory(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryName]);
 
   useEffect(() => {
     if (isSuccess) {
       setPageCount(Math.ceil(data.total / 12));
     }
-  }, [categoryName, data, isSuccess]);
+  }, [data, isSuccess]);
+
+  if (isError) {
+    setTimeout(() => {
+      setPets(data.data.notices);
+    }, 3000);
+  }
 
   const handlePageClick = event => {
     setPage(event.selected + 1);
@@ -74,9 +93,7 @@ const NoticesCategoriesList = () => {
         <List>
           {pets.map(itm => {
             let favorite;
-            if (
-              favoritesPets?.data.favoriteNotices.some(el => el._id === itm._id)
-            ) {
+            if (favoritesPets?.data.notices.some(el => el._id === itm._id)) {
               favorite = true;
             } else {
               favorite = false;
@@ -93,7 +110,7 @@ const NoticesCategoriesList = () => {
           })}
         </List>
       )}
-      {(isError || (isSuccess && pets.length === 0)) && (
+      {(isError || (isSuccess && data?.data?.notices?.length === 0)) && (
         <ErrorWrapper>
           <Error>There is no any animals on your query!</Error>
           <GiJumpingDog
@@ -118,6 +135,14 @@ const NoticesCategoriesList = () => {
       )}
     </>
   );
+};
+
+NoticesCategoriesList.propTypes = {
+  page: PropTypes.number.isRequired,
+  field: PropTypes.string.isRequired,
+  setPage: PropTypes.func.isRequired,
+  pets: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setPets: PropTypes.func.isRequired,
 };
 
 export default NoticesCategoriesList;
