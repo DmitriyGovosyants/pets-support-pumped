@@ -18,17 +18,20 @@ import { fromCategoryToRoute } from 'helpers';
 const NoticesPage = () => {
   const word = useSelector(selectKeyWord);
   const [keyWord, setKeyWord] = useState(word);
+  const [field, setField] = useState('title');
   const [page, setPage] = useState(1);
   const [pets, setPets] = useState([]);
   const selected = useSelector(selectCategory);
   const [isFirstMount, setIsFirstMount] = useState(true);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (isFirstMount) {
       navigate(fromCategoryToRoute(selected));
       setIsFirstMount(false);
     }
   }, [navigate, isFirstMount, selected]);
+
   return (
     <Section>
       <Container>
@@ -37,6 +40,7 @@ const NoticesPage = () => {
           keyWord={keyWord}
           setKeyWord={setKeyWord}
           setPage={setPage}
+          setField={setField}
           setPets={notices => setPets(notices)}
         />
         <Wrapper>
@@ -45,6 +49,7 @@ const NoticesPage = () => {
         </Wrapper>
         <NoticesCategoriesList
           page={page}
+          field={field}
           setPage={setPage}
           pets={pets}
           setPets={setPets}

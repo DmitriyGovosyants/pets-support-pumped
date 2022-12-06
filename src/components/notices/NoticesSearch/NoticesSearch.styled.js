@@ -3,12 +3,15 @@ import { device } from 'styles/mediaquery';
 import { ReactComponent as SearchIcon } from 'data/img/search-icon.svg';
 
 export const SearchForm = styled.form`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 280px;
+  margin: 0 auto;
   margin-bottom: 28px;
   ${device.tablet} {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
     margin-bottom: 40px;
+    width: 704px;
   }
 `;
 
@@ -28,8 +31,8 @@ export const Label = styled.label`
 export const Icon = styled(SearchIcon)`
   width: 20px;
   height: 20px;
-  fill: ${props => props.theme.colors.textMain};
-  transition: fill ${p => p.theme.animation.cubicBezier};
+  fill: ${({ theme }) => theme.colors.textMain};
+  transition: fill ${({ theme }) => theme.animation.cubicBezier};
   ${device.tablet} {
     width: 24px;
     height: 24px;
@@ -45,22 +48,42 @@ export const Input = styled.input`
   font-weight: 500;
   font-size: 16px;
   line-height: 1.375;
-  background: ${props => props.theme.colors.textSecond};
-  box-shadow: 7px 4px 14px ${props => props.theme.colors.shadow};
+  background: ${({ theme, isDisabledSearch }) =>
+    isDisabledSearch ? '#FFCEC3' : theme.colors.textSecond};
+  box-shadow: 7px 4px 14px ${({ theme }) => theme.colors.shadow};
   outline: none;
-  transition: outline-color ${p => p.theme.animation.cubicBezier};
+  transition: outline-color ${({ theme }) => theme.animation.cubicBezier};
   :hover,
   :focus {
     & + ${Icon} {
-      fill: ${props => props.theme.colors.hover};
+      fill: ${({ theme }) => theme.colors.hover};
     }
   }
   ${device.tablet} {
-    width: 608px;
+    width: 500px;
     height: 44px;
     padding: 8px 20px;
     border-radius: 40px;
     font-size: 20px;
     line-height: 1.35;
+  }
+`;
+
+export const SelectWrap = styled.div`
+  & > h4 {
+    margin: 10px 0;
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.35;
+    letter-spacing: 0.04em;
+    ${device.tablet} {
+      margin-top: 0;
+    }
+  }
+  & div {
+    ${device.mobile} {
+      margin: 0 auto;
+    }
   }
 `;

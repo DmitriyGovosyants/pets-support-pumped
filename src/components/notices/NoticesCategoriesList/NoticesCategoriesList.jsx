@@ -16,7 +16,7 @@ import {
   ErrorWrapper,
 } from './NoticesCategoriesList.styled';
 
-const NoticesCategoriesList = ({ page, setPage, pets, setPets }) => {
+const NoticesCategoriesList = ({ page, field, setPage, pets, setPets }) => {
   const [skipFavorites, setSkipFavorites] = useState(true);
   const [skipByCategory, setSkipByCategory] = useState(true);
   const [pageCount, setPageCount] = useState(1);
@@ -30,6 +30,7 @@ const NoticesCategoriesList = ({ page, setPage, pets, setPets }) => {
     {
       request,
       page,
+      field,
       search,
     },
     { skip: skipByCategory }
@@ -126,6 +127,7 @@ const NoticesCategoriesList = ({ page, setPage, pets, setPets }) => {
 
 NoticesCategoriesList.propTypes = {
   page: PropTypes.number.isRequired,
+  field: PropTypes.string.isRequired,
   setPage: PropTypes.func.isRequired,
   pets: PropTypes.arrayOf(PropTypes.object).isRequired,
   setPets: PropTypes.func.isRequired,
