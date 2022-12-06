@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
+import isDate from 'date-fns/isDate';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAddNoticeMutation } from 'redux/noticesApi';
@@ -14,19 +15,18 @@ export const ModalAddNotice = ({ closeModal }) => {
   const [formState, setFormState] = useState({});
 
   const handlePageOne = values => {
-    console.log(values);
-    // console.log(format(new Date(values.birthdate), 'dd.MM.yyyy'));
-    // setFormState(p => ({ ...p, ...values }));
-    // setStep(2);
+    setFormState(p => ({ ...p, ...values }));
+    setStep(2);
   };
 
   const handleBackToPageOne = values => {
     // setFormState(p => ({ ...p, ...values }));
-    // setStep(1);
+    setStep(1);
   };
 
   const onSubmit = async ({ name, city, phone }) => {
     // const { email, password } = formState;
+    // console.log(format(new Date(birthdate), 'dd.MM.yyyy'));
     // const phoneWithoutMask = phone.split(/[-()]+/).join('');
     // try {
     //   await signUp({
@@ -50,6 +50,8 @@ export const ModalAddNotice = ({ closeModal }) => {
     // }
   };
 
+  console.log(formState);
+
   return (
     <Wrapper>
       <Title>Add notice</Title>
@@ -60,14 +62,14 @@ export const ModalAddNotice = ({ closeModal }) => {
           handlePageOne={handlePageOne}
         />
       )}
-      {/* {step === 2 && (
+      {step === 2 && (
         <ModalAddNoticePageTwo
-        formState={formState}
-        handleBackToPageOne={handleBackToPageOne}
-        onSubmit={onSubmit}
-        isLoading={isLoading}
+          formState={formState}
+          handleBackToPageOne={handleBackToPageOne}
+          onSubmit={onSubmit}
+          isLoading={isLoading}
         />
-      )} */}
+      )}
       <ModalBtnClose closeModal={closeModal} />
       {isLoading && <SpinnerFixed />}
     </Wrapper>

@@ -82,7 +82,7 @@ export const Text = styled.p`
   }
 `
 
-export const SelectCategory = styled.div`
+export const RadioGroupCategory = styled.div`
   display: inline-flex;
   flex-wrap: wrap;
   column-gap: 8px;
@@ -100,7 +100,7 @@ export const CategoryInput = styled.input`
 `
 
 export const CategoryLabel = styled.label`
-  padding: 6px 26px;
+  padding: 6px 20px;
 
   font-size: 14px;
   line-height: 1.35;

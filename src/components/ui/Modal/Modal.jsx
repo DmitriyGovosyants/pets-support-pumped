@@ -7,13 +7,13 @@ import { Overlay } from './Modal.styled';
 const modalRoot = document.querySelector('#modal-root');
 const body = document.getElementsByTagName('body')[0];
 
-export const Modal = ({ children, toggleModal }) => {
+export const Modal = ({ children, closeModal }) => {
   const isMounted = useRef(false);
 
   useEffect(() => {
     const handleKeyDown = e => {
       if (e.code === 'Escape') {
-        toggleModal();
+        closeModal();
       }
     };
 
@@ -25,18 +25,10 @@ export const Modal = ({ children, toggleModal }) => {
       window.removeEventListener('keydown', handleKeyDown);
       enableBodyScroll(body);
     };
-  }, [toggleModal]);
-
-  const handleBackdropClick = e => {
-    if (e.target === e.currentTarget) {
-      toggleModal();
-    }
-  };
+  }, [closeModal]);
 
   return createPortal(
-    <Overlay onClick={handleBackdropClick} mounted={isMounted.current}>
-      {children}
-    </Overlay>,
+    <Overlay mounted={isMounted.current}>{children}</Overlay>,
     modalRoot
   );
 };

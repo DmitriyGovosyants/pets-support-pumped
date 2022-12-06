@@ -65,8 +65,13 @@ const petName = Yup.string()
   .max(16)
   .matches(nameRegEx, "Pet name must contain only letters")
 
-const birthdate = Yup.string()
-  .nullable()
+const birthdate = Yup.number()
+  .transform((value) => {
+    if (value === 0 || isNaN(value)) {
+      return null
+    }
+    return value;
+  }).nullable()
 
 const breed = Yup.string()
   .trim()
@@ -75,7 +80,10 @@ const breed = Yup.string()
   .matches(nameRegEx, "Breed must contain only letters")
 
 const category = Yup.string()
-  // .required()
+  .required()
+
+const sex = Yup.string()
+  .required()
 
 export const signInPageOneSchema = Yup.object({
   email,
@@ -100,4 +108,8 @@ export const addNoticePageOneSchema = Yup.object({
   name: petName,
   birthdate,
   breed,
+});
+
+export const addNoticePageTwoSchema = Yup.object({
+  sex,
 });

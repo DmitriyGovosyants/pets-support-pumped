@@ -29,7 +29,7 @@ export const AddNoticeButton = () => {
         </Button>
       </Wrapper>
       {showModal && auth.user && (
-        <Modal toggleModal={() => setShowModal(s => !s)}>
+        <Modal closeModal={() => setShowModal(false)}>
           <ModalAddNotice closeModal={() => setShowModal(false)} />
         </Modal>
       )}
