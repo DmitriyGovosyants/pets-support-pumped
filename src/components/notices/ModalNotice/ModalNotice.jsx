@@ -23,7 +23,7 @@ import {
 export const ModalNotice = ({
   petData,
   favorite,
-  toggleModal,
+  closeModal,
   toggleFavourites,
 }) => {
   const {
@@ -122,7 +122,7 @@ export const ModalNotice = ({
           <HeartIcon />
         </ChangeFavoriteStatusBtn>
       </BtnWrapper>
-      <ModalBtnClose toggleModal={toggleModal} />
+      <ModalBtnClose closeModal={closeModal} />
     </Container>
   );
 };
@@ -145,6 +145,6 @@ ModalNotice.propTypes = {
     }),
   }),
   favorite: PropTypes.bool.isRequired,
-  toggleModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
   toggleFavourites: PropTypes.func.isRequired,
 };

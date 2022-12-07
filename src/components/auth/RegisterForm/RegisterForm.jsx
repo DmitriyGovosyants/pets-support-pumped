@@ -2,28 +2,28 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useSignUpMutation } from 'redux/authApi';
 import { routesPath } from 'router';
-import { RegisterPageOne } from './RegisterPageOne';
-import { RegisterPageTwo } from './RegisterPageTwo';
+import { RegisterFormPageOne } from './RegisterFormPageOne';
+import { RegisterFormPageTwo } from './RegisterFormPageTwo';
 import { SpinnerFixed } from 'components';
 import { Wrapper, Title, Text, FormNavLink } from '../Auth.styled';
 
 export const RegisterForm = () => {
   const [signUp, { isLoading }] = useSignUpMutation();
   const [step, setStep] = useState(1);
-  const [registerData, setRegisterData] = useState({});
+  const [formState, setFormState] = useState({});
 
   const handlePageOne = values => {
-    setRegisterData(p => ({ ...p, ...values }));
+    setFormState(p => ({ ...p, ...values }));
     setStep(2);
   };
 
   const handleBackToPageOne = values => {
-    setRegisterData(p => ({ ...p, ...values }));
+    setFormState(p => ({ ...p, ...values }));
     setStep(1);
   };
 
   const onSubmit = async ({ name, city, phone }) => {
-    const { email, password } = registerData;
+    const { email, password } = formState;
     const phoneWithoutMask = phone.split(/[-()]+/).join('');
 
     try {
@@ -52,14 +52,14 @@ export const RegisterForm = () => {
     <Wrapper>
       <Title>Registration</Title>
       {step === 1 && (
-        <RegisterPageOne
-          registerData={registerData}
+        <RegisterFormPageOne
+          formState={formState}
           handlePageOne={handlePageOne}
         />
       )}
       {step === 2 && (
-        <RegisterPageTwo
-          registerData={registerData}
+        <RegisterFormPageTwo
+          formState={formState}
           handleBackToPageOne={handleBackToPageOne}
           onSubmit={onSubmit}
           isLoading={isLoading}

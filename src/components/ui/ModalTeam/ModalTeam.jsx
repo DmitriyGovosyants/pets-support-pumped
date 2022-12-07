@@ -12,7 +12,7 @@ import {
   WrapperSocial,
 } from './ModalTeam.styled';
 
-export const ModalTeam = ({ toggleModal }) => {
+export const ModalTeam = ({ closeModal }) => {
   return (
     <>
       <TeamTitle>Developers Team</TeamTitle>
@@ -45,11 +45,11 @@ export const ModalTeam = ({ toggleModal }) => {
           }
         )}
       </TeamList>
-      <ModalBtnClose toggleModal={toggleModal} />
+      <ModalBtnClose closeModal={closeModal} />
     </>
   );
 };
 
 ModalTeam.propTypes = {
-  toggleModal: PropTypes.func,
+  closeModal: PropTypes.func,
 };

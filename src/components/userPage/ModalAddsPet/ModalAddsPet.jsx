@@ -33,7 +33,7 @@ import {
   RequiredSymbol,
 } from './ModalAddsPets.styled';
 
-export const ModalAddsPet = ({ toggleModal }) => {
+export const ModalAddsPet = ({ closeModal }) => {
   const [addPet, { isLoading }] = useCreatePetMutation();
   const [avatarData, setAvatarData] = useState();
   const [avatar, setAvatar] = useState();
@@ -69,7 +69,7 @@ export const ModalAddsPet = ({ toggleModal }) => {
 
   const handleSecondBtn = () => {
     if (step === 0) {
-      toggleModal();
+      closeModal();
     }
     if (step === 1) {
       setStep(0);
@@ -150,7 +150,7 @@ export const ModalAddsPet = ({ toggleModal }) => {
 
     try {
       await addPet(formData);
-      toggleModal();
+      closeModal();
       toast.success('Your pet is added');
     } catch (error) {
       console.log(error);
@@ -246,12 +246,12 @@ export const ModalAddsPet = ({ toggleModal }) => {
           {step === 0 ? 'Cancel' : 'Back'}
         </MainButton>
       </BtnBox>
-      <ModalBtnClose toggleModal={toggleModal} />
+      <ModalBtnClose closeModal={closeModal} />
       {isLoading && <SpinnerFixed />}
     </ModalWrap>
   );
 };
 
 ModalAddsPet.propTypes = {
-  toggleModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
 };

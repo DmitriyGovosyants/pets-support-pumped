@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { device } from "styles/mediaquery";
 
-export const ModalCard = styled.form`
+export const Wrapper = styled.div`
   position: relative;
   max-width: 400px;
   margin: 0px auto;
@@ -16,7 +16,7 @@ export const ModalCard = styled.form`
   }
 `
 
-export const FormTitle = styled.h2`
+export const Title = styled.h2`
   margin-bottom: 20px;
 
   font-size: 24px;
@@ -31,7 +31,42 @@ export const FormTitle = styled.h2`
   }
 `
 
-export const FormText = styled.p`
+export const Form = styled.form`
+  & input {
+    width: 100%;
+    padding: 11px 14px;
+
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.35;
+
+    background-color: ${p => p.theme.colors.bgMain};
+    border: 1px solid rgba(245, 146, 86, 0.5);
+    border-radius: 40px;
+    
+    ::placeholder {
+      font-size: 14px;
+      line-height: 1.35;
+      color: ${p => p.theme.colors.placeholder};
+    }
+
+    :focus {
+      outline: 1px solid ${p => p.theme.colors.accent};
+    }
+
+    ${device.tablet} {
+      padding: 11px 16px;
+      font-size: 20px;
+
+      ::placeholder {
+        font-size: 16px;
+        line-height: 1.625;
+      }
+    }
+  }
+`
+
+export const Text = styled.p`
   margin-bottom: 20px;
 
   font-size: 16px;
@@ -47,7 +82,7 @@ export const FormText = styled.p`
   }
 `
 
-export const SelectCategory = styled.div`
+export const RadioGroupCategory = styled.div`
   display: inline-flex;
   flex-wrap: wrap;
   column-gap: 8px;
@@ -60,12 +95,22 @@ export const SelectCategory = styled.div`
   }
 `
 
+export const RadioGroupSex = styled.div`
+  display: flex;
+  gap: 40px;
+  margin-bottom: 32px;
+`
+
 export const CategoryInput = styled.input`
   display: none;
 `
 
+export const SexInput = styled.input`
+  display: none;
+`
+
 export const CategoryLabel = styled.label`
-  padding: 6px 26px;
+  padding: 6px 20px;
 
   font-size: 14px;
   line-height: 1.35;
@@ -98,71 +143,108 @@ export const CategoryLabel = styled.label`
   }
 `
 
-export const InputList = styled.ul`
-  display: grid;
-  gap: 16px;
+export const InputWrapper = styled.div`
+  position: relative;
+  margin-bottom: ${p => p.last ? '40px' : '16px'};
 
   ${device.tablet} {
-    gap: 28px;
+    margin-bottom: ${p => p.last ? '40px' : '28px'};
   }
 `
 
-export const InputItem = styled.li`
-  
+export const InputDateWrapper = styled(InputWrapper)`
+  & .react-datepicker__current-month,
+    .react-datepicker__month-read-view--down-arrow,
+    .react-datepicker__year-read-view--down-arrow {
+    display: none;
+  }
+  & .react-datepicker__month-read-view--selected-month,
+    .react-datepicker__year-read-view--selected-year {
+    font-size: 20px;
+
+    :hover {
+      color: ${p => p.theme.colors.hover};
+    }
+  }
+  & .react-datepicker__month-option,
+    .react-datepicker__year-option {
+    font-size: 14px;
+    padding: 5px 0;
+  }
 `
 
-export const FormInputLabel = styled.p`
-  margin-bottom: ${p => p.indent === 'big' ? '16px' : '8px'};
+export const Label = styled.label`
+  display: grid;
+  gap: 8px;
 
   font-size: 18px;
   line-height: 1.44;
   color: ${p => p.theme.colors.black};
 
   ${device.tablet} {
-    margin-bottom: ${p => p.indent === 'big' ? '28px' : '12px'};
+    gap: 12px;
+
     font-size: 24px;
     line-height: 1.08;
   }
 `
 
-export const RequiredSymbol = styled.span`
-  color: ${p => p.theme.colors.accent};
+export const LabelAboveInput = styled(Label)`
+  margin-bottom: 8px;
+
+  ${device.tablet} {
+    margin-bottom: 12px;
+  }
 `
 
-export const FormInput = styled.input`
-  width: 100%;
-  padding: 11px 14px;
+export const TitleSex = styled.p`
+  margin-bottom: 16px;
 
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.35;
+  font-size: 18px;
+  line-height: 1.44;
+  color: ${p => p.theme.colors.black};
 
-  background-color: ${p => p.theme.colors.bgMain};
-  border: 1px solid rgba(245, 146, 86, 0.5);
-  border-radius: 40px;
-  
-  ::placeholder {
-    font-size: 14px;
-    line-height: 1.35;
-    color: ${p => p.theme.colors.placeholder};
+  ${device.tablet} {
+    margin-bottom: 28px;
+    font-size: 24px;
+    line-height: 1.08;
   }
+`
 
-  :focus {
-    outline: 1px solid ${p => p.theme.colors.accent};
+export const LabelSex = styled.label`
+  font-size: 18px;
+  line-height: 1.44;
+  color: ${p => p.theme.colors.black};
+
+  cursor: pointer;
+
+  transition: color ${p => p.theme.animation.cubicBezier};
+
+  input:checked + & {
+    color: ${p => p.theme.colors.accent};
   }
 
   ${device.tablet} {
-    padding: 11px 16px;
     font-size: 20px;
-
-    ::placeholder {
-      font-size: 16px;
-      line-height: 1.625;
-    }
+    line-height: 1.3;
   }
 `
 
-export const FormTextarea = styled.textarea`
+export const SexImgWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 12px;
+
+  ${device.tablet} {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 20px;
+  }
+`
+
+export const Textarea = styled.textarea`
   width: 100%;
   padding: 11px 14px;
 
@@ -196,7 +278,7 @@ export const FormTextarea = styled.textarea`
   }
 `
 
-export const FormInputLoadWrapper = styled.div`
+export const FileLoadWrapper = styled.div`
   position: relative;
   width: 116px;
   height: 116px;
@@ -210,7 +292,32 @@ export const FormInputLoadWrapper = styled.div`
   }
 `
 
-export const FormInputLoadPlus = styled.img`
+export const FileInput = styled.input`
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  color: transparent;
+  cursor: pointer;
+
+  background-color: ${p => p.theme.colors.bgMain};
+  border-radius: 20px;
+`
+
+export const ErrorBox = styled.p`
+  padding: 0 15px;
+
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.35;
+  color: ${p => p.theme.colors.accent};
+
+  ${device.tablet} {
+    font-size: 18px;
+    line-height: 1.38;
+  }
+`
+
+export const FilePlusImg = styled.img`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -218,7 +325,7 @@ export const FormInputLoadPlus = styled.img`
   pointer-events: none;
 `
 
-export const FormInputLoadImg = styled.img`
+export const FileLoadImg = styled.img`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -235,69 +342,14 @@ export const FormInputLoadImg = styled.img`
   }
 `
 
-export const FormInputLoad = styled.input`
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  color: transparent;
-  cursor: pointer;
-
-  background-color: ${p => p.theme.colors.bgMain};
-  border-radius: 20px;
-`
-
 export const BtnBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 40px;
 
   ${device.tablet} {
     flex-direction: row-reverse;
     justify-content: center;
     gap: 20px;
-  }
-`
-
-export const SelectSex = styled.div`
-  display: flex;
-  gap: 40px;
-  margin-bottom: 32px;
-`
-
-export const SexInput = styled.input`
-  display: none;
-`
-
-export const SexLabel = styled.label`
-  font-size: 18px;
-  line-height: 1.44;
-  color: ${p => p.theme.colors.black};
-
-  cursor: pointer;
-
-  transition: color ${p => p.theme.animation.cubicBezier};
-
-  input:checked + & {
-    color: ${p => p.theme.colors.accent};
-  }
-
-  ${device.tablet} {
-    font-size: 20px;
-    line-height: 1.3;
-  }
-`
-
-export const ImgWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  margin-bottom: 12px;
-
-  ${device.tablet} {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 20px;
   }
 `

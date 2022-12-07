@@ -37,7 +37,7 @@ export const ModalDelete = ({ id, closeModal }) => {
           CANCEL
         </MainButton>
       </BtnBox>
-      <ModalBtnClose toggleModal={closeModal} />
+      <ModalBtnClose closeModal={closeModal} />
       {isLoading && <SpinnerFixed />}
     </ModalContainer>
   );
