@@ -1,8 +1,7 @@
-import PropTypes from 'prop-types';
 import { format } from 'date-fns';
-import isDate from 'date-fns/isDate';
-import { useState } from 'react';
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { useAddNoticeMutation } from 'redux/noticesApi';
 import { ModalAddNoticePageOne } from './ModalAddNoticePageOne';
 import { ModalAddNoticePageTwo } from './ModalAddNoticePageTwo';
@@ -13,6 +12,8 @@ export const ModalAddNotice = ({ closeModal }) => {
   const [addNotice, { isLoading }] = useAddNoticeMutation();
   const [step, setStep] = useState(1);
   const [formState, setFormState] = useState({});
+  const [avatarData, setAvatarData] = useState();
+  const [avatar, setAvatar] = useState();
 
   const handlePageOne = values => {
     if (formState?.price && values.category !== 'sell') {
@@ -29,34 +30,47 @@ export const ModalAddNotice = ({ closeModal }) => {
     setStep(1);
   };
 
-  const onSubmit = async ({ sex, location, price }) => {
-    console.log(formState, sex, location, price);
-    // const { email, password } = formState;
-    // console.log(format(new Date(birthdate), 'dd.MM.yyyy'));
-    // const phoneWithoutMask = phone.split(/[-()]+/).join('');
-    // try {
-    //   await signUp({
-    //     email,
-    //     password,
-    //     name,
-    //     city,
-    //     phone: phoneWithoutMask,
-    //   }).unwrap();
-    //   toast.info(`${email} is registered`);
-    // } catch (error) {
-    //   if (error.status === 400) {
-    //     toast.error(error.data.message);
-    //   }
-    //   if (error.status === 404) {
-    //     toast.error('Resourses not found');
-    //   }
-    //   if (error.status === 500) {
-    //     toast.error('Server not response');
-    //   }
-    // }
-  };
+  const onSubmit = async values => {
+    const dataToSend = { ...formState, ...values };
+    const formData = new FormData();
+    console.log(dataToSend);
 
-  console.log(formState);
+    for (let key in dataToSend) {
+      if (key === 'price' && dataToSend[key] === '') {
+        continue;
+      }
+      if (key === 'birthdate' && !dataToSend[key]) {
+        continue;
+      }
+      if (key === 'birthdate' && dataToSend[key]) {
+        const birthdate = format(new Date(formState.birthdate), 'dd.MM.yyyy');
+        formData.append(key, birthdate);
+        continue;
+      }
+      formData.append(key, dataToSend[key]);
+    }
+
+    if (avatarData) {
+      formData.append('avatar', avatarData);
+    }
+
+    try {
+      await addNotice(formData).unwrap();
+      toast.success('Notice is added');
+    } catch (error) {
+      if (error.status === 400) {
+        toast.error(error.data.message);
+      }
+      if (error.status === 404) {
+        toast.error('Resourses not found');
+      }
+      if (error.status === 500) {
+        toast.error('Server not response');
+      }
+    } finally {
+      closeModal();
+    }
+  };
 
   return (
     <Wrapper>
@@ -74,6 +88,9 @@ export const ModalAddNotice = ({ closeModal }) => {
           handleBackToPageOne={handleBackToPageOne}
           onSubmit={onSubmit}
           isLoading={isLoading}
+          avatar={avatar}
+          setAvatar={setAvatar}
+          setAvatarData={setAvatarData}
         />
       )}
       <ModalBtnClose closeModal={closeModal} />

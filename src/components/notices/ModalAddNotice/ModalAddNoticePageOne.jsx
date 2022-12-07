@@ -2,6 +2,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import PropTypes from 'prop-types';
 import { Fragment, useRef } from 'react';
 import { addNoticePageOneSchema } from 'helpers';
 import { MainButton } from 'components';
@@ -16,7 +17,7 @@ import {
   ErrorBox,
   BtnBox,
   InputDateWrapper,
-  LabelDate,
+  LabelAboveInput,
 } from './ModalAddNotice.styled';
 
 const categoryOptions = [
@@ -108,7 +109,9 @@ export const ModalAddNoticePageOne = ({
       </InputWrapper>
 
       <InputDateWrapper>
-        <LabelDate htmlFor="birthdate-add-notice">Date of birth</LabelDate>
+        <LabelAboveInput htmlFor="birthdate-add-notice">
+          Date of birth
+        </LabelAboveInput>
         <Controller
           name="birthdate"
           control={control}
@@ -151,13 +154,13 @@ export const ModalAddNoticePageOne = ({
       </InputWrapper>
 
       <BtnBox>
-        <MainButton size={'medium'} width={'fixed'} type={'submit'}>
+        <MainButton size="medium" width="fixed" type="submit">
           Next
         </MainButton>
         <MainButton
-          option={'black'}
-          size={'medium'}
-          width={'fixed'}
+          option="black"
+          size="medium"
+          width="fixed"
           onClick={() => closeModal()}
         >
           Cancel
@@ -165,4 +168,10 @@ export const ModalAddNoticePageOne = ({
       </BtnBox>
     </Form>
   );
+};
+
+ModalAddNoticePageOne.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  formState: PropTypes.object.isRequired,
+  handlePageOne: PropTypes.func.isRequired,
 };

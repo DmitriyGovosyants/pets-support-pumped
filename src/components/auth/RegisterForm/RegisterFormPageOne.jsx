@@ -7,7 +7,7 @@ import { signInPageOneSchema } from 'helpers';
 import { MainButton } from 'components';
 import { ErrorBox, Form, InputWrapper, EyeBtn } from '../Auth.styled';
 
-export const RegisterPageOne = ({ formState, handlePageOne }) => {
+export const RegisterFormPageOne = ({ formState, handlePageOne }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const {

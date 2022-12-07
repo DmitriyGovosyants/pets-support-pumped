@@ -1,9 +1,11 @@
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import PropTypes from 'prop-types';
 import { Fragment } from 'react';
 import maleImg from 'data/img/male.png';
 import femaleImg from 'data/img/female.png';
-import { addNoticePageTwoSchema } from 'helpers';
+import plusImg from 'data/img/plus.png';
+import { addNoticePageTwoSchema, handleUploadFile } from 'helpers';
 import { MainButton } from 'components';
 import {
   Form,
@@ -14,6 +16,12 @@ import {
   SexImgWrapper,
   InputWrapper,
   Label,
+  LabelAboveInput,
+  FileLoadWrapper,
+  FileInput,
+  FilePlusImg,
+  FileLoadImg,
+  Textarea,
   ErrorBox,
   BtnBox,
 } from './ModalAddNotice.styled';
@@ -28,6 +36,9 @@ export const ModalAddNoticePageTwo = ({
   handleBackToPageOne,
   onSubmit,
   isLoading,
+  avatar,
+  setAvatar,
+  setAvatarData,
 }) => {
   const {
     handleSubmit,
@@ -41,12 +52,17 @@ export const ModalAddNoticePageTwo = ({
       sex: formState.sex || '',
       location: formState.location || '',
       price: formState.price || '',
+      comments: formState.comments || '',
     },
   });
 
   const handleSavePageTwoData = () => {
     const values = getValues();
     handleBackToPageOne(values);
+  };
+
+  const handleFile = ({ target: { files } }) => {
+    handleUploadFile(files[0], setAvatar, setAvatarData);
   };
 
   return (
@@ -117,19 +133,47 @@ export const ModalAddNoticePageTwo = ({
         </InputWrapper>
       )}
 
+      <InputWrapper>
+        <LabelAboveInput>Load the pet’s image</LabelAboveInput>
+        <FileLoadWrapper>
+          <FileInput
+            type="file"
+            name="avatar"
+            onChange={handleFile}
+            accept=".png, .jpeg, .jpg, .webp"
+          />
+          {!avatar && <FilePlusImg src={plusImg} alt="plus picture" />}
+          {avatar && <FileLoadImg src={avatar} alt="photo of your pet" />}
+        </FileLoadWrapper>
+      </InputWrapper>
+
+      <InputWrapper>
+        <Label>
+          Comments *
+          <Controller
+            name="comments"
+            control={control}
+            render={({ field }) => (
+              <Textarea {...field} placeholder="Type comments" rows={'3'} />
+            )}
+          />
+        </Label>
+        <ErrorBox>{errors?.comments?.message}</ErrorBox>
+      </InputWrapper>
+
       <BtnBox>
         <MainButton
           disabled={isLoading}
-          size={'medium'}
-          width={'fixed'}
-          type={'submit'}
+          size="medium"
+          width="fixed"
+          type="submit"
         >
           Done
         </MainButton>
         <MainButton
-          option={'black'}
-          size={'medium'}
-          width={'fixed'}
+          option="black"
+          size="medium"
+          width="fixed"
           onClick={handleSavePageTwoData}
         >
           Back
@@ -137,4 +181,14 @@ export const ModalAddNoticePageTwo = ({
       </BtnBox>
     </Form>
   );
+};
+
+ModalAddNoticePageTwo.propTypes = {
+  formState: PropTypes.object.isRequired,
+  handleBackToPageOne: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  avatar: PropTypes.string,
+  setAvatar: PropTypes.func.isRequired,
+  setAvatarData: PropTypes.func.isRequired,
 };

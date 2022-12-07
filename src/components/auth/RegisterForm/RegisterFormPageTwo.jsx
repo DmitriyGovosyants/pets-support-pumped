@@ -5,7 +5,7 @@ import { signInPageTwoSchema } from 'helpers';
 import { MainButton } from 'components';
 import { BtnWrapper, ErrorBox, Form, InputWrapper } from '../Auth.styled';
 
-export const RegisterPageTwo = ({
+export const RegisterFormPageTwo = ({
   formState,
   handleBackToPageOne,
   onSubmit,

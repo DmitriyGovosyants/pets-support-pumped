@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useSignUpMutation } from 'redux/authApi';
 import { routesPath } from 'router';
-import { RegisterPageOne } from './RegisterPageOne';
-import { RegisterPageTwo } from './RegisterPageTwo';
+import { RegisterFormPageOne } from './RegisterFormPageOne';
+import { RegisterFormPageTwo } from './RegisterFormPageTwo';
 import { SpinnerFixed } from 'components';
 import { Wrapper, Title, Text, FormNavLink } from '../Auth.styled';
 
@@ -52,10 +52,13 @@ export const RegisterForm = () => {
     <Wrapper>
       <Title>Registration</Title>
       {step === 1 && (
-        <RegisterPageOne formState={formState} handlePageOne={handlePageOne} />
+        <RegisterFormPageOne
+          formState={formState}
+          handlePageOne={handlePageOne}
+        />
       )}
       {step === 2 && (
-        <RegisterPageTwo
+        <RegisterFormPageTwo
           formState={formState}
           handleBackToPageOne={handleBackToPageOne}
           onSubmit={onSubmit}

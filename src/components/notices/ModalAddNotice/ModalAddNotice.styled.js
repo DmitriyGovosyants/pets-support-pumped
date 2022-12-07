@@ -189,7 +189,7 @@ export const Label = styled.label`
   }
 `
 
-export const LabelDate = styled(Label)`
+export const LabelAboveInput = styled(Label)`
   margin-bottom: 8px;
 
   ${device.tablet} {
@@ -244,6 +244,65 @@ export const SexImgWrapper = styled.div`
   }
 `
 
+export const Textarea = styled.textarea`
+  width: 100%;
+  padding: 11px 14px;
+
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.35;
+
+  background-color: ${p => p.theme.colors.bgMain};
+  border: 1px solid rgba(245, 146, 86, 0.5);
+  border-radius: 20px;
+  resize: none;
+  
+  ::placeholder {
+    font-size: 14px;
+    line-height: 1.35;
+    color: ${p => p.theme.colors.placeholder};
+  }
+
+  :focus {
+    outline: 1px solid ${p => p.theme.colors.accent};
+  }
+
+  ${device.tablet} {
+    padding: 16px 18px;
+    font-size: 20px;
+
+    ::placeholder {
+      font-size: 16px;
+      line-height: 1.625;
+    }
+  }
+`
+
+export const FileLoadWrapper = styled.div`
+  position: relative;
+  width: 116px;
+  height: 116px;
+  
+  border-radius: 20px;
+  background-color: ${p => p.theme.colors.bgMain};
+
+  ${device.tablet} {
+    width: 140px;
+    height: 140px;
+  }
+`
+
+export const FileInput = styled.input`
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  color: transparent;
+  cursor: pointer;
+
+  background-color: ${p => p.theme.colors.bgMain};
+  border-radius: 20px;
+`
+
 export const ErrorBox = styled.p`
   padding: 0 15px;
 
@@ -258,11 +317,35 @@ export const ErrorBox = styled.p`
   }
 `
 
+export const FilePlusImg = styled.img`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+`
+
+export const FileLoadImg = styled.img`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 116px;
+  height: 116px;
+  border-radius: 20px;
+  object-fit: cover;
+  pointer-events: none;
+
+  ${device.tablet} {
+    width: 140px;
+    height: 140px;
+  }
+`
+
 export const BtnBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  /* margin-top: 40px; */
 
   ${device.tablet} {
     flex-direction: row-reverse;

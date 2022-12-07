@@ -6,8 +6,9 @@ const nameRegEx = /^[a-zA-Zа-яА-ЯёЁіІїЇєЄ\s]*$/;
 const cityRegEx = /^[a-zA-Zа-яА-ЯёЁіІїЇєЄ\s]+, [a-zA-Zа-яА-ЯёЁіІїЇєЄ\s]+$/;
 const textRegEx = /^[a-zA-Z0-9а-яА-ЯёЁіІїЇєЄ\s]*$/;
 const priceRegEx = /^[1-9][0-9]*$/;
+const commentsRegEx = /^[0-9a-zA-Zа-яА-ЯёЁіІїЇєЄ!@#$%^&+=*,:;><'"~`?_\-()/.|\s]{8,120}$/;
 
-const isValidDomain = (email) => {
+const isValidDomain = email => {
   const validDomenName = ['com', 'net', 'org', 'ua', 'ru', 'gov', 'ca'];
   const emailChunks = email.split('.')
   const currentDomenName = emailChunks[emailChunks.length - 1];
@@ -68,7 +69,8 @@ const petName = Yup.string()
   .test(
     'empty-or-2-characters-check',
     'Pet name must be at least 2 characters',
-    name => !name || name.length >= 2)
+    name => !name || name.length >= 2
+  )
   .max(16)
   .matches(nameRegEx, "Pet name must contain only letters")
 
@@ -101,8 +103,16 @@ const price = Yup.string()
   .test(
     'empty-or-1-characters-check',
     "Price couldn't start from 0, only numbers",
-    price => !price || (price.length >= 1 && price.match(priceRegEx)))
+    price => !price || (price.length >= 1 && price.match(priceRegEx))
+  )
   .max(10)
+
+const comments = Yup.string()
+  .trim()
+  .required()
+  .min(8)
+  .max(120)
+  .matches(commentsRegEx, "Comments should have only 8-120 letters")
 
 export const signInPageOneSchema = Yup.object({
   email,
@@ -133,4 +143,5 @@ export const addNoticePageTwoSchema = Yup.object({
   sex,
   location: city,
   price,
+  comments,
 });
