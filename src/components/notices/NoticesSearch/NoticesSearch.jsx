@@ -1,41 +1,97 @@
-import { useState, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import debounce from 'lodash.debounce';
-import { setWord, selectKeyWord } from 'redux/filterSlice';
-import { Wrapper, Label, Input, Icon } from './NoticesSearch.styled';
+import { setWord } from 'redux/filterSlice';
+import { selectCategory } from 'redux/categorySlice';
+import { SelectInput } from 'components';
+import {
+  SearchForm,
+  Label,
+  Input,
+  Icon,
+  SelectWrap,
+} from './NoticesSearch.styled';
 
-export const NoticesSearch = () => {
+const options = [
+  { value: 'title', label: 'Title' },
+  { value: 'breed', label: 'Breed' },
+  { value: 'location', label: 'Place' },
+  { value: 'price', label: 'Price' },
+];
+
+export const NoticesSearch = ({
+  keyWord,
+  setKeyWord,
+  setPage,
+  setField,
+  setPets,
+}) => {
+  const selected = useSelector(selectCategory);
+  const [isDisabledSearch, setIsDisabledSearch] = useState(false);
+  const [selectField, setSelectField] = useState('title');
   const dispatch = useDispatch();
-  const word = useSelector(selectKeyWord);
-  const [keyWord, setKeyWord] = useState(word);
 
-  const changeInputValue = e => {
-    setKeyWord(e.target.value);
+  useEffect(() => {
+    if (selected === 'Favorite ads' || selected === 'My ads') {
+      setIsDisabledSearch(true);
+      return;
+    }
+    setIsDisabledSearch(false);
+  }, [selected]);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (keyWord === '') {
+      return;
+    }
+    setField(selectField);
+    setPage(1);
+    dispatch(setWord(keyWord));
+    setPets([]);
   };
 
-  const debouncedChangeQuery = useMemo(
-    () =>
-      debounce(e => {
-        dispatch(setWord(e.target.value));
-      }, 500),
-    [dispatch]
-  );
-
-  const onChangeHandler = e => {
-    changeInputValue(e);
-    debouncedChangeQuery(e);
+  const handleChange = e => {
+    const value = e.target.value;
+    setKeyWord(value);
+    if (value.length === 0) {
+      console.log(value);
+      setPage(1);
+      dispatch(setWord(''));
+    }
   };
 
   return (
-    <Wrapper>
-      <Label>
+    <SearchForm onSubmit={handleSubmit}>
+      <Label isDisabledSearch={isDisabledSearch}>
         <Input
           placeholder="Search"
+          disabled={isDisabledSearch}
           value={keyWord}
-          onChange={onChangeHandler}
+          isDisabledSearch={isDisabledSearch}
+          onChange={handleChange}
         />
-        <Icon />
+        <button type="submit" disabled={isDisabledSearch}>
+          <Icon />
+        </button>
       </Label>
-    </Wrapper>
+      <SelectWrap>
+        <h4>Search by field</h4>
+        <SelectInput
+          options={options}
+          name={'fields'}
+          defaultValue={options[0]}
+          onChange={choice => setSelectField(choice.value)}
+          isDisabledSearch={isDisabledSearch}
+        />
+      </SelectWrap>
+    </SearchForm>
   );
+};
+
+NoticesSearch.propTypes = {
+  keyWord: PropTypes.string.isRequired,
+  setKeyWord: PropTypes.func.isRequired,
+  setPage: PropTypes.func.isRequired,
+  setField: PropTypes.func.isRequired,
+  setPets: PropTypes.func.isRequired,
 };
