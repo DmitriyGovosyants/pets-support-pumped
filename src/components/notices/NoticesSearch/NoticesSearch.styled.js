@@ -43,6 +43,7 @@ export const Icon = styled(SearchIcon)`
 export const Input = styled.input`
   width: 280px;
   height: 40px;
+  margin-bottom: 10px;
   padding: 9px 12px;
   border-radius: 20px;
   border: transparent;
@@ -63,6 +64,7 @@ export const Input = styled.input`
   ${device.tablet} {
     width: 500px;
     height: 44px;
+    margin-bottom: 0;
     padding: 8px 20px;
     border-radius: 40px;
     font-size: 20px;
@@ -71,17 +73,6 @@ export const Input = styled.input`
 `;
 
 export const SelectWrap = styled.div`
-  & > h4 {
-    margin: 10px 0;
-    text-align: center;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 1.35;
-    letter-spacing: 0.04em;
-    ${device.tablet} {
-      margin-top: 0;
-    }
-  }
   & div {
     ${device.mobile} {
       margin: 0 auto;

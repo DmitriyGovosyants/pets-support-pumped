@@ -15,8 +15,7 @@ import {
 const options = [
   { value: 'title', label: 'Title' },
   { value: 'breed', label: 'Breed' },
-  { value: 'location', label: 'Place' },
-  { value: 'price', label: 'Price' },
+  { value: 'location', label: 'Location' },
 ];
 
 export const NoticesSearch = ({
@@ -75,7 +74,6 @@ export const NoticesSearch = ({
         </button>
       </Label>
       <SelectWrap>
-        <h4>Search by field</h4>
         <SelectInput
           options={options}
           name={'fields'}
