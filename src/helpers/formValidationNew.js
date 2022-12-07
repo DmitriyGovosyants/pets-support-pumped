@@ -5,6 +5,7 @@ const passwordRegEx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{7,
 const nameRegEx = /^[a-zA-Zа-яА-ЯёЁіІїЇєЄ\s]*$/;
 const cityRegEx = /^[a-zA-Zа-яА-ЯёЁіІїЇєЄ\s]+, [a-zA-Zа-яА-ЯёЁіІїЇєЄ\s]+$/;
 const textRegEx = /^[a-zA-Z0-9а-яА-ЯёЁіІїЇєЄ\s]*$/;
+const priceRegEx = /^[1-9][0-9]*$/;
 
 const isValidDomain = (email) => {
   const validDomenName = ['com', 'net', 'org', 'ua', 'ru', 'gov', 'ca'];
@@ -20,7 +21,10 @@ const email = Yup.string()
   .trim()
   .required("E-mail is required")
   .matches(emailRegEx, 'E-mail must contain @ and domain name')
-  .test('domain-match', 'Domain must contain only .com, .net, .org, .ua, .ru, .gov, .ca', (value) => isValidDomain(value))
+  .test(
+    'domain-match',
+    'Domain must contain only .com, .net, .org, .ua, .ru, .gov, .ca',
+    value => isValidDomain(value))
   .max(255)
     
 const password = Yup.string()
@@ -61,7 +65,10 @@ const title = Yup.string()
 
 const petName = Yup.string()
   .trim()
-  .test('empty-or-2-characters-check', 'Pet name must be at least 2 characters', name => !name || name.length >=2)
+  .test(
+    'empty-or-2-characters-check',
+    'Pet name must be at least 2 characters',
+    name => !name || name.length >= 2)
   .max(16)
   .matches(nameRegEx, "Pet name must contain only letters")
 
@@ -71,11 +78,15 @@ const birthdate = Yup.number()
       return null
     }
     return value;
-  }).nullable()
+  })
+  .nullable()
 
 const breed = Yup.string()
   .trim()
-  .test('empty-or-2-characters-check', 'Breed must be at least 2 characters', breed => !breed || breed.length >=2)
+  .test(
+    'empty-or-2-characters-check',
+    'Breed must be at least 2 characters',
+    breed => !breed || breed.length >= 2)
   .max(24)
   .matches(nameRegEx, "Breed must contain only letters")
 
@@ -84,6 +95,14 @@ const category = Yup.string()
 
 const sex = Yup.string()
   .required()
+
+const price = Yup.string()
+  .trim()
+  .test(
+    'empty-or-1-characters-check',
+    "Price couldn't start from 0, only numbers",
+    price => !price || (price.length >= 1 && price.match(priceRegEx)))
+  .max(10)
 
 export const signInPageOneSchema = Yup.object({
   email,
@@ -112,4 +131,6 @@ export const addNoticePageOneSchema = Yup.object({
 
 export const addNoticePageTwoSchema = Yup.object({
   sex,
+  location: city,
+  price,
 });

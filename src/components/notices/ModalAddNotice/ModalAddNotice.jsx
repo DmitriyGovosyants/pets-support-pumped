@@ -15,16 +15,22 @@ export const ModalAddNotice = ({ closeModal }) => {
   const [formState, setFormState] = useState({});
 
   const handlePageOne = values => {
-    setFormState(p => ({ ...p, ...values }));
+    if (formState?.price && values.category !== 'sell') {
+      setFormState(p => ({ ...p, ...values, price: '' }));
+    } else {
+      setFormState(p => ({ ...p, ...values }));
+    }
+
     setStep(2);
   };
 
   const handleBackToPageOne = values => {
-    // setFormState(p => ({ ...p, ...values }));
+    setFormState(p => ({ ...p, ...values }));
     setStep(1);
   };
 
-  const onSubmit = async ({ name, city, phone }) => {
+  const onSubmit = async ({ sex, location, price }) => {
+    console.log(formState, sex, location, price);
     // const { email, password } = formState;
     // console.log(format(new Date(birthdate), 'dd.MM.yyyy'));
     // const phoneWithoutMask = phone.split(/[-()]+/).join('');

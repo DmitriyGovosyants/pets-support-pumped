@@ -95,7 +95,17 @@ export const RadioGroupCategory = styled.div`
   }
 `
 
+export const RadioGroupSex = styled.div`
+  display: flex;
+  gap: 40px;
+  margin-bottom: 32px;
+`
+
 export const CategoryInput = styled.input`
+  display: none;
+`
+
+export const SexInput = styled.input`
   display: none;
 `
 
@@ -184,6 +194,53 @@ export const LabelDate = styled(Label)`
 
   ${device.tablet} {
     margin-bottom: 12px;
+  }
+`
+
+export const TitleSex = styled.p`
+  margin-bottom: 16px;
+
+  font-size: 18px;
+  line-height: 1.44;
+  color: ${p => p.theme.colors.black};
+
+  ${device.tablet} {
+    margin-bottom: 28px;
+    font-size: 24px;
+    line-height: 1.08;
+  }
+`
+
+export const LabelSex = styled.label`
+  font-size: 18px;
+  line-height: 1.44;
+  color: ${p => p.theme.colors.black};
+
+  cursor: pointer;
+
+  transition: color ${p => p.theme.animation.cubicBezier};
+
+  input:checked + & {
+    color: ${p => p.theme.colors.accent};
+  }
+
+  ${device.tablet} {
+    font-size: 20px;
+    line-height: 1.3;
+  }
+`
+
+export const SexImgWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 12px;
+
+  ${device.tablet} {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 20px;
   }
 `
 
