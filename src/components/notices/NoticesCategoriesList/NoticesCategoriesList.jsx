@@ -86,8 +86,6 @@ const NoticesCategoriesList = ({
     setPage(event.selected + 1);
   };
 
-  console.log(isLoading);
-
   return (
     <>
       {isLoading && <Spinner />}
