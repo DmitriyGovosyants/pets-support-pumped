@@ -119,19 +119,25 @@ const NoticesCategoriesList = ({
           />
         </ErrorWrapper>
       )}
-      {isSuccess && (isSuccessFavorites || !auth.user) && data.total > 12 && (
-        <Paginate
-          breakLabel={isMobile ? '..' : '...'}
-          nextLabel={isMobile ? '>' : 'next'}
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={isMobile ? 1 : 2}
-          marginPagesDisplayed={1}
-          pageCount={pageCount}
-          initialPage={page - 1}
-          previousLabel={isMobile ? '<' : 'previous'}
-          renderOnZeroPageCount={null}
-          activeClassName="selected"
-        />
+      {!isLoading && (
+        <>
+          {isSuccess &&
+            (isSuccessFavorites || !auth.user) &&
+            data.total > 12 && (
+              <Paginate
+                breakLabel={isMobile ? '..' : '...'}
+                nextLabel={isMobile ? '>' : 'next'}
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={isMobile ? 1 : 2}
+                marginPagesDisplayed={1}
+                pageCount={pageCount}
+                initialPage={page - 1}
+                previousLabel={isMobile ? '<' : 'previous'}
+                renderOnZeroPageCount={null}
+                activeClassName="selected"
+              />
+            )}
+        </>
       )}
     </>
   );
