@@ -22,13 +22,16 @@ export const authSlice = createSlice({
         (state, { payload }) => {
           state.token = payload.data.token;
           state.isLoggedIn = true;
-        })
+        }
+      )
       .addMatcher(
         authApi.endpoints.logIn.matchFulfilled,
         (state, { payload }) => {
           state.token = payload.data.token;
+          state.email = payload.data.email;
           state.isLoggedIn = true;
-        })
+        }
+      )
       .addMatcher(authApi.endpoints.logOut.matchFulfilled, state => {
         state.token = null;
         state.isLoggedIn = false;
@@ -36,16 +39,15 @@ export const authSlice = createSlice({
       .addMatcher(authApi.endpoints.getCurrent.matchPending, state => {
         state.isRefreshing = true;
       })
-      .addMatcher(
-        authApi.endpoints.getCurrent.matchFulfilled, state => {
-          state.isLoggedIn = true;
-          state.isRefreshing = false;
-        }
-      );
+      .addMatcher(authApi.endpoints.getCurrent.matchFulfilled, state => {
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+      });
   },
 });
 
 export const selectCurrentUser = state => state.auth.token;
+export const selectCurrentEmail = state => state.auth.email;
 export const getIsLoggedIn = state => state.auth.isLoggedIn;
 export const isRefreshing = state => state.auth.isRefreshing;
 export const { setCredentials } = authSlice.actions;
