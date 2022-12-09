@@ -38,9 +38,9 @@ export const Input = styled.input`
   opacity: 0;
   width: 100%;
   height: 100%;
-  color: transparent;
   cursor: pointer;
 
+  font-size: 0px !important;
   background-color: ${p => p.theme.colors.bgMain};
   border-radius: 20px;
 `
