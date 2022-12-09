@@ -51,7 +51,7 @@ export const ModalAddPetPageOne = ({
         <LabelAboveInput htmlFor="birthdate-add-notice">
           Date of birth *
         </LabelAboveInput>
-        <InputBirthdate control={control} formState={formState} />
+        <InputBirthdate control={control} birthdate={formState?.birthdate} />
         <InputErrorBox>{errors?.birthdate?.message}</InputErrorBox>
       </InputWrapper>
 

@@ -1,8 +1,10 @@
+import PropTypes from 'prop-types';
 import { Controller } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
 import { InputStyles } from './InputBirthdate.styled';
 
-export const InputBirthdate = ({ control, formState }) => {
+export const InputBirthdate = ({ control, birthdate }) => {
+  console.log(birthdate);
   return (
     <InputStyles>
       <Controller
@@ -15,7 +17,7 @@ export const InputBirthdate = ({ control, formState }) => {
             onChange={date => {
               field.onChange(parseInt(Date.parse(date), 10));
             }}
-            value={formState.birthdate}
+            value={birthdate}
             selected={field.value}
             dateFormat="dd.MM.yyyy"
             maxDate={new Date()}
@@ -30,4 +32,9 @@ export const InputBirthdate = ({ control, formState }) => {
       />
     </InputStyles>
   );
+};
+
+InputBirthdate.propTypes = {
+  control: PropTypes.object.isRequired,
+  birthdate: PropTypes.number,
 };

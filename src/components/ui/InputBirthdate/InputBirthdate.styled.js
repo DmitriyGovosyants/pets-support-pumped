@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 
-
 export const InputStyles = styled.div`
   & .react-datepicker__current-month,
     .react-datepicker__month-read-view--down-arrow,
