@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAuth } from 'redux/useAuth';
-import { Modal, ModalAddsPet } from 'components';
+import { Modal, ModalAddPet } from 'components';
 import { Button, Wrapper, Text, StyledPlusIcon } from './AddUsersPet.styled';
 
 export const AddUsersPet = () => {
@@ -22,7 +22,7 @@ export const AddUsersPet = () => {
       </Wrapper>
       {showModal && (
         <Modal closeModal={() => setShowModal(false)}>
-          <ModalAddsPet closeModal={() => setShowModal(false)} />
+          <ModalAddPet closeModal={() => setShowModal(false)} />
         </Modal>
       )}
     </>

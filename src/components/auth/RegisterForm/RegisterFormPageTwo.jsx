@@ -2,8 +2,8 @@ import InputMask from 'comigo-tech-react-input-mask';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signInPageTwoSchema } from 'helpers';
-import { MainButton } from 'components';
-import { BtnWrapper, ErrorBox, Form, InputWrapper } from '../Auth.styled';
+import { InputErrorBox, MainButton } from 'components';
+import { BtnWrapper, Form, InputWrapper } from '../Auth.styled';
 
 export const RegisterFormPageTwo = ({
   formState,
@@ -41,7 +41,7 @@ export const RegisterFormPageTwo = ({
             <input {...field} type="text" placeholder="Name*" />
           )}
         />
-        <ErrorBox>{errors?.name?.message}</ErrorBox>
+        <InputErrorBox>{errors?.name?.message}</InputErrorBox>
       </InputWrapper>
 
       <InputWrapper>
@@ -52,7 +52,7 @@ export const RegisterFormPageTwo = ({
             <input {...field} type="text" placeholder="City, Region*" />
           )}
         />
-        <ErrorBox>{errors?.city?.message}</ErrorBox>
+        <InputErrorBox>{errors?.city?.message}</InputErrorBox>
       </InputWrapper>
 
       <InputWrapper last>
@@ -68,7 +68,7 @@ export const RegisterFormPageTwo = ({
             />
           )}
         />
-        <ErrorBox>{errors?.phone?.message}</ErrorBox>
+        <InputErrorBox>{errors?.phone?.message}</InputErrorBox>
       </InputWrapper>
 
       <BtnWrapper>

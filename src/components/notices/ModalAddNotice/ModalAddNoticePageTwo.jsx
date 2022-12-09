@@ -4,9 +4,8 @@ import PropTypes from 'prop-types';
 import { Fragment } from 'react';
 import maleImg from 'data/img/male.png';
 import femaleImg from 'data/img/female.png';
-import plusImg from 'data/img/plus.png';
-import { addNoticePageTwoSchema, handleUploadFile } from 'helpers';
-import { MainButton } from 'components';
+import { addNoticePageTwoSchema } from 'helpers';
+import { InputErrorBox, InputFile, MainButton } from 'components';
 import {
   Form,
   TitleSex,
@@ -16,13 +15,7 @@ import {
   SexImgWrapper,
   InputWrapper,
   Label,
-  LabelAboveInput,
-  FileLoadWrapper,
-  FileInput,
-  FilePlusImg,
-  FileLoadImg,
   Textarea,
-  ErrorBox,
   BtnBox,
 } from './ModalAddNotice.styled';
 
@@ -61,10 +54,6 @@ export const ModalAddNoticePageTwo = ({
     handleBackToPageOne(values);
   };
 
-  const handleFile = ({ target: { files } }) => {
-    handleUploadFile(files[0], setAvatar, setAvatarData);
-  };
-
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <TitleSex>The sex *</TitleSex>
@@ -95,7 +84,7 @@ export const ModalAddNoticePageTwo = ({
             ))
           }
         />
-        <ErrorBox>{errors?.sex?.message}</ErrorBox>
+        <InputErrorBox>{errors?.sex?.message}</InputErrorBox>
       </RadioGroupSex>
 
       <InputWrapper>
@@ -109,7 +98,7 @@ export const ModalAddNoticePageTwo = ({
             )}
           />
         </Label>
-        <ErrorBox>{errors?.location?.message}</ErrorBox>
+        <InputErrorBox>{errors?.location?.message}</InputErrorBox>
       </InputWrapper>
 
       {formState.category === 'sell' && (
@@ -129,22 +118,17 @@ export const ModalAddNoticePageTwo = ({
               )}
             />
           </Label>
-          <ErrorBox>{errors?.price?.message}</ErrorBox>
+          <InputErrorBox>{errors?.price?.message}</InputErrorBox>
         </InputWrapper>
       )}
 
       <InputWrapper>
-        <LabelAboveInput>Load the pet’s image</LabelAboveInput>
-        <FileLoadWrapper>
-          <FileInput
-            type="file"
-            name="avatar"
-            onChange={handleFile}
-            accept=".png, .jpeg, .jpg, .webp"
-          />
-          {!avatar && <FilePlusImg src={plusImg} alt="plus picture" />}
-          {avatar && <FileLoadImg src={avatar} alt="photo of your pet" />}
-        </FileLoadWrapper>
+        <InputFile
+          labelText={'Load the pet’s image'}
+          avatar={avatar}
+          setAvatar={setAvatar}
+          setAvatarData={setAvatarData}
+        />
       </InputWrapper>
 
       <InputWrapper>
@@ -158,7 +142,7 @@ export const ModalAddNoticePageTwo = ({
             )}
           />
         </Label>
-        <ErrorBox>{errors?.comments?.message}</ErrorBox>
+        <InputErrorBox>{errors?.comments?.message}</InputErrorBox>
       </InputWrapper>
 
       <BtnBox>

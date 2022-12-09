@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import { device } from "styles/mediaquery";
+import styled from '@emotion/styled';
+import { device } from 'styles/mediaquery';
 
 export const Wrapper = styled.div`
   position: relative;
@@ -66,83 +66,6 @@ export const Form = styled.form`
   }
 `
 
-export const Text = styled.p`
-  margin-bottom: 20px;
-
-  font-size: 16px;
-  line-height: 1.375;
-  letter-spacing: -0.01em;
-  text-align: center;
-  color: ${p => p.theme.colors.textMain};
-
-  ${device.tablet} {
-    font-size: 20px;
-    line-height: 1.35;
-    color: ${p => p.theme.colors.black};
-  }
-`
-
-export const RadioGroupCategory = styled.div`
-  display: inline-flex;
-  flex-wrap: wrap;
-  column-gap: 8px;
-  row-gap: 12px;
-  margin-bottom: 32px;
-
-  ${device.tablet} {
-    column-gap: 12px;
-    row-gap: 16px;
-  }
-`
-
-export const RadioGroupSex = styled.div`
-  display: flex;
-  gap: 40px;
-  margin-bottom: 32px;
-`
-
-export const CategoryInput = styled.input`
-  display: none;
-`
-
-export const SexInput = styled.input`
-  display: none;
-`
-
-export const CategoryLabel = styled.label`
-  padding: 6px 20px;
-
-  font-size: 14px;
-  line-height: 1.35;
-  letter-spacing: 0.04em;
-  color: ${p => p.theme.colors.black};
-
-  background-color: transparent;
-  border-radius: 40px;
-  border: 2px solid ${p => p.theme.colors.accent};
-  cursor: pointer;
-
-  transition: color ${p => p.theme.animation.cubicBezier},
-   background-color ${p => p.theme.animation.cubicBezier},
-   border-color ${p => p.theme.animation.cubicBezier};
-
-  input:checked + & {
-    color: ${p => p.theme.colors.textSecond};
-    background-color: ${p => p.theme.colors.accent};;
-  }
-
-  :hover,
-  :focus {
-    color: ${p => p.theme.colors.textSecond};
-    background-color: ${p => p.theme.colors.hover};;
-    border: 2px solid ${p => p.theme.colors.hover};
-  }
-
-  ${device.tablet} {
-    font-size: 20px;
-  }
-`
-
 export const InputWrapper = styled.div`
   position: relative;
   margin-bottom: ${p => p.last ? '40px' : '16px'};
@@ -169,57 +92,11 @@ export const Label = styled.label`
 `
 
 export const LabelAboveInput = styled(Label)`
+  text-align: ${p => p.center ? 'center' : 'start'};
   margin-bottom: 8px;
 
   ${device.tablet} {
     margin-bottom: 12px;
-  }
-`
-
-export const TitleSex = styled.p`
-  margin-bottom: 16px;
-
-  font-size: 18px;
-  line-height: 1.44;
-  color: ${p => p.theme.colors.black};
-
-  ${device.tablet} {
-    margin-bottom: 28px;
-    font-size: 24px;
-    line-height: 1.08;
-  }
-`
-
-export const LabelSex = styled.label`
-  font-size: 18px;
-  line-height: 1.44;
-  color: ${p => p.theme.colors.black};
-
-  cursor: pointer;
-
-  transition: color ${p => p.theme.animation.cubicBezier};
-
-  input:checked + & {
-    color: ${p => p.theme.colors.accent};
-  }
-
-  ${device.tablet} {
-    font-size: 20px;
-    line-height: 1.3;
-  }
-`
-
-export const SexImgWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  margin-bottom: 12px;
-
-  ${device.tablet} {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 20px;
   }
 `
 

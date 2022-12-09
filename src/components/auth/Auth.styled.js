@@ -104,20 +104,6 @@ export const InputWrapper = styled.div`
   margin-bottom: ${p => p.last ? '40px' : '16px'};
 `
 
-export const ErrorBox = styled.p`
-  padding: 0 15px;
-
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.35;
-  color: ${p => p.theme.colors.accent};
-
-  ${device.tablet} {
-    font-size: 18px;
-    line-height: 1.38;
-  }
-`
-
 export const EyeBtn = styled.button`
   position: absolute;
   top: 10px;
