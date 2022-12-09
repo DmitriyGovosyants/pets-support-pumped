@@ -31,7 +31,7 @@ export const PetItem = ({ id, image, name, dateOfBirth, breed, comments }) => {
     <PetItemStyled>
       <ThumbImage>
         <Image
-          width={'161px'}
+          key={Date.now()}
           onError={addDefaultSrc}
           src={image || petTemlate}
           alt="pet"

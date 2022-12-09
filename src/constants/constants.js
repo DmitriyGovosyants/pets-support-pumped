@@ -12,8 +12,6 @@ export const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 export const orderUserFields = ['name', 'email', 'birthdate', 'phone', 'city'];
 
-export const validFileExtension = ['png', 'jpeg', 'jpg', 'webp'];
-
 export const validationErrMsg = {
   name: 'Name should have only letters and don`t start with a space',
   email:
@@ -25,9 +23,6 @@ export const validationErrMsg = {
   city: 'You should type location in format: City, Region',
   avatar:
     'File must be < 1MB and contain only .png, .jpeg, .jpg or .webp extension',
-  avatarIsTooLarge: 'File is too large',
-  avatarExtensionFailure:
-    'File must contain only .png, .jpeg, .jpg or .webp extension',
   category: 'Choose category',
   title: 'Title should have only 2-48 letters',
   petName: 'Name should have only 2-16 letters',

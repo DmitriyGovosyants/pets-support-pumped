@@ -30,6 +30,7 @@ export const PetItemStyled = styled.li`
 `;
 
 export const ThumbImage = styled.div`
+  flex-shrink: 0;
   width: 240px;
   height: 240px;
   border-radius: 20px;
@@ -41,13 +42,13 @@ export const ThumbImage = styled.div`
 `;
 
 export const Image = styled.img`
-  min-width: 240px;
+  width: 240px;
   height: 240px;
   border-radius: 40px;
   object-fit: cover;
 
   ${device.tablet} {
-    min-width: 161px;
+    width: 161px;
     height: 161px;
   }
 `;
