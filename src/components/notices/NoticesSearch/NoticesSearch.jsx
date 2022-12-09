@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setWord } from 'redux/filterSlice';
 import { selectCategory } from 'redux/categorySlice';
-import { SelectInput } from 'components';
+import { InputSelect } from 'components';
 import {
   SearchForm,
   Label,
@@ -74,7 +74,7 @@ export const NoticesSearch = ({
         </button>
       </Label>
       <SelectWrap>
-        <SelectInput
+        <InputSelect
           options={options}
           name={'fields'}
           defaultValue={options[0]}

@@ -7,13 +7,12 @@ import { routesPath } from 'router';
 import { loginSchema } from 'helpers';
 import eyeImg from 'data/img/eye.png';
 import eyeClosedImg from 'data/img/eye-blocked.png';
-import { MainButton, SpinnerFixed } from 'components';
+import { InputErrorBox, MainButton, SpinnerFixed } from 'components';
 import {
   Wrapper,
   Title,
   Text,
   FormNavLink,
-  ErrorBox,
   Form,
   InputWrapper,
   EyeBtn,
@@ -67,7 +66,7 @@ export const LoginForm = () => {
               <input {...field} type="email" placeholder="Email*" />
             )}
           />
-          <ErrorBox>{errors?.email?.message}</ErrorBox>
+          <InputErrorBox>{errors?.email?.message}</InputErrorBox>
         </InputWrapper>
 
         <InputWrapper last>
@@ -82,10 +81,10 @@ export const LoginForm = () => {
               />
             )}
           />
-          <ErrorBox>{errors?.password?.message}</ErrorBox>
+          <InputErrorBox>{errors?.password?.message}</InputErrorBox>
           <EyeBtn type="button" onClick={() => setShowPassword(!showPassword)}>
             <img
-              src={showPassword ? eyeImg : eyeClosedImg}
+              src={showPassword ? eyeClosedImg : eyeImg}
               alt="eye"
               width={20}
             />

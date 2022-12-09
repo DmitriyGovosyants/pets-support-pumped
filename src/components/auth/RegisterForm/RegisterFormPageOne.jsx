@@ -4,8 +4,8 @@ import { useState } from 'react';
 import eyeImg from 'data/img/eye.png';
 import eyeClosedImg from 'data/img/eye-blocked.png';
 import { signInPageOneSchema } from 'helpers';
-import { MainButton } from 'components';
-import { ErrorBox, Form, InputWrapper, EyeBtn } from '../Auth.styled';
+import { InputErrorBox, MainButton } from 'components';
+import { Form, InputWrapper, EyeBtn } from '../Auth.styled';
 
 export const RegisterFormPageOne = ({ formState, handlePageOne }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -34,7 +34,7 @@ export const RegisterFormPageOne = ({ formState, handlePageOne }) => {
             <input {...field} type="email" placeholder="Email*" />
           )}
         />
-        <ErrorBox>{errors?.email?.message}</ErrorBox>
+        <InputErrorBox>{errors?.email?.message}</InputErrorBox>
       </InputWrapper>
 
       <InputWrapper>
@@ -49,10 +49,10 @@ export const RegisterFormPageOne = ({ formState, handlePageOne }) => {
             />
           )}
         />
-        <ErrorBox>{errors?.password?.message}</ErrorBox>
+        <InputErrorBox>{errors?.password?.message}</InputErrorBox>
         <EyeBtn type="button" onClick={() => setShowPassword(!showPassword)}>
           <img
-            src={showPassword ? eyeImg : eyeClosedImg}
+            src={showPassword ? eyeClosedImg : eyeImg}
             alt="eye"
             width={20}
           />
@@ -71,10 +71,10 @@ export const RegisterFormPageOne = ({ formState, handlePageOne }) => {
             />
           )}
         />
-        <ErrorBox>{errors?.confirmPassword?.message}</ErrorBox>
+        <InputErrorBox>{errors?.confirmPassword?.message}</InputErrorBox>
         <EyeBtn type="button" onClick={() => setShowPassword(!showPassword)}>
           <img
-            src={showPassword ? eyeImg : eyeClosedImg}
+            src={showPassword ? eyeClosedImg : eyeImg}
             alt="eye"
             width={20}
           />

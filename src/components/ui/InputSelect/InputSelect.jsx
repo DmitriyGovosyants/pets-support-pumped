@@ -4,7 +4,7 @@ import makeAnimated from 'react-select/animated';
 
 const animatedComponents = makeAnimated();
 
-export const SelectInput = ({
+export const InputSelect = ({
   options,
   name,
   defaultValue,
@@ -39,7 +39,7 @@ export const SelectInput = ({
   />
 );
 
-SelectInput.propTypes = {
+InputSelect.propTypes = {
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
   name: PropTypes.string.isRequired,
   defaultValue: PropTypes.object.isRequired,
