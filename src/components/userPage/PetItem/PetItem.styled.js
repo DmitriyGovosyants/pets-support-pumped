@@ -8,7 +8,7 @@ export const PetItemStyled = styled.li`
   gap: 20px;
 
   background-color: ${p => p.theme.colors.bgSecond};
-  box-shadow: 7px 4px 14px rgba(0, 0, 0, 0.11);
+  box-shadow: 7px 4px 14px ${p => p.theme.colors.shadow};
   border-radius: 20px;
 
   ${device.tablet} {
@@ -19,12 +19,9 @@ export const PetItemStyled = styled.li`
   ${device.desktop} {
     padding-right: 28px;
 
-    transform: scale(1);
-    transition: transform ${p => p.theme.animation.cubicBezier};
-
-    &:hover,
-    &:focus {
-      transform: scale(0.99);
+    :hover,
+    :focus {
+      box-shadow: 14px 10px 14px ${p => p.theme.colors.shadow};
     }
   }
 `;

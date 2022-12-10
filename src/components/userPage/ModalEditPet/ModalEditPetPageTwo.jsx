@@ -95,4 +95,5 @@ ModalEditPetPageTwo.propTypes = {
   avatar: PropTypes.string,
   setAvatar: PropTypes.func.isRequired,
   setAvatarData: PropTypes.func.isRequired,
+  comments: PropTypes.string.isRequired,
 };

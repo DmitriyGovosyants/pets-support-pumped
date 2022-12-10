@@ -98,4 +98,7 @@ ModalEditPetPageOne.propTypes = {
   closeModal: PropTypes.func.isRequired,
   formState: PropTypes.object.isRequired,
   handlePageOne: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  birthdate: PropTypes.string.isRequired,
+  breed: PropTypes.string.isRequired,
 };
