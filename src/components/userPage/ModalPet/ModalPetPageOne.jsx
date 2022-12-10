@@ -10,13 +10,24 @@ import {
   Label,
   LabelAboveInput,
   BtnBox,
-} from './ModalAddPet.styled';
+} from './ModalPet.styled';
 
-export const ModalAddPetPageOne = ({
+export const ModalPetPageOne = ({
   closeModal,
   formState,
   handlePageOne,
+  name,
+  birthdate,
+  breed,
 }) => {
+  let birthdateParse = null;
+  if (birthdate) {
+    const birthdateArray = birthdate.split('.');
+    const birthdateString =
+      birthdateArray[1] + '.' + birthdateArray[0] + '.' + birthdateArray[2];
+    birthdateParse = parseInt(Date.parse(birthdateString), 10);
+  }
+
   const {
     handleSubmit,
     control,
@@ -25,9 +36,9 @@ export const ModalAddPetPageOne = ({
     resolver: yupResolver(addPetPageOneSchema),
     mode: 'onBlur',
     defaultValues: {
-      name: formState.name || '',
-      birthdate: formState.birthdate || null,
-      breed: formState.breed || '',
+      name: formState.name || name || '',
+      birthdate: formState.birthdate || birthdateParse || null,
+      breed: formState.breed || breed || '',
     },
   });
 
@@ -86,8 +97,11 @@ export const ModalAddPetPageOne = ({
   );
 };
 
-ModalAddPetPageOne.propTypes = {
+ModalPetPageOne.propTypes = {
   closeModal: PropTypes.func.isRequired,
   formState: PropTypes.object.isRequired,
   handlePageOne: PropTypes.func.isRequired,
+  name: PropTypes.string,
+  birthdate: PropTypes.string,
+  breed: PropTypes.string,
 };

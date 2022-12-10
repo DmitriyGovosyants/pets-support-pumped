@@ -1,5 +1,6 @@
-import { validationErrMsg, validFileExtension } from "constants/constants";
 import { toast } from "react-toastify";
+
+const validFileExtension = ['png', 'jpeg', 'jpg', 'webp'];
 
 export const handleUploadFile = (file, setAvatar, setAvatarData) => {
   const fileNameSplit = file.name.split('.');
@@ -8,14 +9,14 @@ export const handleUploadFile = (file, setAvatar, setAvatarData) => {
     );
 
     if (file.size > 1000000) {
-      toast.error(validationErrMsg.avatarIsTooLarge);
+      toast.error('File is too large');
       setAvatar();
       setAvatarData();
       return;
     }
 
     if (!isValidFileExtension) {
-      toast.error(validationErrMsg.avatarExtensionFailure);
+      toast.error('File must contain only .png, .jpeg, .jpg or .webp extension');
       setAvatar();
       setAvatarData();
       return;

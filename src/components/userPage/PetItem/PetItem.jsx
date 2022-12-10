@@ -3,12 +3,7 @@ import { useState } from 'react';
 import { ReactComponent as EditIcon } from 'data/img/edit-icon.svg';
 import { ReactComponent as DeleteIcon } from 'data/img/fluent_delete-16-filled.svg';
 import petTemlate from 'data/img/pet-template.jpg';
-import {
-  Modal,
-  ModalDelete,
-  ModalEditPet,
-  PetsInterfaceButton,
-} from 'components';
+import { Modal, ModalDelete, ModalPet, PetsInterfaceButton } from 'components';
 import {
   PetItemStyled,
   ThumbImage,
@@ -31,7 +26,7 @@ export const PetItem = ({ id, image, name, dateOfBirth, breed, comments }) => {
     <PetItemStyled>
       <ThumbImage>
         <Image
-          width={'161px'}
+          key={Date.now()}
           onError={addDefaultSrc}
           src={image || petTemlate}
           alt="pet"
@@ -84,13 +79,14 @@ export const PetItem = ({ id, image, name, dateOfBirth, breed, comments }) => {
       )}
       {showModalEdit && (
         <Modal closeModal={() => setShowModalEdit(false)}>
-          <ModalEditPet
+          <ModalPet
             id={id}
             image={image}
             name={name}
             birthdate={dateOfBirth}
             breed={breed}
             comments={comments}
+            method="edit"
             closeModal={() => setShowModalEdit(false)}
           />
         </Modal>

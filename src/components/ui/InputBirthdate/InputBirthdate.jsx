@@ -4,7 +4,6 @@ import DatePicker from 'react-datepicker';
 import { InputStyles } from './InputBirthdate.styled';
 
 export const InputBirthdate = ({ control, birthdate }) => {
-  console.log(birthdate);
   return (
     <InputStyles>
       <Controller

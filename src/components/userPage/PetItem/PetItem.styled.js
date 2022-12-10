@@ -8,7 +8,7 @@ export const PetItemStyled = styled.li`
   gap: 20px;
 
   background-color: ${p => p.theme.colors.bgSecond};
-  box-shadow: 7px 4px 14px rgba(0, 0, 0, 0.11);
+  box-shadow: 7px 4px 14px ${p => p.theme.colors.shadow};
   border-radius: 20px;
 
   ${device.tablet} {
@@ -19,17 +19,15 @@ export const PetItemStyled = styled.li`
   ${device.desktop} {
     padding-right: 28px;
 
-    transform: scale(1);
-    transition: transform ${p => p.theme.animation.cubicBezier};
-
-    &:hover,
-    &:focus {
-      transform: scale(0.99);
+    :hover,
+    :focus {
+      box-shadow: 14px 10px 14px ${p => p.theme.colors.shadow};
     }
   }
 `;
 
 export const ThumbImage = styled.div`
+  flex-shrink: 0;
   width: 240px;
   height: 240px;
   border-radius: 20px;
@@ -41,13 +39,13 @@ export const ThumbImage = styled.div`
 `;
 
 export const Image = styled.img`
-  min-width: 240px;
+  width: 240px;
   height: 240px;
   border-radius: 40px;
   object-fit: cover;
 
   ${device.tablet} {
-    min-width: 161px;
+    width: 161px;
     height: 161px;
   }
 `;

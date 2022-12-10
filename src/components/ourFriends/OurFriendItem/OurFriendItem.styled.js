@@ -10,14 +10,16 @@ export const Card = styled.li`
 
   transition: box-shadow ${p => p.theme.animation.cubicBezier};
 
-  :hover,
-  :focus {
-    box-shadow: 14px 10px 14px ${p => p.theme.colors.shadow};
-  }
-
   ${device.tablet} {
     padding: 16px 16px 16px 4px;
     border-radius: 40px;
+  }
+
+  ${device.desktop} {
+    :hover,
+    :focus {
+      box-shadow: 14px 10px 14px ${p => p.theme.colors.shadow};
+    }
   }
 `;
 
