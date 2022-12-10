@@ -3,15 +3,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import PropTypes from 'prop-types';
 import { addPetPageTwoSchema } from 'helpers';
 import { InputErrorBox, InputFile, MainButton } from 'components';
-import {
-  Form,
-  InputWrapper,
-  Label,
-  Textarea,
-  BtnBox,
-} from './ModalAddPet.styled';
+import { Form, InputWrapper, Label, Textarea, BtnBox } from './ModalPet.styled';
 
-export const ModalAddPetPageTwo = ({
+export const ModalPetPageTwo = ({
   formState,
   handleBackToPageOne,
   onSubmit,
@@ -19,6 +13,7 @@ export const ModalAddPetPageTwo = ({
   avatar,
   setAvatar,
   setAvatarData,
+  comments,
 }) => {
   const {
     handleSubmit,
@@ -29,7 +24,7 @@ export const ModalAddPetPageTwo = ({
     resolver: yupResolver(addPetPageTwoSchema),
     mode: 'onBlur',
     defaultValues: {
-      comments: formState.comments || '',
+      comments: formState.comments || comments,
     },
   });
 
@@ -86,7 +81,7 @@ export const ModalAddPetPageTwo = ({
   );
 };
 
-ModalAddPetPageTwo.propTypes = {
+ModalPetPageTwo.propTypes = {
   formState: PropTypes.object.isRequired,
   handleBackToPageOne: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
@@ -94,4 +89,5 @@ ModalAddPetPageTwo.propTypes = {
   avatar: PropTypes.string,
   setAvatar: PropTypes.func.isRequired,
   setAvatarData: PropTypes.func.isRequired,
+  comments: PropTypes.string,
 };

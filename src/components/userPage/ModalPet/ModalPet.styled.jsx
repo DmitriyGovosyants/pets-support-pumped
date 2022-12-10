@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
     max-width: 608px;
     padding: 40px 80px;
   }
-`
+`;
 
 export const Title = styled.h2`
   margin-bottom: 20px;
@@ -29,7 +29,7 @@ export const Title = styled.h2`
     font-size: 36px;
     color: ${p => p.theme.colors.black};
   }
-`
+`;
 
 export const Form = styled.form`
   & input {
@@ -43,7 +43,7 @@ export const Form = styled.form`
     background-color: ${p => p.theme.colors.bgMain};
     border: 1px solid rgba(245, 146, 86, 0.5);
     border-radius: 40px;
-    
+
     ::placeholder {
       font-size: 14px;
       line-height: 1.35;
@@ -64,16 +64,16 @@ export const Form = styled.form`
       }
     }
   }
-`
+`;
 
 export const InputWrapper = styled.div`
   position: relative;
-  margin-bottom: ${p => p.last ? '40px' : '16px'};
+  margin-bottom: ${p => (p.last ? '40px' : '16px')};
 
   ${device.tablet} {
-    margin-bottom: ${p => p.last ? '40px' : '28px'};
+    margin-bottom: ${p => (p.last ? '40px' : '28px')};
   }
-`
+`;
 
 export const Label = styled.label`
   display: grid;
@@ -89,16 +89,16 @@ export const Label = styled.label`
     font-size: 24px;
     line-height: 1.08;
   }
-`
+`;
 
 export const LabelAboveInput = styled(Label)`
-  text-align: ${p => p.center ? 'center' : 'start'};
+  text-align: ${p => (p.center ? 'center' : 'start')};
   margin-bottom: 8px;
 
   ${device.tablet} {
     margin-bottom: 12px;
   }
-`
+`;
 
 export const Textarea = styled.textarea`
   width: 100%;
@@ -112,7 +112,7 @@ export const Textarea = styled.textarea`
   border: 1px solid rgba(245, 146, 86, 0.5);
   border-radius: 20px;
   resize: none;
-  
+
   ::placeholder {
     font-size: 14px;
     line-height: 1.35;
@@ -132,7 +132,7 @@ export const Textarea = styled.textarea`
       line-height: 1.625;
     }
   }
-`
+`;
 
 export const BtnBox = styled.div`
   display: flex;
@@ -144,4 +144,4 @@ export const BtnBox = styled.div`
     justify-content: center;
     gap: 20px;
   }
-`
+`;
