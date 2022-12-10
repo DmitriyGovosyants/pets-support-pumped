@@ -54,3 +54,4 @@ export * from './ui/InputSelect/InputSelect';
 export * from './ui/InputFile/InputFile';
 export * from './ui/InputBirthdate/InputBirthdate';
 export * from './ui/InputErrorBox/InputErrorBox';
+export * from './ui/GridTemplate/GridTemplate';
