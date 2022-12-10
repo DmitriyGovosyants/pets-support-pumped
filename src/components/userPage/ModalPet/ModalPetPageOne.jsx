@@ -10,9 +10,9 @@ import {
   Label,
   LabelAboveInput,
   BtnBox,
-} from './ModalEditPet.styled';
+} from './ModalPet.styled';
 
-export const ModalEditPetPageOne = ({
+export const ModalPetPageOne = ({
   closeModal,
   formState,
   handlePageOne,
@@ -20,10 +20,13 @@ export const ModalEditPetPageOne = ({
   birthdate,
   breed,
 }) => {
-  const birthdateArray = birthdate.split('.');
-  const birthdateString =
-    birthdateArray[1] + '.' + birthdateArray[0] + '.' + birthdateArray[2];
-  const birthdateParse = parseInt(Date.parse(birthdateString), 10);
+  let birthdateParse = null;
+  if (birthdate) {
+    const birthdateArray = birthdate.split('.');
+    const birthdateString =
+      birthdateArray[1] + '.' + birthdateArray[0] + '.' + birthdateArray[2];
+    birthdateParse = parseInt(Date.parse(birthdateString), 10);
+  }
 
   const {
     handleSubmit,
@@ -33,9 +36,9 @@ export const ModalEditPetPageOne = ({
     resolver: yupResolver(addPetPageOneSchema),
     mode: 'onBlur',
     defaultValues: {
-      name: formState.name || name,
-      birthdate: formState.birthdate || birthdateParse,
-      breed: formState.breed || breed,
+      name: formState.name || name || '',
+      birthdate: formState.birthdate || birthdateParse || null,
+      breed: formState.breed || breed || '',
     },
   });
 
@@ -94,11 +97,11 @@ export const ModalEditPetPageOne = ({
   );
 };
 
-ModalEditPetPageOne.propTypes = {
+ModalPetPageOne.propTypes = {
   closeModal: PropTypes.func.isRequired,
   formState: PropTypes.object.isRequired,
   handlePageOne: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  birthdate: PropTypes.string.isRequired,
-  breed: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  birthdate: PropTypes.string,
+  breed: PropTypes.string,
 };

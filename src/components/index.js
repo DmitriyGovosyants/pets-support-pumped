@@ -22,13 +22,12 @@ export * from './userPage/UserData/UserData';
 export * from './userPage/UserDataItem/UserDataItem';
 export * from './userPage/Logout/Logout';
 export * from './userPage/PetsData/PetsData';
-export * from './userPage/ModalAddPet/ModalAddPet';
 export * from './userPage/PetsList/PetsList';
 export * from './userPage/PetItem/PetItem';
 export * from './userPage/PetsInterfaceButton/PetsInterfaceButton';
 export * from './userPage/AddUsersPet/AddUsersPet';
 export * from './userPage/ModalDelete/ModalDelete';
-export * from './userPage/ModalEditPet/ModalEditPet';
+export * from './userPage/ModalPet/ModalPet';
 
 export * from './news/NewsItem/NewsItem';
 

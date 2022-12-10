@@ -2,18 +2,28 @@ import { format } from 'date-fns';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { useCreatePetMutation } from 'redux/usersApi';
-import { ModalAddPetPageOne } from './ModalAddPetPageOne';
-import { ModalAddPetPageTwo } from './ModalAddPetPageTwo';
+import { useCreatePetMutation, useEditPetMutation } from 'redux/usersApi';
+import { ModalPetPageOne } from './ModalPetPageOne';
+import { ModalPetPageTwo } from './ModalPetPageTwo';
 import { ModalBtnClose, SpinnerFixed } from 'components';
-import { Wrapper, Title } from './ModalAddPet.styled';
+import { Wrapper, Title } from './ModalPet.styled';
 
-export const ModalAddPet = ({ closeModal }) => {
-  const [addPet, { isLoading }] = useCreatePetMutation();
+export const ModalPet = ({
+  id,
+  image,
+  name,
+  birthdate,
+  breed,
+  comments,
+  method = 'create',
+  closeModal,
+}) => {
+  const [addPet, addPetResult] = useCreatePetMutation();
+  const [editPet, editPetResult] = useEditPetMutation();
   const [step, setStep] = useState(1);
   const [formState, setFormState] = useState({});
   const [avatarData, setAvatarData] = useState();
-  const [avatar, setAvatar] = useState();
+  const [avatar, setAvatar] = useState(image);
 
   const handlePageOne = values => {
     setFormState(p => ({ ...p, ...values }));
@@ -44,7 +54,12 @@ export const ModalAddPet = ({ closeModal }) => {
     }
 
     try {
-      await addPet(formData).unwrap();
+      if (method === 'create') {
+        await addPet(formData).unwrap();
+        toast.success('Your pet is added');
+        return;
+      }
+      await editPet({ id, formData }).unwrap();
       toast.success('Your pet is added');
     } catch (error) {
       if (error.status === 400) {
@@ -63,31 +78,42 @@ export const ModalAddPet = ({ closeModal }) => {
 
   return (
     <Wrapper>
-      <Title>Add pet</Title>
+      <Title>{method === 'create' ? 'Add pet' : 'Edit pet'}</Title>
       {step === 1 && (
-        <ModalAddPetPageOne
+        <ModalPetPageOne
           closeModal={closeModal}
           formState={formState}
           handlePageOne={handlePageOne}
+          name={name}
+          birthdate={birthdate}
+          breed={breed}
         />
       )}
       {step === 2 && (
-        <ModalAddPetPageTwo
+        <ModalPetPageTwo
           formState={formState}
           handleBackToPageOne={handleBackToPageOne}
           onSubmit={onSubmit}
-          isLoading={isLoading}
+          isLoading={addPetResult.isLoading || editPetResult.isLoading}
           avatar={avatar}
           setAvatar={setAvatar}
           setAvatarData={setAvatarData}
+          comments={comments}
         />
       )}
       <ModalBtnClose closeModal={closeModal} />
-      {isLoading && <SpinnerFixed />}
+      {(addPetResult.isLoading || editPetResult.isLoading) && <SpinnerFixed />}
     </Wrapper>
   );
 };
 
-ModalAddPet.propTypes = {
+ModalPet.propTypes = {
+  id: PropTypes.string,
+  image: PropTypes.string,
+  name: PropTypes.string,
+  birthdate: PropTypes.string,
+  breed: PropTypes.string,
+  comments: PropTypes.string,
+  method: PropTypes.string,
   closeModal: PropTypes.func.isRequired,
 };
