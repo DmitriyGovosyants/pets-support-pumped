@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { GridList } from './GridTemplate.styled';
 
-export const GridTemplate = ({ children }) => {
-  return <GridList>{children}</GridList>;
+export const GridTemplate = ({ mobileGap, children }) => {
+  return <GridList mobileGap={mobileGap}>{children}</GridList>;
 };
 
 GridTemplate.propTypes = {

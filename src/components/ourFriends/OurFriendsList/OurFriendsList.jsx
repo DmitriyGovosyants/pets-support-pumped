@@ -1,9 +1,9 @@
 import { useGetFriendsQuery } from 'redux/friendsApi';
-import { OurFriendItem, Spinner } from 'components';
-import { FriendsList } from './OurFriendsList.styled';
+import { GridTemplate, OurFriendItem, Spinner } from 'components';
+// import { FriendsList } from './OurFriendsList.styled';
 
 export const OurFriendsList = () => {
-  const { data: friends, isLoading, isError, error } = useGetFriendsQuery('');
+  const { data: friends, isLoading, isError, error } = useGetFriendsQuery();
 
   if (isLoading) return <Spinner />;
 
@@ -23,7 +23,7 @@ export const OurFriendsList = () => {
 
   if (friends) {
     return (
-      <FriendsList>
+      <GridTemplate mobileGap="16px">
         {friends.data.map(
           ({
             title,
@@ -50,7 +50,7 @@ export const OurFriendsList = () => {
             );
           }
         )}
-      </FriendsList>
+      </GridTemplate>
     );
   }
 };
