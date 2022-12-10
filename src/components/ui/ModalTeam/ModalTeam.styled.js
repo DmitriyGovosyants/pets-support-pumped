@@ -1,13 +1,29 @@
 import styled from '@emotion/styled';
-import { device } from 'styles/mediaquery';
+import { device, size } from 'styles/mediaquery';
 
-export const TeamTitle = styled.h2`
+export const Container = styled.div`
+  position: relative;
+  margin: 0px auto;
+  padding: 60px 20px 40px;
+  max-width: 400px;
+
+  background-color: ${props => props.theme.colors.bgMain};
+  border-radius: 20px;
+
+  ${device.tablet} {
+    max-width: ${size.tablet};
+  }
+  ${device.desktop} {
+    max-width: ${size.desktop};
+  }
+`;
+
+export const Title = styled.h2`
   text-align: center;
   font-weight: 700;
   font-size: 30px;
-  line-height: 1.375;
-  color: ${p => p.theme.colors.textSecond};
-  text-decoration: underline;
+  line-height: 2;
+  color: ${p => p.theme.colors.accent};
   margin-bottom: 30px;
 
   ${device.tablet} {
@@ -15,50 +31,40 @@ export const TeamTitle = styled.h2`
   }
 `;
 
-export const TeamList = styled.ul`
-  display: grid;
-  gap: 30px;
-  max-width: 300px;
-  margin: 0 auto;
-
-  ${device.tablet} {
-    max-width: 700px;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
-  }
-  ${device.desktop} {
-    max-width: 1000px;
-    grid-template-columns: repeat(3, 1fr);
-  }
-`;
-
-export const TeamItem = styled.li`
+export const Item = styled.li`
+  display: flex;
+  flex-direction: column;
   background-color: ${p => p.theme.colors.bgSecond};
+  box-shadow: 7px 4px 14px rgba(0, 0, 0, 0.11);
   border-radius: 20px;
+  transition: box-shadow ${p => p.theme.animation.cubicBezier};
 
   ${device.tablet} {
     padding: 16px;
     border-radius: 40px;
   }
+  ${device.desktop} {
+    &:hover,
+    &:focus {
+      box-shadow: 14px 10px 14px ${p => p.theme.colors.shadow};
+    }
+  }
 `;
 
 export const Img = styled.img`
-  width: 400px;
+  aspect-ratio: 1 / 1;
+  width: 100%;
   margin-bottom: 10px;
+  object-fit: cover;
 
   border-radius: 20px;
 
   ${device.tablet} {
-    width: 450px;
-    border-radius: 40px;
-  }
-  ${device.desktop} {
-    width: 500px;
     border-radius: 40px;
   }
 `;
 
-export const MemberName = styled.p`
+export const Name = styled.p`
   margin-bottom: 10px;
   font-size: 36px;
   text-align: center;
@@ -72,6 +78,7 @@ export const Position = styled.p`
 
 export const WrapperSocial = styled.div`
   display: flex;
+  margin-top: auto;
   justify-content: center;
   gap: 10px;
 `;
