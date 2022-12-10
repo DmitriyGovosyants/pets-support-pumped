@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { device, size } from 'styles/mediaquery';
 
 export const ContainerStyled = styled.div`
-  position: relative;
   width: 100%;
   margin: 0 auto;
   padding-left: ${p => p.theme.spacing(5)};
