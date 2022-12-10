@@ -60,7 +60,7 @@ export const ModalPet = ({
         return;
       }
       await editPet({ id, formData }).unwrap();
-      toast.success('Your pet is added');
+      toast.success('Your pet is changed');
     } catch (error) {
       if (error.status === 400) {
         toast.error(error.data.message);
