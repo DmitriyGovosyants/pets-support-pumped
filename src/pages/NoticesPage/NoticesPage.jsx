@@ -1,4 +1,9 @@
-import NoticesCategoriesList from 'components/notices/NoticesCategoriesList/NoticesCategoriesList';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectCategory } from 'redux/categorySlice';
+import { selectKeyWord } from 'redux/filterSlice';
+import { fromCategoryToRoute } from 'helpers';
 import {
   Section,
   Container,
@@ -6,14 +11,9 @@ import {
   NoticesCategoriesNav,
   AddNoticeButton,
   MainTitle,
+  NoticesCategoriesList,
 } from 'components';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Wrapper } from './NoticesPage.styled';
-import { selectCategory } from 'redux/categorySlice';
-import { selectKeyWord } from '../../redux/filterSlice';
-import { fromCategoryToRoute } from 'helpers';
 
 const NoticesPage = () => {
   const word = useSelector(selectKeyWord);

@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
-import { NoticeCategoryItem, Spinner } from 'components';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
-import { GiJumpingDog } from 'react-icons/gi';
 import { useGetNoticesQuery, useGetFavoritesQuery } from 'redux/noticesApi';
 import { useAuth } from 'redux/useAuth';
 import useRequest from 'hooks/useRequest';
 import { useFilter } from 'hooks/useFilter';
+import { GiJumpingDog } from 'react-icons/gi';
+import { NoticeCategoryItem, Spinner } from 'components';
 import {
   List,
   Item,
@@ -16,7 +16,7 @@ import {
   ErrorWrapper,
 } from './NoticesCategoriesList.styled';
 
-const NoticesCategoriesList = ({
+export const NoticesCategoriesList = ({
   page,
   field = 'title',
   setPage,
@@ -150,5 +150,3 @@ NoticesCategoriesList.propTypes = {
   pets: PropTypes.arrayOf(PropTypes.object).isRequired,
   setPets: PropTypes.func.isRequired,
 };
-
-export default NoticesCategoriesList;
