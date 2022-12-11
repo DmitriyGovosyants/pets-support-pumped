@@ -28,10 +28,10 @@ const persistConfig = {
 
 export const store = configureStore({
   reducer: {
-    [noticesApi.reducerPath]: noticesApi.reducer,
-    [friendsApi.reducerPath]: friendsApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
+    [noticesApi.reducerPath]: noticesApi.reducer,
+    [friendsApi.reducerPath]: friendsApi.reducer,
     [newsApi.reducerPath]: newsApi.reducer,
     auth: persistReducer(persistConfig, authSlice.reducer),
     filter: filterReducer,
@@ -44,10 +44,10 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-    noticesApi.middleware,
     authApi.middleware,
-    friendsApi.middleware,
     usersApi.middleware,
+    noticesApi.middleware,
+    friendsApi.middleware,
     newsApi.middleware,
   ],
 });

@@ -7,12 +7,12 @@ import {
   ImgWrapper,
   Img,
   Title,
-  FeaturesList,
-  FeaturesItem,
-  FeaturesDescription,
-  FeaturesDefinition,
+  List,
+  Item,
+  Label,
+  Description,
   ContactButton,
-  ChangeFavoriteStatusBtn,
+  BtnFavorite,
   CategoryMark,
   ContactLink,
   FeaturesWrapper,
@@ -40,8 +40,6 @@ export const ModalNotice = ({
     sex,
   } = petData;
 
-  const noticeCategory = category.split('-').join(' ');
-
   return (
     <Container>
       <Wrapper>
@@ -53,74 +51,68 @@ export const ModalNotice = ({
               e.target.src = petTemlate;
             }}
           />
-          <CategoryMark>{noticeCategory}</CategoryMark>
+          <CategoryMark>{category.split('-').join(' ')}</CategoryMark>
         </ImgWrapper>
 
         <FeaturesWrapper>
           <Title>{title}</Title>
-          <FeaturesList>
-            {name && (
-              <FeaturesItem>
-                <FeaturesDescription>Name:</FeaturesDescription>
-                <FeaturesDefinition>{name}</FeaturesDefinition>
-              </FeaturesItem>
-            )}
-            {birthdate && (
-              <FeaturesItem>
-                <FeaturesDescription>Birthday:</FeaturesDescription>
-                <FeaturesDefinition>{birthdate}</FeaturesDefinition>
-              </FeaturesItem>
-            )}
-            {breed && (
-              <FeaturesItem>
-                <FeaturesDescription>Breed:</FeaturesDescription>
-                <FeaturesDefinition>{breed}</FeaturesDefinition>
-              </FeaturesItem>
-            )}
-            <FeaturesItem>
-              <FeaturesDescription>Loсation:</FeaturesDescription>
-              <FeaturesDefinition>{location}</FeaturesDefinition>
-            </FeaturesItem>
-            <FeaturesItem>
-              <FeaturesDescription>The sex:</FeaturesDescription>
-              <FeaturesDefinition>{sex}</FeaturesDefinition>
-            </FeaturesItem>
+          <List>
+            <Item>
+              <Label>Name:</Label>
+              <Description>{name ? name : '-'}</Description>
+            </Item>
+            <Item>
+              <Label>Birthday:</Label>
+              <Description>{birthdate ? birthdate : '-'}</Description>
+            </Item>
+            <Item>
+              <Label>Breed:</Label>
+              <Description>{breed ? breed : '-'}</Description>
+            </Item>
+            <Item>
+              <Label>Loсation:</Label>
+              <Description>{location}</Description>
+            </Item>
+            <Item>
+              <Label>The sex:</Label>
+              <Description>{sex}</Description>
+            </Item>
             {owner && (
               <>
-                <FeaturesItem>
-                  <FeaturesDescription>Email:</FeaturesDescription>
+                <Item>
+                  <Label>Email:</Label>
                   <ContactLink href={`mailto: ${owner?.email}`}>
                     {owner?.email}
                   </ContactLink>
-                </FeaturesItem>
-                <FeaturesItem>
-                  <FeaturesDescription>Phone:</FeaturesDescription>
+                </Item>
+                <Item>
+                  <Label>Phone:</Label>
                   <ContactLink href={`tel: ${owner?.phone}`}>
                     {owner?.phone}
                   </ContactLink>
-                </FeaturesItem>
+                </Item>
               </>
             )}
-            {category.toLowerCase() === 'sell' && (
-              <FeaturesItem>
-                <FeaturesDescription>Sell:</FeaturesDescription>
-                <FeaturesDefinition>{price} $</FeaturesDefinition>
-              </FeaturesItem>
+            {price && (
+              <Item>
+                <Label>Price:</Label>
+                <Description>{price} $</Description>
+              </Item>
             )}
-          </FeaturesList>
+          </List>
         </FeaturesWrapper>
       </Wrapper>
 
-      <FeaturesDefinition>
+      <Description>
         <b>Comments:</b> {comments}
-      </FeaturesDefinition>
+      </Description>
 
       <BtnWrapper>
         <ContactButton href={`tel: ${owner?.phone}`}>Contact</ContactButton>
-        <ChangeFavoriteStatusBtn type="button" onClick={toggleFavourites}>
+        <BtnFavorite type="button" onClick={toggleFavourites}>
           {!favorite ? 'Add to' : 'Remove from'}
           <HeartIcon />
-        </ChangeFavoriteStatusBtn>
+        </BtnFavorite>
       </BtnWrapper>
       <ModalBtnClose closeModal={closeModal} />
     </Container>
