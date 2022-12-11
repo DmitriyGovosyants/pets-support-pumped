@@ -4,6 +4,7 @@ import { useSignUpMutation } from 'redux/authApi';
 import { routesPath } from 'router';
 import { RegisterFormPageOne } from './RegisterFormPageOne';
 import { RegisterFormPageTwo } from './RegisterFormPageTwo';
+import { requestErrorPopUp } from 'helpers';
 import { SpinnerFixed } from 'components';
 import { Wrapper, Title, Text, FormNavLink } from '../Auth.styled';
 
@@ -36,15 +37,7 @@ export const RegisterForm = () => {
       }).unwrap();
       toast.info(`${email} is registered`);
     } catch (error) {
-      if (error.status === 400) {
-        toast.error(error.data.message);
-      }
-      if (error.status === 404) {
-        toast.error('Resourses not found');
-      }
-      if (error.status === 500) {
-        toast.error('Server not response');
-      }
+      requestErrorPopUp(error);
     }
   };
 

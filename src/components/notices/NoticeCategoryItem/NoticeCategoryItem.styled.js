@@ -4,6 +4,25 @@ import { ReactComponent as ToFavouriteIcon } from 'data/img/to-favourite-icon.sv
 import { device } from 'styles/mediaquery';
 import { TiDelete } from 'react-icons/ti';
 
+export const Item = styled.li`
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  padding-bottom: 32px;
+
+  border-radius: 0px 0px 20px 20px;
+  background: ${p => p.theme.colors.textSecond};
+  box-shadow: 7px 4px 14px ${p => p.theme.colors.shadow};
+
+  ${device.tablet} {
+    width: 336px;
+    border-radius: 0px 0px 40px 40px;
+  }
+  ${device.desktop} {
+    width: 288px;
+  }
+`;
+
 export const ImgWrapper = styled.div`
   position: relative;
   margin-bottom: 20px;
@@ -23,24 +42,24 @@ export const Image = styled.img`
 
 export const StyledFavouriteIcon = styled(FavouriteIcon)`
   scale: 1;
-  stroke: ${props => props.theme.colors.accent};
-  fill: ${props => props.theme.colors.accent};
+  stroke: ${p => p.theme.colors.accent};
+  fill: ${p => p.theme.colors.accent};
   transition: scale ${p => p.theme.animation.cubicBezier};
   transition: stroke ${p => p.theme.animation.cubicBezier};
   transition: fill ${p => p.theme.animation.cubicBezier};
 `;
 
 export const StyledToFavouriteIcon = styled(ToFavouriteIcon)`
-  fill: ${props => props.theme.colors.btnTransperent};
+  fill: ${p => p.theme.colors.btnTransperent};
   scale: 1;
-  stroke: ${props => props.theme.colors.accent};
+  stroke: ${p => p.theme.colors.accent};
   transition: scale ${p => p.theme.animation.cubicBezier};
   transition: stroke ${p => p.theme.animation.cubicBezier};
 `;
 
 export const StyledDelete = styled(TiDelete)`
   scale: 1;
-  fill: ${props => props.theme.colors.accent};
+  fill: ${p => p.theme.colors.accent};
   transition: scale ${p => p.theme.animation.cubicBezier};
   transition: fill ${p => p.theme.animation.cubicBezier};
 `;
@@ -55,22 +74,22 @@ export const Button = styled.button`
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background-color: ${props => props.theme.colors.btnTransperent};
+  background-color: ${p => p.theme.colors.btnTransperent};
   cursor: pointer;
   :hover,
   :focus {
     & ${StyledFavouriteIcon} {
       scale: 1.05;
-      stroke: ${props => props.theme.colors.hover};
-      fill: ${props => props.theme.colors.hover};
+      stroke: ${p => p.theme.colors.hover};
+      fill: ${p => p.theme.colors.hover};
     }
     & ${StyledToFavouriteIcon} {
       scale: 1.05;
-      stroke: ${props => props.theme.colors.hover};
+      stroke: ${p => p.theme.colors.hover};
     }
     & ${StyledDelete} {
       scale: 1.05;
-      fill: ${props => props.theme.colors.hover};
+      fill: ${p => p.theme.colors.hover};
     }
   }
   :nth-of-type(1) {
@@ -92,7 +111,7 @@ export const Category = styled.span`
   font-size: 12px;
   line-height: 1.33;
   letter-spacing: 0.04em;
-  background-color: ${props => props.theme.colors.btnTransperent};
+  background-color: ${p => p.theme.colors.btnTransperent};
 `;
 
 export const Title = styled.h2`
@@ -139,19 +158,19 @@ export const LearnMore = styled.button`
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
-  border: 2px solid ${props => props.theme.colors.accent};
+  border: 2px solid ${p => p.theme.colors.accent};
   border-radius: 40px;
   font-weight: 500;
   font-size: 16px;
   line-height: 1.33;
   letter-spacing: 0.04em;
-  color: ${props => props.theme.colors.accent};
+  color: ${p => p.theme.colors.accent};
   cursor: pointer;
   transition: color ${p => p.theme.animation.cubicBezier};
   transition: border-color ${p => p.theme.animation.cubicBezier};
   :hover,
   :focus {
-    border-color: ${props => props.theme.colors.hover};
-    color: ${props => props.theme.colors.hover};
+    border-color: ${p => p.theme.colors.hover};
+    color: ${p => p.theme.colors.hover};
   }
 `;
