@@ -7,9 +7,8 @@ import { useAuth } from 'redux/useAuth';
 import useRequest from 'hooks/useRequest';
 import { useFilter } from 'hooks/useFilter';
 import { GiJumpingDog } from 'react-icons/gi';
-import { NoticeCategoryItem, Spinner } from 'components';
+import { GridTemplate, NoticeCategoryItem, Spinner } from 'components';
 import {
-  List,
   Item,
   Error,
   Paginate,
@@ -92,7 +91,7 @@ export const NoticesCategoriesList = ({
     <>
       {isLoading && <Spinner />}
       {isSuccess && (isSuccessFavorites || !auth.user) && (
-        <List>
+        <GridTemplate desCol="4">
           {notices.map(itm => {
             let favorite;
             if (favoritesPets?.data.notices.some(el => el._id === itm._id)) {
@@ -110,7 +109,7 @@ export const NoticesCategoriesList = ({
               </Item>
             );
           })}
-        </List>
+        </GridTemplate>
       )}
       {(isError || (isSuccess && data?.data?.notices?.length === 0)) && (
         <ErrorWrapper>

@@ -27,7 +27,6 @@ export const ModalPet = ({
 
   const handlePageOne = values => {
     setFormState(p => ({ ...p, ...values }));
-
     setStep(2);
   };
 
