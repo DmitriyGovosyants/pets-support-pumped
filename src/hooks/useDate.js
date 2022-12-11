@@ -1,9 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-const useDate = (birthdate, func) => {
+export const useDate = (birthdate) => {
+  const [state, setState] = useState('');
+
   useEffect(() => {
     if (!birthdate || birthdate === '') {
-      func('-');
+      setState('-');
     } else {
       const array = birthdate.split('.');
       const newBirthdayFormat = [array[1], array[0], array[2]].join('-');
@@ -12,14 +14,14 @@ const useDate = (birthdate, func) => {
           (1000 * 60 * 60 * 24 * 365.25)
       );
       if (petYears === 0) {
-        func('Less the one year');
+        setState('Less the one year');
       } else if (petYears === 1) {
-        func('One year');
+        setState('One year');
       } else if (petYears > 1) {
-        func(`${petYears} years`);
+        setState(`${petYears} years`);
       }
     }
-  }, [birthdate, func]);
-};
+  }, [birthdate]);
 
-export default useDate;
+  return [state];
+};

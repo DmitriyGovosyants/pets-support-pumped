@@ -4,22 +4,22 @@ import { useParams } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { useGetNoticesQuery, useGetFavoritesQuery } from 'redux/noticesApi';
 import { useAuth } from 'redux/useAuth';
-import useRequest from 'hooks/useRequest';
 import { useFilter } from 'hooks/useFilter';
 import { GiJumpingDog } from 'react-icons/gi';
+import { requestCategories } from 'constants/constants';
 import { GridTemplate, NoticeCategoryItem, Spinner } from 'components';
 import { Error, Paginate, IconWrapper } from './NoticesCategoriesList.styled';
 
 export const NoticesCategoriesList = ({ page, field = 'title', setPage }) => {
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+  const { categoryName } = useParams();
+  const search = useFilter(categoryName);
   const { user } = useAuth();
   const [skipByCategory, setSkipByCategory] = useState(true);
   const [pageCount, setPageCount] = useState(1);
-  const { categoryName } = useParams();
-  const [request, setRequest] = useState('?category=sell');
 
-  useRequest(categoryName, setRequest);
-  const search = useFilter(categoryName);
-  const { data, isSuccess, isFetching, isError, refetch } = useGetNoticesQuery(
+  const request = requestCategories[categoryName];
+  const { data, isSuccess, isFetching, isError } = useGetNoticesQuery(
     {
       request,
       page,
@@ -32,7 +32,6 @@ export const NoticesCategoriesList = ({ page, field = 'title', setPage }) => {
     useGetFavoritesQuery('', {
       skip: !user,
     });
-  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
   useEffect(() => {
     setPage(1);
@@ -92,7 +91,6 @@ export const NoticesCategoriesList = ({ page, field = 'title', setPage }) => {
                 petData={itm}
                 favorite={favorite}
                 isPrivate={categoryName === 'my-ads' ? true : false}
-                refetch={refetch}
               />
             );
           })}

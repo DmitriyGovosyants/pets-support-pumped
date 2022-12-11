@@ -1,16 +1,13 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 import { toast } from 'react-toastify';
-import petTemlate from 'data/img/pet-template.jpg';
-import { useSelector } from 'react-redux';
-import useCategories from 'hooks/useCategories';
-import { selectCategory } from 'redux/categorySlice';
-import useDate from 'hooks/useDate';
+import { useState } from 'react';
+import { useDate } from 'hooks/useDate';
 import { useAuth } from 'redux/useAuth';
 import {
   useAddNoticeToFavouriteMutation,
   useRemoveNoticeFromFavouriteMutation,
 } from 'redux/noticesApi';
+import petTemlate from 'data/img/pet-template.jpg';
 import { requestErrorPopUp } from 'helpers';
 import { Modal, ModalNotice, ModalDeleteNotice } from 'components';
 import {
@@ -29,25 +26,19 @@ import {
   StyledDelete,
 } from './NoticeCategoryItem.styled';
 
-export const NoticeCategoryItem = ({
-  petData,
-  favorite,
-  isPrivate,
-  refetch,
-}) => {
+export const NoticeCategoryItem = ({ petData, favorite, isPrivate }) => {
   const { _id, title, breed, location, birthdate, avatarURL, category, price } =
     petData;
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isFavorite, setIsFavorite] = useState(favorite);
-  const [age, setAge] = useState('');
-  const [categoryName, setCategoryName] = useState('sell');
   const { user } = useAuth();
-  const selected = useSelector(selectCategory);
-  useCategories(category, setCategoryName);
-  useDate(birthdate, setAge);
-  const [addNoticeToFavourite] = useAddNoticeToFavouriteMutation();
-  const [removeNoticeFromFavourite] = useRemoveNoticeFromFavouriteMutation();
+  const [age] = useDate(birthdate);
+
+  const [addToFavourite, { isLoading: isLoadingAdd }] =
+    useAddNoticeToFavouriteMutation();
+  const [removeFromFavourite, { isLoading: isLoadingRemove }] =
+    useRemoveNoticeFromFavouriteMutation();
 
   const toggleFavourites = async () => {
     if (!user) {
@@ -56,17 +47,13 @@ export const NoticeCategoryItem = ({
     }
 
     try {
-      if (isFavorite) {
-        await removeNoticeFromFavourite(_id).unwrap();
-      }
       if (!isFavorite) {
-        await addNoticeToFavourite(_id).unwrap();
+        await addToFavourite(_id).unwrap();
+      }
+      if (isFavorite) {
+        await removeFromFavourite(_id).unwrap();
       }
       setIsFavorite(!isFavorite);
-
-      if (selected === 'Favorite ads') {
-        refetch();
-      }
     } catch (error) {
       setIsFavorite(isFavorite);
       requestErrorPopUp(error);
@@ -80,7 +67,7 @@ export const NoticeCategoryItem = ({
   return (
     <Item>
       <ImgWrapper>
-        <Category>{categoryName}</Category>
+        <Category>{category.split('-').join(' ')}</Category>
         <Image
           src={avatarURL || petTemlate}
           alt={breed}
@@ -88,7 +75,11 @@ export const NoticeCategoryItem = ({
             e.target.src = petTemlate;
           }}
         />
-        <Button type="button" onClick={toggleFavourites}>
+        <Button
+          type="button"
+          disabled={isLoadingAdd || isLoadingRemove}
+          onClick={toggleFavourites}
+        >
           {isFavorite ? <StyledFavouriteIcon /> : <StyledToFavouriteIcon />}
         </Button>
         {isPrivate && (
@@ -106,7 +97,7 @@ export const NoticeCategoryItem = ({
           <Text>{location}</Text>
           <Text>Age:</Text>
           <Text>{age}</Text>
-          {categoryName === 'sell' && (
+          {category === 'sell' && (
             <>
               <Text>Price:</Text>
               <Text>{price} $</Text>
@@ -124,6 +115,8 @@ export const NoticeCategoryItem = ({
             favorite={isFavorite}
             closeModal={() => setShowModal(false)}
             toggleFavourites={toggleFavourites}
+            isLoadingAdd={isLoadingAdd}
+            isLoadingRemove={isLoadingRemove}
           />
         </Modal>
       )}
