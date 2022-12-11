@@ -24,13 +24,14 @@ export const Item = styled.li`
 export const Error = styled.p`
   font-size: 24px;
   line-height: 1.375;
+  text-align: center;
 
   ${device.tablet} {
     font-size: 36px;
   }
 `;
 
-export const ErrorWrapper = styled.div`
+export const IconWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

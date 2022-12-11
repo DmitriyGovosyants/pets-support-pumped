@@ -33,7 +33,6 @@ export const ModalAddNotice = ({ closeModal }) => {
   const onSubmit = async values => {
     const dataToSend = { ...formState, ...values };
     const formData = new FormData();
-    console.log(dataToSend);
 
     for (let key in dataToSend) {
       if (key === 'price' && dataToSend[key] === '') {

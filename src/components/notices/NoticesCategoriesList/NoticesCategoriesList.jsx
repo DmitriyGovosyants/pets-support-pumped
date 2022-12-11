@@ -12,7 +12,7 @@ import {
   Item,
   Error,
   Paginate,
-  ErrorWrapper,
+  IconWrapper,
 } from './NoticesCategoriesList.styled';
 
 export const NoticesCategoriesList = ({
@@ -31,7 +31,7 @@ export const NoticesCategoriesList = ({
 
   useRequest(categoryName, setRequest);
   const search = useFilter(categoryName);
-  const { data, isSuccess, isLoading, isError } = useGetNoticesQuery(
+  const { data, isSuccess, isFetching, isError } = useGetNoticesQuery(
     {
       request,
       page,
@@ -70,7 +70,11 @@ export const NoticesCategoriesList = ({
   }, [categoryName]);
 
   useEffect(() => {
-    if (isSuccess) {
+    const totalPageCount = Math.ceil(data?.total / 12);
+    if (totalPageCount === 0) {
+      setPageCount(1);
+    }
+    if (isSuccess && totalPageCount !== 0) {
       setPageCount(Math.ceil(data.total / 12));
     }
   }, [data, isSuccess]);
@@ -85,12 +89,28 @@ export const NoticesCategoriesList = ({
     setPage(event.selected + 1);
   };
 
-  console.log(isLoading);
+  if (isFetching) {
+    return <Spinner />;
+  }
 
-  return (
-    <>
-      {isLoading && <Spinner />}
-      {isSuccess && (isSuccessFavorites || !auth.user) && (
+  if (isError) {
+    return <Error>There are no animals on your request =/</Error>;
+  }
+
+  if (isSuccess && data?.data?.notices?.length === 0) {
+    return (
+      <IconWrapper>
+        <GiJumpingDog
+          size={isMobile ? '20%' : '15%'}
+          style={{ margin: '0 auto', fill: '#F59256' }}
+        />
+      </IconWrapper>
+    );
+  }
+
+  if (isSuccess && !isFetching && (isSuccessFavorites || !auth.user)) {
+    return (
+      <>
         <GridTemplate desCol="4">
           {notices.map(itm => {
             let favorite;
@@ -110,20 +130,7 @@ export const NoticesCategoriesList = ({
             );
           })}
         </GridTemplate>
-      )}
-      {(isError || (isSuccess && data?.data?.notices?.length === 0)) && (
-        <ErrorWrapper>
-          <Error>There is no any animals on your query!</Error>
-          <GiJumpingDog
-            size={isMobile ? '20%' : '15%'}
-            style={{ margin: '0 auto', fill: '#F59256' }}
-          />
-        </ErrorWrapper>
-      )}
-      {!isLoading &&
-        isSuccess &&
-        (isSuccessFavorites || !auth.user) &&
-        data.total > 12 && (
+        {data.total > 12 && (
           <Paginate
             breakLabel={isMobile ? '..' : '...'}
             nextLabel={isMobile ? '>' : 'next'}
@@ -137,8 +144,9 @@ export const NoticesCategoriesList = ({
             activeClassName="selected"
           />
         )}
-    </>
-  );
+      </>
+    );
+  }
 };
 
 NoticesCategoriesList.propTypes = {

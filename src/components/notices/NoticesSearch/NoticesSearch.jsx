@@ -53,7 +53,6 @@ export const NoticesSearch = ({
     const value = e.target.value;
     setKeyWord(value);
     if (value.length === 0) {
-      console.log(value);
       setPage(1);
       dispatch(setWord(''));
     }
