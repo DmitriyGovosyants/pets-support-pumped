@@ -1,6 +1,5 @@
 import { useGetFriendsQuery } from 'redux/friendsApi';
 import { GridTemplate, OurFriendItem, Spinner } from 'components';
-// import { FriendsList } from './OurFriendsList.styled';
 
 export const OurFriendsList = () => {
   const { data: friends, isLoading, isError, error } = useGetFriendsQuery();
@@ -23,7 +22,7 @@ export const OurFriendsList = () => {
 
   if (friends) {
     return (
-      <GridTemplate mobileGap="16px">
+      <GridTemplate mobGap="16px 16px">
         {friends.data.map(
           ({
             title,
