@@ -26,7 +26,7 @@ export const usersApi = createApi({
     updateUser: builder.mutation({
       query: userField => ({
         url: '/info',
-        method: 'PATCH',
+        method: 'PUT',
         body: userField,
         invalidatesTags: ['Info'],
       }),

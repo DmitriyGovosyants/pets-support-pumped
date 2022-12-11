@@ -1,12 +1,5 @@
 import { useGetPetsQuery, useGetUserQuery } from 'redux/usersApi';
-import {
-  Section,
-  Container,
-  UserData,
-  Logout,
-  PetsData,
-  Spinner,
-} from 'components';
+import { Section, Container, UserData, PetsData, Spinner } from 'components';
 import { UserPageWrapper, UserDataWrapper } from './UserPage.styled';
 
 const UserPage = () => {
@@ -23,7 +16,6 @@ const UserPage = () => {
           <UserPageWrapper>
             <UserDataWrapper>
               <UserData />
-              <Logout />
             </UserDataWrapper>
             <PetsData />
           </UserPageWrapper>

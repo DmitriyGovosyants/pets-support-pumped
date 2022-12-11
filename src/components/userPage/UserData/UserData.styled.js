@@ -24,50 +24,110 @@ export const UserDataTitle = styled.p`
   }
 `;
 
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  padding: 20px 12px 84px 16px;
-
+export const Wrap = styled.div`
+  width: 100%;
+  padding: 20px 14px 20px 14px;
   background-color: ${p => p.theme.colors.bgSecond};
   border-radius: 20px;
   box-shadow: 7px 4px 14px rgba(0, 0, 0, 0.11);
+
+  ${device.tablet} {
+    padding: 24px 40px 24px 32px;
+  }
+  ${device.desktop} {
+    min-width: 420px;
+    padding: 20px 16px 40px 16px;
+  }
+`;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 41px;
 
   ${device.mobileOnly} {
     align-items: flex-end;
   }
 
   ${device.tablet} {
-    margin-left: -32px;
     border-radius: 0px 40px 40px 0px;
-    padding: 24px 40px 24px 32px;
   }
 
   ${device.tabletOnly} {
     flex-direction: row-reverse;
-    justify-content: start;
+    justify-content: space-between;
+    align-items: center;
   }
 
   ${device.desktop} {
-    min-width: 420px;
-    align-items: flex-end;
-    margin-left: -16px;
-    padding: 20px 16px 103px 16px;
+    margin-bottom: 41px;
   }
   & label + label {
-    margin-bottom: 15px;
+    margin-top: 15px;
   }
 `;
 
 export const Label = styled.label`
   display: flex;
-  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  width: 252px;
   height: 25px;
 
-  font-size: 18px;
+  color: ${p => p.theme.colors.black};
+  font-size: 12px;
   font-weight: 500;
   line-height: 1.44;
-  color: ${p => p.theme.colors.black};
+
+  ${device.tablet} {
+    font-size: 18px;
+  }
+
+  ${device.tablet} {
+    width: 100%;
+  }
+
+  & input {
+    width: 170px;
+    height: 25px;
+    padding: 4px 18px;
+
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1.33;
+    letter-spacing: 0.04em;
+    color: ${theme.colors.textMain};
+
+    background-color: ${({ disabled, theme }) =>
+      disabled ? theme.colors.bgSecond : theme.colors.bgMain};
+
+    border: 1px solid
+      ${({ disabled, theme }) =>
+        disabled ? theme.colors.bgSecond : 'rgba(245, 146, 86, 0.5)'};
+    border-radius: 40px;
+
+    ${device.tablet} {
+      width: 230px;
+      padding: 4px 12px;
+      font-size: 18px;
+      line-height: 1.39px;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+`;
+
+export const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 200px;
+
+  ${device.tablet} {
+    justify-content: space-between;
+    width: 290px;
+  }
 `;
 
 export const InfoEditBtn = styled.button`
@@ -77,21 +137,34 @@ export const InfoEditBtn = styled.button`
   justify-content: center;
   width: 20px;
   height: 20px;
-  margin-left: 10px;
   color: ${props =>
-    props.disabled ? 'rgba(17, 17, 17, 0.6)' : theme.colors.accent};
+    props.focused ? theme.colors.accent : 'rgba(17, 17, 17, 0.6)'};
   background-color: ${theme.colors.bgMain};
   border-radius: 50%;
-  cursor: ${props => (props.disabled ? 'auto' : 'pointer')};
+  cursor: pointer;
   transition: color ${theme.animation.cubicBezier};
+
+  ${device.tablet} {
+    width: 32px;
+    height: 32px;
+  }
+
+  & > svg {
+    width: 15px;
+    height: 15px;
+    ${device.tablet} {
+      width: 20px;
+      height: 20px;
+    }
+  }
 `;
 
 export const AvatarWrapper = styled.div`
   display: flex;
   align-items: flex-end;
+  justify-content: flex-end;
 
   ${device.mobileOnly} {
-    padding: 0 11px 0 8px;
     margin-bottom: 34px;
   }
 
@@ -125,45 +198,38 @@ export const UserAvatar = styled.img`
   }
 `;
 
-export const AvatarForm = styled.form`
+export const UploadLabel = styled.label`
+  display: flex;
   position: relative;
-  width: 86px;
-  height: 22px;
+  cursor: pointer;
+  outline: none;
 
-  ${device.desktop} {
-    margin-left: -13px;
+  & svg {
+    position: absolute;
+    left: 5px;
+  }
+
+  & p {
+    position: absolute;
+    left: 30px;
+    font-size: 12px;
+    line-height: 1.8;
+    letter-spacing: 0.04em;
+    color: ${p => p.theme.colors.textMain};
   }
 `;
 
-export const UploadLabel = styled.label`
-  display: flex;
-  gap: 2px;
-
-  font-size: 12px;
-  line-height: 1.8;
-  letter-spacing: 0.04em;
-  color: ${p => p.theme.colors.textMain};
-`;
-
 export const UploadInput = styled.input`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-
-  width: 100%;
-  height: 100%;
-
-  font-size: 0;
-  cursor: ${props => (props.disabled ? 'auto' : 'pointer')};
+  width: 100px;
+  height: 22px;
+  visibility: hidden;
 `;
 
 export const BtnBox = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  gap: 10px;
-  float: right;
+  display: flex;
+  width: 100px;
+  justify-content: space-around;
+  align-items: center;
 `;
 
 export const Btn = styled.button`
