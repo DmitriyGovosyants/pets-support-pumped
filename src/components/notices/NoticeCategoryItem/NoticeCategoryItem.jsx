@@ -86,15 +86,10 @@ export const NoticeCategoryItem = ({ petData, favorite, isPrivate }) => {
           <Text>{location}</Text>
           <Text>Age:</Text>
           <Text>{age}</Text>
-          {categoryName === 'sell' ? (
+          {categoryName === 'sell' && (
             <>
               <Text>Price:</Text>
               <Text>{price} $</Text>
-            </>
-          ) : (
-            <>
-              <Text></Text>
-              <Text></Text>
             </>
           )}
         </Description>

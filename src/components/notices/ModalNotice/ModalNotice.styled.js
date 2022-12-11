@@ -7,7 +7,7 @@ export const Container = styled.div`
   margin: 0px auto;
   padding: 60px 20px 40px;
 
-  background-color: ${props => props.theme.colors.bgSecond};
+  background-color: ${p => p.theme.colors.bgSecond};
   border-radius: 20px;
 
   ${device.tablet} {
@@ -73,7 +73,7 @@ export const CategoryMark = styled.span`
   line-height: 1.375;
   letter-spacing: 0.04em;
 
-  background-color: ${props => props.theme.colors.btnTransperent};
+  background-color: ${p => p.theme.colors.btnTransperent};
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 `;
@@ -100,7 +100,7 @@ export const Title = styled.h2`
   }
 `;
 
-export const FeaturesList = styled.ul`
+export const List = styled.ul`
   margin-bottom: 28px;
 
   ${device.tablet} {
@@ -108,7 +108,7 @@ export const FeaturesList = styled.ul`
   }
 `;
 
-export const FeaturesItem = styled.li`
+export const Item = styled.li`
   display: flex;
 
   &:not(:last-child) {
@@ -116,13 +116,13 @@ export const FeaturesItem = styled.li`
   }
 `;
 
-export const FeaturesDescription = styled.p`
+export const Label = styled.p`
   min-width: 118px;
 
   font-weight: 600;
   font-size: 14px;
   line-height: 1.35;
-  color: ${props => props.theme.colors.black};
+  color: ${p => p.theme.colors.black};
 
   ${device.tablet} {
     min-width: 120px;
@@ -132,19 +132,10 @@ export const FeaturesDescription = styled.p`
   }
 `;
 
-export const ContactLink = styled.a`
+export const Description = styled.p`
   font-size: 14px;
   line-height: 1.35;
-  color: ${props => props.theme.colors.black};
-  overflow: hidden;
-  word-wrap: break-word;
-
-  transition: color ${p => p.theme.animation.cubicBezier};
-
-  &:hover,
-  &:focus {
-    color: ${props => props.theme.colors.accent};
-  }
+  color: ${p => p.theme.colors.black};
 
   ${device.tablet} {
     font-size: 16px;
@@ -152,10 +143,19 @@ export const ContactLink = styled.a`
   }
 `;
 
-export const FeaturesDefinition = styled.p`
+export const ContactLink = styled.a`
   font-size: 14px;
   line-height: 1.35;
-  color: ${props => props.theme.colors.black};
+  color: ${p => p.theme.colors.black};
+  overflow: hidden;
+  word-wrap: break-word;
+
+  transition: color ${p => p.theme.animation.cubicBezier};
+
+  &:hover,
+  &:focus {
+    color: ${p => p.theme.colors.accent};
+  }
 
   ${device.tablet} {
     font-size: 16px;
@@ -182,10 +182,10 @@ export const ContactButton = styled.a`
   font-size: 16px;
   line-height: 1.375;
   letter-spacing: 0.04em;
-  color: ${props => props.theme.colors.textSecond};
+  color: ${p => p.theme.colors.textSecond};
   text-align: center;
 
-  background-color: ${props => props.theme.colors.accent};
+  background-color: ${p => p.theme.colors.accent};
   border-radius: 40px;
   transition: background-color ${p => p.theme.animation.cubicBezier};
 
@@ -196,11 +196,11 @@ export const ContactButton = styled.a`
 
   &:hover,
   &:focus {
-    background-color: ${props => props.theme.colors.hover};
+    background-color: ${p => p.theme.colors.hover};
   }
 `;
 
-export const ChangeFavoriteStatusBtn = styled.button`
+export const BtnFavorite = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -210,9 +210,9 @@ export const ChangeFavoriteStatusBtn = styled.button`
   font-size: 16px;
   line-height: 1.375;
   letter-spacing: 0.04em;
-  color: ${props => props.theme.colors.textMain};
+  color: ${p=> p.theme.colors.textMain};
 
-  border: 2px solid ${props => props.theme.colors.accent};
+  border: 2px solid ${p => p.theme.colors.accent};
   border-radius: 40px;
   cursor: pointer;
   transition: border-color ${p => p.theme.animation.cubicBezier};
@@ -222,7 +222,7 @@ export const ChangeFavoriteStatusBtn = styled.button`
     height: 16px;
     margin-left: 8px;
 
-    fill: ${props => props.theme.colors.accent};
+    fill: ${p => p.theme.colors.accent};
     transition: fill ${p => p.theme.animation.cubicBezier};
   }
 
@@ -233,10 +233,10 @@ export const ChangeFavoriteStatusBtn = styled.button`
 
   &:hover,
   &:focus {
-    border-color: ${props => props.theme.colors.hover};
+    border-color: ${p => p.theme.colors.hover};
 
     & > svg {
-      fill: ${props => props.theme.colors.hover};
+      fill: ${p => p.theme.colors.hover};
     }
   }
 `;

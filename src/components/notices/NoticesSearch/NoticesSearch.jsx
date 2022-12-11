@@ -23,7 +23,7 @@ export const NoticesSearch = ({
   setKeyWord,
   setPage,
   setField,
-  setPets,
+  setNotices,
 }) => {
   const selected = useSelector(selectCategory);
   const [isDisabledSearch, setIsDisabledSearch] = useState(false);
@@ -46,7 +46,7 @@ export const NoticesSearch = ({
     setField(selectField);
     setPage(1);
     dispatch(setWord(keyWord));
-    setPets([]);
+    setNotices([]);
   };
 
   const handleChange = e => {
@@ -91,5 +91,5 @@ NoticesSearch.propTypes = {
   setKeyWord: PropTypes.func.isRequired,
   setPage: PropTypes.func.isRequired,
   setField: PropTypes.func.isRequired,
-  setPets: PropTypes.func.isRequired,
+  setNotices: PropTypes.func.isRequired,
 };
