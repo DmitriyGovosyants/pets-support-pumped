@@ -3,6 +3,7 @@ export * from './header/Logo/Logo';
 export * from './header/Nav/Nav';
 export * from './header/AuthNav/AuthNav';
 export * from './header/UserNav/UserNav';
+export * from './header/VideoBox/VideoBox';
 
 export * from './auth/RegisterForm/RegisterForm';
 export * from './auth/LoginForm/LoginForm';
