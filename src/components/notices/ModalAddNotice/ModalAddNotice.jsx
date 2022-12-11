@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useAddNoticeMutation } from 'redux/noticesApi';
 import { ModalAddNoticePageOne } from './ModalAddNoticePageOne';
 import { ModalAddNoticePageTwo } from './ModalAddNoticePageTwo';
+import { requestErrorPopUp } from 'helpers';
 import { ModalBtnClose, SpinnerFixed } from 'components';
 import { Wrapper, Title } from './ModalAddNotice.styled';
 
@@ -57,15 +58,7 @@ export const ModalAddNotice = ({ closeModal }) => {
       await addNotice(formData).unwrap();
       toast.success('Notice is added');
     } catch (error) {
-      if (error.status === 400) {
-        toast.error(error.data.message);
-      }
-      if (error.status === 404) {
-        toast.error('Resourses not found');
-      }
-      if (error.status === 500) {
-        toast.error('Server not response');
-      }
+      requestErrorPopUp(error);
     } finally {
       closeModal();
     }

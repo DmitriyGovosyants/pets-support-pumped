@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useCreatePetMutation, useEditPetMutation } from 'redux/usersApi';
 import { ModalPetPageOne } from './ModalPetPageOne';
 import { ModalPetPageTwo } from './ModalPetPageTwo';
+import { requestErrorPopUp } from 'helpers';
 import { ModalBtnClose, SpinnerFixed } from 'components';
 import { Wrapper, Title } from './ModalPet.styled';
 
@@ -61,15 +62,7 @@ export const ModalPet = ({
       await editPet({ id, formData }).unwrap();
       toast.success('Your pet is changed');
     } catch (error) {
-      if (error.status === 400) {
-        toast.error(error.data.message);
-      }
-      if (error.status === 404) {
-        toast.error('Resourses not found');
-      }
-      if (error.status === 500) {
-        toast.error('Server not response');
-      }
+      requestErrorPopUp(error);
     } finally {
       closeModal();
     }

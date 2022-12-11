@@ -2,15 +2,19 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import petTemlate from 'data/img/pet-template.jpg';
+import { useSelector } from 'react-redux';
 import useCategories from 'hooks/useCategories';
+import { selectCategory } from 'redux/categorySlice';
 import useDate from 'hooks/useDate';
 import { useAuth } from 'redux/useAuth';
 import {
   useAddNoticeToFavouriteMutation,
   useRemoveNoticeFromFavouriteMutation,
 } from 'redux/noticesApi';
+import { requestErrorPopUp } from 'helpers';
 import { Modal, ModalNotice, ModalDeleteNotice } from 'components';
 import {
+  Item,
   ImgWrapper,
   Image,
   Button,
@@ -25,30 +29,47 @@ import {
   StyledDelete,
 } from './NoticeCategoryItem.styled';
 
-export const NoticeCategoryItem = ({ petData, favorite, isPrivate }) => {
+export const NoticeCategoryItem = ({
+  petData,
+  favorite,
+  isPrivate,
+  refetch,
+}) => {
   const { _id, title, breed, location, birthdate, avatarURL, category, price } =
     petData;
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [isFavourite, setIsFavourite] = useState(favorite);
+  const [isFavorite, setIsFavorite] = useState(favorite);
   const [age, setAge] = useState('');
   const [categoryName, setCategoryName] = useState('sell');
-  const auth = useAuth();
+  const { user } = useAuth();
+  const selected = useSelector(selectCategory);
   useCategories(category, setCategoryName);
   useDate(birthdate, setAge);
-  const [AddNoticeToFavourite] = useAddNoticeToFavouriteMutation();
+  const [addNoticeToFavourite] = useAddNoticeToFavouriteMutation();
   const [removeNoticeFromFavourite] = useRemoveNoticeFromFavouriteMutation();
 
-  const toggleFavourites = () => {
-    if (!auth.user) {
+  const toggleFavourites = async () => {
+    if (!user) {
       toast.warn('You must sign in for add to favorites!');
       return;
     }
-    setIsFavourite(!isFavourite);
-    if (isFavourite) {
-      removeNoticeFromFavourite(_id);
-    } else {
-      AddNoticeToFavourite(_id);
+
+    try {
+      if (isFavorite) {
+        await removeNoticeFromFavourite(_id).unwrap();
+      }
+      if (!isFavorite) {
+        await addNoticeToFavourite(_id).unwrap();
+      }
+      setIsFavorite(!isFavorite);
+
+      if (selected === 'Favorite ads') {
+        refetch();
+      }
+    } catch (error) {
+      setIsFavorite(isFavorite);
+      requestErrorPopUp(error);
     }
   };
 
@@ -57,7 +78,7 @@ export const NoticeCategoryItem = ({ petData, favorite, isPrivate }) => {
   };
 
   return (
-    <>
+    <Item>
       <ImgWrapper>
         <Category>{categoryName}</Category>
         <Image
@@ -66,10 +87,9 @@ export const NoticeCategoryItem = ({ petData, favorite, isPrivate }) => {
           onError={e => {
             e.target.src = petTemlate;
           }}
-          onWaiting={e => console.log('waiting:', e)}
         />
         <Button type="button" onClick={toggleFavourites}>
-          {isFavourite ? <StyledFavouriteIcon /> : <StyledToFavouriteIcon />}
+          {isFavorite ? <StyledFavouriteIcon /> : <StyledToFavouriteIcon />}
         </Button>
         {isPrivate && (
           <Button type="button" onClick={removePrivate}>
@@ -101,7 +121,7 @@ export const NoticeCategoryItem = ({ petData, favorite, isPrivate }) => {
         <Modal closeModal={() => setShowModal(false)}>
           <ModalNotice
             petData={petData}
-            favorite={isFavourite}
+            favorite={isFavorite}
             closeModal={() => setShowModal(false)}
             toggleFavourites={toggleFavourites}
           />
@@ -115,7 +135,7 @@ export const NoticeCategoryItem = ({ petData, favorite, isPrivate }) => {
           />
         </Modal>
       )}
-    </>
+    </Item>
   );
 };
 

@@ -20,7 +20,6 @@ const NoticesPage = () => {
   const [keyWord, setKeyWord] = useState(word);
   const [field, setField] = useState('title');
   const [page, setPage] = useState(1);
-  const [notices, setNotices] = useState([]);
   const selected = useSelector(selectCategory);
   const [isFirstMount, setIsFirstMount] = useState(true);
   const navigate = useNavigate();
@@ -41,19 +40,12 @@ const NoticesPage = () => {
           setKeyWord={setKeyWord}
           setPage={setPage}
           setField={setField}
-          setNotices={setNotices}
         />
         <Wrapper>
           <NoticesCategoriesNav setKeyWord={setKeyWord} />
           <AddNoticeButton />
         </Wrapper>
-        <NoticesCategoriesList
-          page={page}
-          field={field}
-          setPage={setPage}
-          notices={notices}
-          setNotices={setNotices}
-        />
+        <NoticesCategoriesList page={page} field={field} setPage={setPage} />
       </Container>
     </Section>
   );

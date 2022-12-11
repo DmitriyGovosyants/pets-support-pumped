@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const noticesApi = createApi({
-  reducerPath: 'notices',
+  reducerPath: 'noticesApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://petly-node-js-rest-api-v2.onrender.com/api',
     prepareHeaders: (headers, { getState }) => {
@@ -20,11 +20,15 @@ export const noticesApi = createApi({
       query: ({ request, page, field, search }) =>
         `/notices${request}&page=${page}${search}&field=${field}`,
       keepUnusedDataFor: 60,
-      providesTags: ['Notices'],
+      providesTags: (result, error, arg) => {
+        return arg.request === '/favorites?' ?
+         ['Notices', 'ChangeFavorite'] : ['Notices']
+      },
+        
     }),
     getFavorites: builder.query({
       query: () => '/notices/favorites?page=1&limit=1000',
-      providesTags: ['Notices'],
+      providesTags: ['Favorites'],
     }),
     addNoticeToFavourite: builder.mutation({
       query: noticeId => ({
@@ -32,14 +36,14 @@ export const noticesApi = createApi({
         method: 'PATCH',
         body: '',
       }),
-      invalidatesTags: ['Notices'],
+      invalidatesTags: ['Favorites', 'ChangeFavorite'],
     }),
     removeNoticeFromFavourite: builder.mutation({
       query: noticeId => ({
         url: `/notices/favorites/${noticeId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Notices'],
+      invalidatesTags: ['Favorites', 'ChangeFavorite'],
     }),
     getPrivateNotices: builder.query({
       query: () => '/notices/private',

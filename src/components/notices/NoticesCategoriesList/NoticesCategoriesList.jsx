@@ -8,30 +8,18 @@ import useRequest from 'hooks/useRequest';
 import { useFilter } from 'hooks/useFilter';
 import { GiJumpingDog } from 'react-icons/gi';
 import { GridTemplate, NoticeCategoryItem, Spinner } from 'components';
-import {
-  Item,
-  Error,
-  Paginate,
-  IconWrapper,
-} from './NoticesCategoriesList.styled';
+import { Error, Paginate, IconWrapper } from './NoticesCategoriesList.styled';
 
-export const NoticesCategoriesList = ({
-  page,
-  field = 'title',
-  setPage,
-  notices,
-  setNotices,
-}) => {
-  const [skipFavorites, setSkipFavorites] = useState(true);
+export const NoticesCategoriesList = ({ page, field = 'title', setPage }) => {
+  const { user } = useAuth();
   const [skipByCategory, setSkipByCategory] = useState(true);
   const [pageCount, setPageCount] = useState(1);
-  const auth = useAuth();
   const { categoryName } = useParams();
   const [request, setRequest] = useState('?category=sell');
 
   useRequest(categoryName, setRequest);
   const search = useFilter(categoryName);
-  const { data, isSuccess, isFetching, isError } = useGetNoticesQuery(
+  const { data, isSuccess, isFetching, isError, refetch } = useGetNoticesQuery(
     {
       request,
       page,
@@ -42,27 +30,12 @@ export const NoticesCategoriesList = ({
   );
   const { data: favoritesPets, isSuccess: isSuccessFavorites } =
     useGetFavoritesQuery('', {
-      skip: skipFavorites,
+      skip: !user,
     });
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
   useEffect(() => {
-    if (!auth.user) {
-      return;
-    }
-    setSkipFavorites(false);
-  }, [auth]);
-
-  useEffect(() => {
-    if (data) {
-      setNotices(data?.data.notices);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, favoritesPets]);
-
-  useEffect(() => {
     setPage(1);
-    setNotices([]);
     if (categoryName) {
       setSkipByCategory(false);
     }
@@ -78,12 +51,6 @@ export const NoticesCategoriesList = ({
       setPageCount(Math.ceil(data.total / 12));
     }
   }, [data, isSuccess]);
-
-  if (isError) {
-    setTimeout(() => {
-      setNotices(data.data.notices);
-    }, 3000);
-  }
 
   const handlePageClick = event => {
     setPage(event.selected + 1);
@@ -108,11 +75,11 @@ export const NoticesCategoriesList = ({
     );
   }
 
-  if (isSuccess && !isFetching && (isSuccessFavorites || !auth.user)) {
+  if (isSuccess && !isFetching && (isSuccessFavorites || !user)) {
     return (
       <>
         <GridTemplate desCol="4">
-          {notices.map(itm => {
+          {data?.data?.notices.map(itm => {
             let favorite;
             if (favoritesPets?.data.notices.some(el => el._id === itm._id)) {
               favorite = true;
@@ -120,13 +87,13 @@ export const NoticesCategoriesList = ({
               favorite = false;
             }
             return (
-              <Item key={itm._id}>
-                <NoticeCategoryItem
-                  petData={itm}
-                  favorite={favorite}
-                  isPrivate={categoryName === 'my-ads' ? true : false}
-                />
-              </Item>
+              <NoticeCategoryItem
+                key={itm._id}
+                petData={itm}
+                favorite={favorite}
+                isPrivate={categoryName === 'my-ads' ? true : false}
+                refetch={refetch}
+              />
             );
           })}
         </GridTemplate>
@@ -153,6 +120,4 @@ NoticesCategoriesList.propTypes = {
   page: PropTypes.number.isRequired,
   field: PropTypes.string.isRequired,
   setPage: PropTypes.func.isRequired,
-  notices: PropTypes.arrayOf(PropTypes.object).isRequired,
-  setNotices: PropTypes.func.isRequired,
 };
