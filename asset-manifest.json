@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/static/css/main.52310e20.css",
-    "main.js": "/static/js/main.4d0e5072.js",
+    "main.js": "/static/js/main.57f51466.js",
     "home-page.js": "/static/js/home-page.a961cf94.chunk.js",
     "register-page.js": "/static/js/register-page.8c50bbab.chunk.js",
     "login-page.js": "/static/js/login-page.a14560f3.chunk.js",
     "news-page.js": "/static/js/news-page.9e44d4d8.chunk.js",
-    "notices-page.js": "/static/js/notices-page.3e485e72.chunk.js",
+    "notices-page.js": "/static/js/notices-page.ab2eee69.chunk.js",
     "friends-page.js": "/static/js/friends-page.bfd372a0.chunk.js",
     "user-page.js": "/static/js/user-page.40e9399f.chunk.js",
     "static/media/hp-bckg-tablet@2x.png": "/static/media/hp-bckg-tablet@2x.bc98ab167ad7c72aa8b3.png",
@@ -48,17 +48,17 @@
     "static/media/edit-icon.svg": "/static/media/edit-icon.f33e8538d882418b76070d5bd0a94a00.svg",
     "static/media/plus-icon.svg": "/static/media/plus-icon.65c74ef373dbf9e8a113c07965b48e3e.svg",
     "main.52310e20.css.map": "/static/css/main.52310e20.css.map",
-    "main.4d0e5072.js.map": "/static/js/main.4d0e5072.js.map",
+    "main.57f51466.js.map": "/static/js/main.57f51466.js.map",
     "home-page.a961cf94.chunk.js.map": "/static/js/home-page.a961cf94.chunk.js.map",
     "register-page.8c50bbab.chunk.js.map": "/static/js/register-page.8c50bbab.chunk.js.map",
     "login-page.a14560f3.chunk.js.map": "/static/js/login-page.a14560f3.chunk.js.map",
     "news-page.9e44d4d8.chunk.js.map": "/static/js/news-page.9e44d4d8.chunk.js.map",
-    "notices-page.3e485e72.chunk.js.map": "/static/js/notices-page.3e485e72.chunk.js.map",
+    "notices-page.ab2eee69.chunk.js.map": "/static/js/notices-page.ab2eee69.chunk.js.map",
     "friends-page.bfd372a0.chunk.js.map": "/static/js/friends-page.bfd372a0.chunk.js.map",
     "user-page.40e9399f.chunk.js.map": "/static/js/user-page.40e9399f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.52310e20.css",
-    "static/js/main.4d0e5072.js"
+    "static/js/main.57f51466.js"
   ]
 }
