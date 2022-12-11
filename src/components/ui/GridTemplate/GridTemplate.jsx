@@ -10,5 +10,9 @@ export const GridTemplate = ({ mobGap, tabGap, desGap, desCol, children }) => {
 };
 
 GridTemplate.propTypes = {
+  mobGap: PropTypes.string,
+  tabGap: PropTypes.string,
+  desGap: PropTypes.string,
+  desCol: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
