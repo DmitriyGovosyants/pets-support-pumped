@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const noticesApi = createApi({
-  reducerPath: 'noticesApi',
+  reducerPath: 'notices',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://petly-node-js-rest-api-v2.onrender.com/api',
     prepareHeaders: (headers, { getState }) => {
