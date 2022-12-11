@@ -25,6 +25,8 @@ export const ModalNotice = ({
   favorite,
   closeModal,
   toggleFavourites,
+  isLoadingAdd,
+  isLoadingRemove,
 }) => {
   const {
     title,
@@ -109,7 +111,11 @@ export const ModalNotice = ({
 
       <BtnWrapper>
         <ContactButton href={`tel: ${owner?.phone}`}>Contact</ContactButton>
-        <BtnFavorite type="button" onClick={toggleFavourites}>
+        <BtnFavorite
+          type="button"
+          onClick={toggleFavourites}
+          disabled={isLoadingAdd || isLoadingRemove}
+        >
           {!favorite ? 'Add to' : 'Remove from'}
           <HeartIcon />
         </BtnFavorite>
@@ -139,4 +145,6 @@ ModalNotice.propTypes = {
   favorite: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   toggleFavourites: PropTypes.func.isRequired,
+  isLoadingAdd: PropTypes.bool.isRequired,
+  isLoadingRemove: PropTypes.bool.isRequired,
 };

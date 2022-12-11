@@ -1,25 +1,30 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-const useDate = (birthdate, func) => {
+export const useDate = (birthdate) => {
+  const [state, setState] = useState('');
+
   useEffect(() => {
     if (!birthdate || birthdate === '') {
-      func('-');
-    } else {
-      const array = birthdate.split('.');
-      const newBirthdayFormat = [array[1], array[0], array[2]].join('-');
-      const petYears = Math.floor(
-        (new Date() - new Date(newBirthdayFormat)) /
-          (1000 * 60 * 60 * 24 * 365.25)
-      );
-      if (petYears === 0) {
-        func('Less the one year');
-      } else if (petYears === 1) {
-        func('One year');
-      } else if (petYears > 1) {
-        func(`${petYears} years`);
-      }
-    }
-  }, [birthdate, func]);
-};
+      return setState('-');
+    } 
 
-export default useDate;
+    const array = birthdate.split('.');
+    const newBirthdayFormat = [array[1], array[0], array[2]].join('-');
+    const petYears = Math.floor(
+      (new Date() - new Date(newBirthdayFormat)) /
+        (1000 * 60 * 60 * 24 * 365.25)
+    );
+
+    if (petYears === 0) {
+      setState('Less the one year');
+    }
+    if (petYears === 1) {
+      setState('One year');
+    }
+    if (petYears > 1) {
+      setState(`${petYears} years`);
+    }
+  }, [birthdate]);
+
+  return [state];
+};
