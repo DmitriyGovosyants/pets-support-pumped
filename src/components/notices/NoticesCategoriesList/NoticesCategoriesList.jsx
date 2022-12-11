@@ -20,8 +20,8 @@ export const NoticesCategoriesList = ({
   page,
   field = 'title',
   setPage,
-  pets,
-  setPets,
+  notices,
+  setNotices,
 }) => {
   const [skipFavorites, setSkipFavorites] = useState(true);
   const [skipByCategory, setSkipByCategory] = useState(true);
@@ -56,14 +56,14 @@ export const NoticesCategoriesList = ({
 
   useEffect(() => {
     if (data) {
-      setPets(data.data.notices);
+      setNotices(data?.data.notices);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, favoritesPets]);
 
   useEffect(() => {
     setPage(1);
-    setPets([]);
+    setNotices([]);
     if (categoryName) {
       setSkipByCategory(false);
     }
@@ -78,7 +78,7 @@ export const NoticesCategoriesList = ({
 
   if (isError) {
     setTimeout(() => {
-      setPets(data.data.notices);
+      setNotices(data.data.notices);
     }, 3000);
   }
 
@@ -86,12 +86,14 @@ export const NoticesCategoriesList = ({
     setPage(event.selected + 1);
   };
 
+  console.log(isLoading);
+
   return (
     <>
       {isLoading && <Spinner />}
       {isSuccess && (isSuccessFavorites || !auth.user) && (
         <List>
-          {pets.map(itm => {
+          {notices.map(itm => {
             let favorite;
             if (favoritesPets?.data.notices.some(el => el._id === itm._id)) {
               favorite = true;
@@ -119,26 +121,23 @@ export const NoticesCategoriesList = ({
           />
         </ErrorWrapper>
       )}
-      {!isLoading && (
-        <>
-          {isSuccess &&
-            (isSuccessFavorites || !auth.user) &&
-            data.total > 12 && (
-              <Paginate
-                breakLabel={isMobile ? '..' : '...'}
-                nextLabel={isMobile ? '>' : 'next'}
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={isMobile ? 1 : 2}
-                marginPagesDisplayed={1}
-                pageCount={pageCount}
-                initialPage={page - 1}
-                previousLabel={isMobile ? '<' : 'previous'}
-                renderOnZeroPageCount={null}
-                activeClassName="selected"
-              />
-            )}
-        </>
-      )}
+      {!isLoading &&
+        isSuccess &&
+        (isSuccessFavorites || !auth.user) &&
+        data.total > 12 && (
+          <Paginate
+            breakLabel={isMobile ? '..' : '...'}
+            nextLabel={isMobile ? '>' : 'next'}
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={isMobile ? 1 : 2}
+            marginPagesDisplayed={1}
+            pageCount={pageCount}
+            initialPage={page - 1}
+            previousLabel={isMobile ? '<' : 'previous'}
+            renderOnZeroPageCount={null}
+            activeClassName="selected"
+          />
+        )}
     </>
   );
 };
@@ -147,6 +146,6 @@ NoticesCategoriesList.propTypes = {
   page: PropTypes.number.isRequired,
   field: PropTypes.string.isRequired,
   setPage: PropTypes.func.isRequired,
-  pets: PropTypes.arrayOf(PropTypes.object).isRequired,
-  setPets: PropTypes.func.isRequired,
+  notices: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setNotices: PropTypes.func.isRequired,
 };
