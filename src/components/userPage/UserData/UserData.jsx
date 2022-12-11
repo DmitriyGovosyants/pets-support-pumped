@@ -1,16 +1,28 @@
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
+import InputMask from 'comigo-tech-react-input-mask';
 import { BsCheckLg } from 'react-icons/bs';
 import { HiCamera } from 'react-icons/hi';
+import { MdEdit } from 'react-icons/md';
 import { theme } from 'styles';
 import { ReactComponent as CloseIcon } from 'data/img/close-icon.svg';
 import imageNotFound from 'data/img/no-image.webp';
 import { useGetUserQuery, useUpdateUserMutation } from 'redux/usersApi';
+import { editUserSchema } from '../../../helpers/formValidationNew';
 import { orderUserFields } from 'constants/constants';
-import { SpinnerFixed, UserDataItem } from 'components';
+import {
+  SpinnerFixed,
+  UserDataItem,
+  InputBirthdate,
+  InputErrorBox,
+} from 'components';
 import { handleUploadFile } from 'helpers';
 import {
   UserDataTitle,
-  UserCardWrapper,
+  Form,
+  Label,
+  InfoEditBtn,
   AvatarWrapper,
   UserAvatar,
   AvatarForm,
@@ -24,7 +36,8 @@ import {
 export const UserData = () => {
   const [avatarData, setAvatarData] = useState();
   const [avatar, setAvatar] = useState();
-  const [isShowForm, setIsShowForm] = useState('');
+  const [formState, setFormState] = useState({});
+  const [isDisabledInput, setIsDisabledInput] = useState('');
   const [isEditBtnDisabled, setIsEditBtnDisabled] = useState(false);
   const {
     data: {
@@ -33,44 +46,71 @@ export const UserData = () => {
     refetch,
   } = useGetUserQuery();
   const [editContact, { isLoading: isEditLoading }] = useUpdateUserMutation();
+  const birthdateArray = userData.birthdate.split('.');
+  const birthdateString =
+    birthdateArray[1] + '.' + birthdateArray[0] + '.' + birthdateArray[2];
+  const birthdateParse = parseInt(Date.parse(birthdateString), 10);
 
-  const handleShowForm = e => {
-    const id = e.currentTarget.id;
-    setIsShowForm(id);
-    setIsEditBtnDisabled(true);
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(editUserSchema),
+    mode: 'onBlur',
+    defaultValues: {
+      name: userData.name || '',
+      email: userData.email || '',
+      birthdate: userData.birthdate || birthdateParse || null,
+      phone: userData.phone || '',
+      city: userData.city || '',
+    },
+  });
+
+  const onSubmit = async values => {
+    const dataToSend = { ...userData, ...values };
+    const formData = new FormData();
   };
+
+  // const handleShowForm = e => {
+  //   const id = e.currentTarget.id;
+  //   setIsShowForm(id);
+  //   setIsEditBtnDisabled(true);
+  // };
 
   const handleFile = e => {
     const file = e.target.files[0];
     handleUploadFile(file, setAvatar, setAvatarData);
   };
 
-  const onCancelSubmit = () => {
-    setAvatar();
-    setAvatarData();
+  const onCancelSubmit = e => {
+    console.log(e.target);
+    // setAvatar();
+    // setAvatarData();
   };
 
   const onFileSubmit = async e => {
-    e.preventDefault();
+    console.log(e.target);
+    // e.preventDefault();
 
-    try {
-      const formdata = new FormData();
-      formdata.append('avatar', avatarData);
-      await editContact(formdata);
-    } catch (error) {
-      onCancelSubmit();
-      console.log(error);
-    } finally {
-      setAvatarData();
-      setAvatar();
-      refetch();
-    }
+    // try {
+    //   const formdata = new FormData();
+    //   formdata.append('avatar', avatarData);
+    //   await editContact(formdata);
+    // } catch (error) {
+    //   onCancelSubmit();
+    //   console.log(error);
+    // } finally {
+    //   setAvatarData();
+    //   setAvatar();
+    //   refetch();
+    // }
   };
 
   return (
     <>
       <UserDataTitle>My information:</UserDataTitle>
-      <UserCardWrapper>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <AvatarWrapper>
           <UserAvatar
             src={avatar || userData?.avatarURL || imageNotFound}
@@ -97,35 +137,75 @@ export const UserData = () => {
               <BtnBox>
                 <Btn
                   type="button"
-                  disabled={isEditLoading}
+                  // disabled={isEditLoading}
                   onClick={() => onCancelSubmit()}
                 >
                   <CloseIcon style={{ fill: 'black' }} />
                 </Btn>
-                <Btn type="submit" disabled={isEditLoading}>
+                <Btn type="submit">
                   <BsCheckLg />
                 </Btn>
               </BtnBox>
             )}
           </AvatarForm>
         </AvatarWrapper>
+        <Label>
+          Name:
+          <Controller
+            name="name"
+            control={control}
+            render={({ field }) => <input {...field} type="text" />}
+          />
+          <InputErrorBox>{errors?.name?.message}</InputErrorBox>
+          <InfoEditBtn
+            id={'name'}
+            // onClick={onShowForm}
+            disabled={isEditBtnDisabled}
+          >
+            <MdEdit />
+          </InfoEditBtn>
+        </Label>
+        <Label>
+          Email:
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => <input {...field} type="email" />}
+          />
+          <InputErrorBox>{errors?.email?.message}</InputErrorBox>
+        </Label>
+        <Label>
+          Birthday:
+          <InputBirthdate control={control} birthdate={userData?.birthdate} />
+          <InputErrorBox>{errors?.email?.message}</InputErrorBox>
+        </Label>
+        <Label>
+          Phone:
+          <Controller
+            name="phone"
+            control={control}
+            render={({ field }) => (
+              <InputMask
+                {...field}
+                mask={'+38(099)999-99-99'}
+                type="text"
+                alwaysShowMask={true}
+              />
+            )}
+          />
+          <InputErrorBox>{errors?.phone?.message}</InputErrorBox>
+        </Label>
+        <Label>
+          Email:
+          <Controller
+            name="city"
+            control={control}
+            render={({ field }) => <input {...field} type="text" />}
+          />
+          <InputErrorBox>{errors?.city?.message}</InputErrorBox>
+        </Label>
+      </Form>
 
-        <UserDataList>
-          {orderUserFields.map(el => (
-            <UserDataItem
-              key={el}
-              title={el}
-              value={userData[el]}
-              isShowForm={isShowForm}
-              onShowForm={handleShowForm}
-              isEditBtnDisabled={isEditBtnDisabled}
-              allUserData={userData}
-              setIsShowForm={setIsShowForm}
-              setIsEditBtnDisabled={setIsEditBtnDisabled}
-            />
-          ))}
-        </UserDataList>
-      </UserCardWrapper>
       {isEditLoading && <SpinnerFixed />}
     </>
   );

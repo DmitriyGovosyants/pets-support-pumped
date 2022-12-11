@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { device } from 'styles/mediaquery';
+import { theme } from 'styles';
 
 export const UserDataTitle = styled.p`
   display: flex;
@@ -23,8 +24,7 @@ export const UserDataTitle = styled.p`
   }
 `;
 
-export const UserCardWrapper = styled.div`
-  position: relative;
+export const Form = styled.form`
   display: flex;
   flex-direction: column;
   padding: 20px 12px 84px 16px;
@@ -54,6 +54,36 @@ export const UserCardWrapper = styled.div`
     margin-left: -16px;
     padding: 20px 16px 103px 16px;
   }
+  & label + label {
+    margin-bottom: 15px;
+  }
+`;
+
+export const Label = styled.label`
+  display: flex;
+  width: 100%;
+  height: 25px;
+
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.44;
+  color: ${p => p.theme.colors.black};
+`;
+
+export const InfoEditBtn = styled.button`
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  color: ${props =>
+    props.disabled ? 'rgba(17, 17, 17, 0.6)' : theme.colors.accent};
+  background-color: ${theme.colors.bgMain};
+  border-radius: 50%;
+  cursor: ${props => (props.disabled ? 'auto' : 'pointer')};
+  transition: color ${theme.animation.cubicBezier};
 `;
 
 export const AvatarWrapper = styled.div`
