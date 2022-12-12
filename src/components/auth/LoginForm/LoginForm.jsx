@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { useLogInMutation } from 'redux/authApi';
 import { routesPath } from 'router';
-import { loginSchema } from 'helpers';
+import { loginSchema, requestErrorPopUp } from 'helpers';
 import eyeImg from 'data/img/eye.png';
 import eyeClosedImg from 'data/img/eye-blocked.png';
 import { InputErrorBox, MainButton, SpinnerFixed } from 'components';
@@ -42,15 +42,7 @@ export const LoginForm = () => {
       }).unwrap();
       toast.info(`${email} is logged in`);
     } catch (error) {
-      if (error.status === 401) {
-        toast.error(error.data.message);
-      }
-      if (error.status === 404) {
-        toast.error('Resourses not found');
-      }
-      if (error.status === 500) {
-        toast.error('Server not response');
-      }
+      requestErrorPopUp(error);
     }
   };
 
