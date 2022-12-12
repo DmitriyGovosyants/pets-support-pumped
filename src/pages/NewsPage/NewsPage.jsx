@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import React, { useState } from 'react';
 import { useGetAllNewsQuery } from 'redux/newsApi';
 import {
@@ -10,6 +9,7 @@ import {
   GridTemplate,
 } from 'components';
 import { Input, SearchForm, Label, Icon } from './NewsPage.styled';
+import { requestErrorPopUp } from 'helpers';
 
 const NewsPage = () => {
   const [newsName, setNewsName] = useState('');
@@ -22,15 +22,7 @@ const NewsPage = () => {
   };
 
   if (isError) {
-    if (error.status === 400) {
-      toast.error(error.data.message);
-    }
-    if (error.status === 404) {
-      toast.error('Resourses not found');
-    }
-    if (error.status === 500) {
-      toast.error('Server not response');
-    }
+    requestErrorPopUp(error);
   }
 
   return (
