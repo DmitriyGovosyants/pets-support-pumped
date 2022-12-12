@@ -9,6 +9,7 @@ import { GiJumpingDog } from 'react-icons/gi';
 import { requestCategories } from 'constants/constants';
 import { GridTemplate, NoticeCategoryItem, Spinner } from 'components';
 import { Error, Paginate, IconWrapper } from './NoticesCategoriesList.styled';
+import { requestErrorPopUp } from 'helpers';
 
 export const NoticesCategoriesList = ({ page, field = 'title', setPage }) => {
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
@@ -19,7 +20,7 @@ export const NoticesCategoriesList = ({ page, field = 'title', setPage }) => {
   const [pageCount, setPageCount] = useState(1);
 
   const request = requestCategories[categoryName];
-  const { data, isSuccess, isFetching, isError } = useGetNoticesQuery(
+  const { data, isSuccess, isFetching, isError, error } = useGetNoticesQuery(
     {
       request,
       page,
@@ -28,10 +29,13 @@ export const NoticesCategoriesList = ({ page, field = 'title', setPage }) => {
     },
     { skip: skipByCategory }
   );
-  const { data: favoritesPets, isSuccess: isSuccessFavorites } =
-    useGetFavoritesQuery('', {
-      skip: !user,
-    });
+  const {
+    data: favoritesPets,
+    isSuccess: isSuccessFavorites,
+    error: favoritesError,
+  } = useGetFavoritesQuery('', {
+    skip: !user,
+  });
 
   useEffect(() => {
     setPage(1);
@@ -50,6 +54,12 @@ export const NoticesCategoriesList = ({ page, field = 'title', setPage }) => {
       setPageCount(Math.ceil(data.total / 12));
     }
   }, [data, isSuccess]);
+
+  useEffect(() => {
+    if (error || favoritesError) {
+      requestErrorPopUp(error || favoritesError);
+    }
+  }, [error, favoritesError]);
 
   const handlePageClick = event => {
     setPage(event.selected + 1);
