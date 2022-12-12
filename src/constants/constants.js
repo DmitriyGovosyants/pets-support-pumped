@@ -32,3 +32,11 @@ export const validationErrMsg = {
   price: "Price couldn't start from 0, only numbers",
   comments: 'Comments should have only 8-120 letters',
 };
+
+export const requestCategories = {
+  sell: '?category=sell',
+  'lost-found': '?category=lost-found',
+  'in-good-hands': '?category=in-good-hands',
+  'favorite-ads': '/favorites?',
+  'my-ads': '/private?',
+};

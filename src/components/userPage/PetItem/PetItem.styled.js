@@ -11,6 +11,8 @@ export const PetItemStyled = styled.li`
   box-shadow: 7px 4px 14px ${p => p.theme.colors.shadow};
   border-radius: 20px;
 
+  transition: box-shadow ${p => p.theme.animation.cubicBezier};
+
   ${device.tablet} {
     flex-direction: row;
     gap: 32px;

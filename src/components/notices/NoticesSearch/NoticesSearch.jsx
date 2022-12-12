@@ -18,13 +18,7 @@ const options = [
   { value: 'location', label: 'Location' },
 ];
 
-export const NoticesSearch = ({
-  keyWord,
-  setKeyWord,
-  setPage,
-  setField,
-  setPets,
-}) => {
+export const NoticesSearch = ({ keyWord, setKeyWord, setPage, setField }) => {
   const selected = useSelector(selectCategory);
   const [isDisabledSearch, setIsDisabledSearch] = useState(false);
   const [selectField, setSelectField] = useState('title');
@@ -46,14 +40,12 @@ export const NoticesSearch = ({
     setField(selectField);
     setPage(1);
     dispatch(setWord(keyWord));
-    setPets([]);
   };
 
   const handleChange = e => {
     const value = e.target.value;
     setKeyWord(value);
     if (value.length === 0) {
-      console.log(value);
       setPage(1);
       dispatch(setWord(''));
     }
@@ -78,7 +70,7 @@ export const NoticesSearch = ({
           options={options}
           name={'fields'}
           defaultValue={options[0]}
-          onChange={choice => setSelectField(choice.value)}
+          onChange={({ value }) => setSelectField(value)}
           isDisabledSearch={isDisabledSearch}
         />
       </SelectWrap>
@@ -91,5 +83,4 @@ NoticesSearch.propTypes = {
   setKeyWord: PropTypes.func.isRequired,
   setPage: PropTypes.func.isRequired,
   setField: PropTypes.func.isRequired,
-  setPets: PropTypes.func.isRequired,
 };

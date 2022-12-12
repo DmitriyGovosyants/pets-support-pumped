@@ -6,7 +6,6 @@ import {
   ReadMore,
   Wrapper,
   Line,
-  ItemWrapper,
 } from './NewsItem.styled';
 
 export const NewsItem = ({ title, description, url, date }) => {
@@ -14,7 +13,7 @@ export const NewsItem = ({ title, description, url, date }) => {
     return date.split('-').reverse().join('/');
   }
   return (
-    <ItemWrapper>
+    <li>
       <Line></Line>
       <Title>{title}</Title>
       <NewsText>{description}</NewsText>
@@ -25,7 +24,7 @@ export const NewsItem = ({ title, description, url, date }) => {
           Read more
         </ReadMore>
       </Wrapper>
-    </ItemWrapper>
+    </li>
   );
 };
 

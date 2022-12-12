@@ -10,11 +10,6 @@ const initialState = {
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    setCredentials: (state, { payload: { token } }) => {
-      state.token = token;
-    },
-  },
   extraReducers: builder => {
     builder
       .addMatcher(
@@ -50,4 +45,3 @@ export const selectCurrentUser = state => state.auth.token;
 export const selectCurrentEmail = state => state.auth.email;
 export const getIsLoggedIn = state => state.auth.isLoggedIn;
 export const isRefreshing = state => state.auth.isRefreshing;
-export const { setCredentials } = authSlice.actions;

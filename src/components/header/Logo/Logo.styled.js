@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { device } from "styles/mediaquery";
+import videoCursor from 'data/img/video-cursor.png';
 
 export const LogoWrap = styled.p`
   display: inline;
@@ -10,6 +11,7 @@ export const LogoWrap = styled.p`
   line-height: 1.5;
   letter-spacing: 0.07em;
   color: ${p => p.theme.colors.textMain};
+  cursor: url(${videoCursor}), auto;
 
   user-select: none;
 

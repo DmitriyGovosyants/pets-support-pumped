@@ -12,21 +12,22 @@ export const NoticesCategoriesNav = ({ setKeyWord }) => {
   const dispatch = useDispatch();
   const selected = useSelector(selectCategory);
   const [navCategories, setNavCategories] = useState(categoriesWithoutAuth);
-  const auth = useAuth();
+  const { user } = useAuth();
 
   useEffect(() => {
-    if (auth.user) {
+    if (user) {
       setNavCategories(categories);
     } else {
       setNavCategories(categoriesWithoutAuth);
     }
-  }, [auth]);
+  }, [user]);
 
   const categoryToggler = category => {
     dispatch(setCategory(category));
     dispatch(setWord(''));
     setKeyWord('');
   };
+
   return (
     <List>
       {navCategories.map((itm, idx) => (

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const newsApi = createApi({
-  reducePath: 'newsApi',
+  reducerPath: 'newsApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://petly-node-js-rest-api-v2.onrender.com/api',
   }),
@@ -12,15 +12,11 @@ export const newsApi = createApi({
         if (newsName !== '') {
           return `/news?search=${newsName}`;
         }
-        return 'news';
+        return '/news';
       },
-      providesTags: ['News'],
-    }),
-    getSearchNews: builder.query({
-      query: newsName => `/news?search=${newsName}`,
       providesTags: ['News'],
     }),
   }),
 });
 
-export const { useGetAllNewsQuery, useGetSearchNewsQuery } = newsApi;
+export const { useGetAllNewsQuery } = newsApi;
