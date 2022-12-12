@@ -2,6 +2,29 @@ import styled from '@emotion/styled/macro';
 import { device } from 'styles/mediaquery';
 import { ReactComponent as SearchIcon } from 'data/img/search-icon.svg'
 
+export const SearchForm = styled.form`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+
+  ${device.tablet} {
+    margin-bottom: 60px;
+  }
+`;
+
+export const Label = styled.label`
+  position: relative;
+  & > button {
+    position: absolute;
+    padding-top: 3px;
+    right: 5px;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    cursor: pointer;
+  }
+`;
+
 export const Icon = styled(SearchIcon)`
   position: absolute;
   top: 10px;
@@ -52,19 +75,5 @@ export const Input = styled.input`
     line-height: 1.35;
 
     border-radius: 40px;
-  }
-`;
-
-export const Label = styled.div`
-  position: relative;
-`
-
-export const SearchForm = styled.form`
-  display: flex;
-  justify-content: center;
-  padding-bottom: 40px;
-
-  ${device.tablet} {
-    padding-bottom: 60px;
   }
 `;
