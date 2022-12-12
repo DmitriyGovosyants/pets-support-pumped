@@ -10,8 +10,6 @@ export const categoriesWithoutAuth = ['Sell', 'Lost/found', 'In good hands'];
 
 export const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-export const orderUserFields = ['name', 'email', 'birthdate', 'phone', 'city'];
-
 export const validationErrMsg = {
   name: 'Name should have only letters and don`t start with a space',
   email:

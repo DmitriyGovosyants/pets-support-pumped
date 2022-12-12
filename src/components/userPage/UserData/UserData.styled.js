@@ -88,9 +88,9 @@ export const Label = styled.label`
   }
 
   & input {
-    width: 170px;
+    width: 140px;
     height: 25px;
-    padding: 4px 18px;
+    padding: 4px 4px;
 
     font-weight: 400;
     font-size: 12px;
@@ -122,7 +122,8 @@ export const Label = styled.label`
 export const InputWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 200px;
+  justify-content: space-between;
+  width: 190px;
 
   ${device.tablet} {
     justify-content: space-between;
@@ -246,13 +247,5 @@ export const Btn = styled.button`
   ${device.tablet} {
     width: 32px;
     height: 32px;
-  }
-`;
-
-export const UserDataList = styled.ul`
-  width: 100%;
-  ${device.tabletOnly} {
-    padding-top: 16px;
-    margin-right: 40px;
   }
 `;

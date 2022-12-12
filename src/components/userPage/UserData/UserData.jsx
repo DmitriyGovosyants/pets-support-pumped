@@ -1,6 +1,6 @@
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
 import InputMask from 'comigo-tech-react-input-mask';
@@ -11,15 +11,8 @@ import { theme } from 'styles';
 import { ReactComponent as CloseIcon } from 'data/img/close-icon.svg';
 import imageNotFound from 'data/img/no-image.webp';
 import { useGetUserQuery, useUpdateUserMutation } from 'redux/usersApi';
-import { editUserSchema } from '../../../helpers/formValidationNew';
-import { orderUserFields } from 'constants/constants';
-import {
-  Logout,
-  SpinnerFixed,
-  UserDataItem,
-  InputBirthdate,
-  InputErrorBox,
-} from 'components';
+import { editUserSchema, requestErrorPopUp } from '../../../helpers';
+import { Logout, SpinnerFixed, InputBirthdate } from 'components';
 import { handleUploadFile } from 'helpers';
 import {
   UserDataTitle,
@@ -30,7 +23,6 @@ import {
   InfoEditBtn,
   AvatarWrapper,
   UserAvatar,
-  UserDataList,
   UploadLabel,
   UploadInput,
   Btn,
@@ -41,13 +33,12 @@ export const UserData = () => {
   const [avatarData, setAvatarData] = useState();
   const [avatar, setAvatar] = useState();
   const [isConfirmFileBox, seIsConfirmFileBox] = useState(false);
-  const [formState, setFormState] = useState({});
-  const [isDisabledInput, setIsDisabledInput] = useState('');
+  const [selectedInputName, setSelectedInputName] = useState('');
+  const [selectedButtonName, setSelectedButtonName] = useState('');
   const {
     data: {
       data: { user: userData },
     },
-    refetch,
   } = useGetUserQuery();
   const [editContact, { isLoading: isEditLoading }] = useUpdateUserMutation();
   let birthdateParse;
@@ -74,6 +65,16 @@ export const UserData = () => {
     },
   });
 
+  useEffect(() => {
+    if (!errors[selectedInputName]) {
+      setSelectedButtonName('');
+      return;
+    }
+    toast.error(errors[selectedInputName].message);
+    setSelectedButtonName(selectedInputName);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedInputName, errors[selectedInputName]]);
+
   const onSubmit = async values => {
     const dataToSend = { ...values };
     const formData = new FormData();
@@ -91,19 +92,12 @@ export const UserData = () => {
 
     try {
       await editContact(formData).unwrap();
+      console.log(editContact);
       toast.success('Your info is edited');
       seIsConfirmFileBox(false);
       return;
     } catch (error) {
-      if (error.status === 400) {
-        toast.error(error.data.message);
-      }
-      if (error.status === 404) {
-        toast.error('Resourses not found');
-      }
-      if (error.status === 500) {
-        toast.error('Server not response');
-      }
+      requestErrorPopUp(error);
     }
   };
 
@@ -115,17 +109,19 @@ export const UserData = () => {
 
   const handleDisable = e => {
     const id = e.currentTarget.getAttribute('id');
-    const inputValue = e.currentTarget.parentNode.firstChild.value;
-    console.log(inputValue);
-    if (id === isDisabledInput) {
-      setIsDisabledInput('');
+    let inputValue = e.currentTarget.parentNode.firstChild.value;
+    if (id === 'birthday') {
+      inputValue = document.querySelector('#birthdate-add-notice').value;
+    }
+    if (id === selectedInputName) {
+      setSelectedInputName('');
       if (inputValue === userData[id]) {
         return;
       }
       e.currentTarget.setAttribute('type', 'submit');
       return;
     }
-    setIsDisabledInput(id);
+    setSelectedInputName(id);
   };
 
   const onCancelSubmit = () => {
@@ -153,7 +149,7 @@ export const UserData = () => {
                 <UploadInput
                   type="file"
                   name="photo"
-                  disabled={isDisabledInput}
+                  disabled={selectedInputName}
                   accept=".png, .jpeg, .jpg, .webp"
                   onChange={handleFile}
                 />
@@ -172,7 +168,7 @@ export const UserData = () => {
             )}
           </AvatarWrapper>
           <div>
-            <Label disabled={!(isDisabledInput === 'name')}>
+            <Label disabled={!(selectedInputName === 'name')}>
               Name:
               <InputWrapper>
                 <Controller
@@ -182,22 +178,22 @@ export const UserData = () => {
                     <input
                       {...field}
                       type="text"
-                      disabled={!(isDisabledInput === 'name')}
+                      disabled={!(selectedInputName === 'name')}
                     />
                   )}
                 />
-                <InputErrorBox>{errors?.name?.message}</InputErrorBox>
                 <InfoEditBtn
                   type="button"
-                  id={'name'}
+                  id="name"
                   onClick={handleDisable}
-                  focused={isDisabledInput === 'name'}
+                  disabled={selectedButtonName === 'name'}
+                  focused={selectedInputName === 'name'}
                 >
-                  {isDisabledInput === 'name' ? <BsCheckLg /> : <MdEdit />}
+                  {selectedInputName === 'name' ? <BsCheckLg /> : <MdEdit />}
                 </InfoEditBtn>
               </InputWrapper>
             </Label>
-            <Label disabled={!(isDisabledInput === 'email')}>
+            <Label disabled={!(selectedInputName === 'email')}>
               Email:
               <InputWrapper>
                 <Controller
@@ -207,41 +203,45 @@ export const UserData = () => {
                     <input
                       {...field}
                       type="email"
-                      disabled={!(isDisabledInput === 'email')}
+                      disabled={!(selectedInputName === 'email')}
                     />
                   )}
                 />
-                <InputErrorBox>{errors?.email?.message}</InputErrorBox>
                 <InfoEditBtn
                   type="button"
-                  id={'email'}
+                  id="email"
                   onClick={handleDisable}
-                  focused={isDisabledInput === 'email'}
+                  disabled={selectedButtonName === 'email'}
+                  focused={selectedInputName === 'email'}
                 >
-                  {isDisabledInput === 'email' ? <BsCheckLg /> : <MdEdit />}
+                  {selectedInputName === 'email' ? <BsCheckLg /> : <MdEdit />}
                 </InfoEditBtn>
               </InputWrapper>
             </Label>
-            <Label disabled={!(isDisabledInput === 'birthday')}>
+            <Label disabled={!(selectedInputName === 'birthday')}>
               Birthday:
               <InputWrapper>
                 <InputBirthdate
                   control={control}
                   birthdate={birthdateParse}
-                  disabled={!(isDisabledInput === 'birthday')}
+                  disabled={!(selectedInputName === 'birthday')}
                 />
-                <InputErrorBox>{errors?.email?.message}</InputErrorBox>
                 <InfoEditBtn
                   type="button"
-                  id={'birthday'}
+                  id="birthday"
                   onClick={handleDisable}
-                  focused={isDisabledInput === 'birthday'}
+                  disabled={selectedButtonName === 'birthday'}
+                  focused={selectedInputName === 'birthday'}
                 >
-                  {isDisabledInput === 'birthday' ? <BsCheckLg /> : <MdEdit />}
+                  {selectedInputName === 'birthday' ? (
+                    <BsCheckLg />
+                  ) : (
+                    <MdEdit />
+                  )}
                 </InfoEditBtn>
               </InputWrapper>
             </Label>
-            <Label disabled={!(isDisabledInput === 'phone')}>
+            <Label disabled={!(selectedInputName === 'phone')}>
               Phone:
               <InputWrapper>
                 <Controller
@@ -253,22 +253,22 @@ export const UserData = () => {
                       mask={'+38(099)999-99-99'}
                       type="text"
                       alwaysShowMask={true}
-                      disabled={!(isDisabledInput === 'phone')}
+                      disabled={!(selectedInputName === 'phone')}
                     />
                   )}
                 />
-                <InputErrorBox>{errors?.phone?.message}</InputErrorBox>
                 <InfoEditBtn
                   type="button"
-                  id={'phone'}
+                  id="phone"
                   onClick={handleDisable}
-                  focused={isDisabledInput === 'phone'}
+                  disabled={selectedButtonName === 'phone'}
+                  focused={selectedInputName === 'phone'}
                 >
-                  {isDisabledInput === 'phone' ? <BsCheckLg /> : <MdEdit />}
+                  {selectedInputName === 'phone' ? <BsCheckLg /> : <MdEdit />}
                 </InfoEditBtn>
               </InputWrapper>
             </Label>
-            <Label disabled={!(isDisabledInput === 'city')}>
+            <Label disabled={!(selectedInputName === 'city')}>
               City:
               <InputWrapper>
                 <Controller
@@ -278,18 +278,18 @@ export const UserData = () => {
                     <input
                       {...field}
                       type="text"
-                      disabled={!(isDisabledInput === 'city')}
+                      disabled={!(selectedInputName === 'city')}
                     />
                   )}
                 />
-                <InputErrorBox>{errors?.city?.message}</InputErrorBox>
                 <InfoEditBtn
                   type="button"
-                  id={'city'}
+                  id="city"
+                  disabled={selectedButtonName === 'city'}
                   onClick={handleDisable}
-                  focused={isDisabledInput === 'city'}
+                  focused={selectedInputName === 'city'}
                 >
-                  {isDisabledInput === 'city' ? <BsCheckLg /> : <MdEdit />}
+                  {selectedInputName === 'city' ? <BsCheckLg /> : <MdEdit />}
                 </InfoEditBtn>
               </InputWrapper>
             </Label>
@@ -297,7 +297,6 @@ export const UserData = () => {
         </Form>
         <Logout />
       </Wrap>
-
       {isEditLoading && <SpinnerFixed />}
     </>
   );
