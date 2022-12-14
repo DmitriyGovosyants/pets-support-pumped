@@ -32,6 +32,7 @@ import {
 export const UserData = () => {
   const [avatarData, setAvatarData] = useState();
   const [avatar, setAvatar] = useState();
+  const [userInfo, setUserInfo] = useState(null);
   const [isConfirmFileBox, seIsConfirmFileBox] = useState(false);
   const [selectedInputName, setSelectedInputName] = useState('');
   const [selectedButtonName, setSelectedButtonName] = useState('');
@@ -66,6 +67,10 @@ export const UserData = () => {
   });
 
   useEffect(() => {
+    setUserInfo({ ...UserData });
+  }, [userData]);
+
+  useEffect(() => {
     if (!errors[selectedInputName]) {
       setSelectedButtonName('');
       return;
@@ -75,13 +80,19 @@ export const UserData = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedInputName, errors[selectedInputName]]);
 
-  const onSubmit = async values => {
+  const onSubmit = async (values, e) => {
+    e.nativeEvent.submitter.setAttribute('type', 'button');
     const dataToSend = { ...values };
     const formData = new FormData();
     for (let key in dataToSend) {
       if (key === 'birthdate') {
         const birthdate = format(new Date(dataToSend.birthdate), 'dd.MM.yyyy');
         formData.append(key, birthdate);
+        continue;
+      }
+      if (key === 'phone') {
+        const phone = values.phone.split(/[-()]+/).join('');
+        formData.append(key, phone);
         continue;
       }
       formData.append(key, dataToSend[key]);
@@ -91,8 +102,9 @@ export const UserData = () => {
     }
 
     try {
-      await editContact(formData).unwrap();
-      console.log(editContact);
+      const { data } = await editContact(formData).unwrap();
+      const { name, email, birthdate, phone, city } = data.user;
+      setUserInfo({ name, email, birthdate, phone, city });
       toast.success('Your info is edited');
       seIsConfirmFileBox(false);
       return;
@@ -108,20 +120,27 @@ export const UserData = () => {
   };
 
   const handleDisable = e => {
-    const id = e.currentTarget.getAttribute('id');
+    const name = e.currentTarget.getAttribute('name');
     let inputValue = e.currentTarget.parentNode.firstChild.value;
-    if (id === 'birthday') {
+    if (name === 'birthdate') {
       inputValue = document.querySelector('#birthdate-add-notice').value;
     }
-    if (id === selectedInputName) {
+    if (name === 'phone') {
+      const value = e.currentTarget.parentNode.firstChild.value;
+      inputValue = value.split(/[-()]+/).join('');
+    }
+    if (name === selectedInputName) {
       setSelectedInputName('');
-      if (inputValue === userData[id]) {
+      console.log(inputValue);
+      console.log(userInfo[name]);
+      console.log(userData[name]);
+      if (inputValue === userInfo[name] || inputValue === userData[name]) {
         return;
       }
       e.currentTarget.setAttribute('type', 'submit');
       return;
     }
-    setSelectedInputName(id);
+    setSelectedInputName(name);
   };
 
   const onCancelSubmit = () => {
@@ -184,7 +203,7 @@ export const UserData = () => {
                 />
                 <InfoEditBtn
                   type="button"
-                  id="name"
+                  name="name"
                   onClick={handleDisable}
                   disabled={selectedButtonName === 'name'}
                   focused={selectedInputName === 'name'}
@@ -209,7 +228,7 @@ export const UserData = () => {
                 />
                 <InfoEditBtn
                   type="button"
-                  id="email"
+                  name="email"
                   onClick={handleDisable}
                   disabled={selectedButtonName === 'email'}
                   focused={selectedInputName === 'email'}
@@ -218,20 +237,20 @@ export const UserData = () => {
                 </InfoEditBtn>
               </InputWrapper>
             </Label>
-            <Label disabled={!(selectedInputName === 'birthday')}>
+            <Label disabled={!(selectedInputName === 'birthdate')}>
               Birthday:
               <InputWrapper>
                 <InputBirthdate
                   control={control}
                   birthdate={birthdateParse}
-                  disabled={!(selectedInputName === 'birthday')}
+                  disabled={!(selectedInputName === 'birthdate')}
                 />
                 <InfoEditBtn
                   type="button"
-                  id="birthday"
+                  name="birthdate"
                   onClick={handleDisable}
-                  disabled={selectedButtonName === 'birthday'}
-                  focused={selectedInputName === 'birthday'}
+                  disabled={selectedButtonName === 'birthdate'}
+                  focused={selectedInputName === 'birthdate'}
                 >
                   {selectedInputName === 'birthday' ? (
                     <BsCheckLg />
@@ -259,7 +278,7 @@ export const UserData = () => {
                 />
                 <InfoEditBtn
                   type="button"
-                  id="phone"
+                  name="phone"
                   onClick={handleDisable}
                   disabled={selectedButtonName === 'phone'}
                   focused={selectedInputName === 'phone'}
@@ -284,7 +303,7 @@ export const UserData = () => {
                 />
                 <InfoEditBtn
                   type="button"
-                  id="city"
+                  name="city"
                   disabled={selectedButtonName === 'city'}
                   onClick={handleDisable}
                   focused={selectedInputName === 'city'}
