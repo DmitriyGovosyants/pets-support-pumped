@@ -20,16 +20,16 @@ export const usersApi = createApi({
     getUser: builder.query({
       query: () => ({
         url: '/info',
-        invalidatesTags: ['Info'],
       }),
+      providesTags: ['Info'],
     }),
     updateUser: builder.mutation({
       query: userField => ({
         url: '/info',
         method: 'PUT',
         body: userField,
-        invalidatesTags: ['Info'],
       }),
+      invalidatesTags: ['Info'],
     }),
     //----- useFetchPetsQuery --------
     getPets: builder.query({
