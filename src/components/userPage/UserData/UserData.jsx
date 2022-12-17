@@ -1,26 +1,37 @@
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
 import InputMask from 'comigo-tech-react-input-mask';
 import { BsCheckLg } from 'react-icons/bs';
 import { HiCamera } from 'react-icons/hi';
 import { MdEdit } from 'react-icons/md';
-import { theme } from 'styles';
+import { useState } from 'react';
+import { useGetUserQuery, useUpdateUserMutation } from 'redux/usersApi';
 import { ReactComponent as CloseIcon } from 'data/img/close-icon.svg';
 import imageNotFound from 'data/img/no-image.webp';
-import { useGetUserQuery, useUpdateUserMutation } from 'redux/usersApi';
-import { editUserSchema, requestErrorPopUp } from '../../../helpers';
-import { Logout, SpinnerFixed, InputBirthdate } from 'components';
-import { handleUploadFile } from 'helpers';
+import {
+  handleUploadFile,
+  editUserSchema,
+  isNewData,
+  requestErrorPopUp,
+  handleDate,
+} from 'helpers';
+import {
+  Logout,
+  SpinnerFixed,
+  InputBirthdate,
+  InputErrorBox,
+} from 'components';
 import {
   UserDataTitle,
   Wrap,
   Form,
+  MainWrap,
   Label,
   InputWrapper,
-  InfoEditBtn,
+  EditBtn,
+  SubmitBtn,
   AvatarWrapper,
   UserAvatar,
   UploadLabel,
@@ -32,23 +43,14 @@ import {
 export const UserData = () => {
   const [avatarData, setAvatarData] = useState();
   const [avatar, setAvatar] = useState();
-  const [userInfo, setUserInfo] = useState(null);
-  const [isConfirmFileBox, seIsConfirmFileBox] = useState(false);
   const [selectedInputName, setSelectedInputName] = useState('');
-  const [selectedButtonName, setSelectedButtonName] = useState('');
   const {
     data: {
-      data: { user: userData },
+      data: { user },
     },
   } = useGetUserQuery();
   const [editContact, { isLoading: isEditLoading }] = useUpdateUserMutation();
-  let birthdateParse;
-  if (userData.birthdate) {
-    const birthdateArray = userData.birthdate.split('.');
-    const birthdateString =
-      birthdateArray[1] + '.' + birthdateArray[0] + '.' + birthdateArray[2];
-    birthdateParse = parseInt(Date.parse(birthdateString), 10);
-  }
+  const userData = handleDate(user);
 
   const {
     handleSubmit,
@@ -60,30 +62,21 @@ export const UserData = () => {
     defaultValues: {
       name: userData.name || '',
       email: userData.email || '',
-      birthdate: birthdateParse || null,
+      birthdate: userData.birthdate || null,
       phone: userData.phone || '',
       city: userData.city || '',
     },
   });
 
-  useEffect(() => {
-    setUserInfo({ ...UserData });
-  }, [userData]);
-
-  useEffect(() => {
-    if (!errors[selectedInputName]) {
-      setSelectedButtonName('');
+  const onSubmit = async values => {
+    if (!isNewData(values, userData) && !avatarData) {
+      setSelectedInputName('');
       return;
     }
-    toast.error(errors[selectedInputName].message);
-    setSelectedButtonName(selectedInputName);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedInputName, errors[selectedInputName]]);
 
-  const onSubmit = async (values, e) => {
-    e.nativeEvent.submitter.setAttribute('type', 'button');
     const dataToSend = { ...values };
     const formData = new FormData();
+
     for (let key in dataToSend) {
       if (key === 'birthdate') {
         const birthdate = format(new Date(dataToSend.birthdate), 'dd.MM.yyyy');
@@ -102,12 +95,10 @@ export const UserData = () => {
     }
 
     try {
-      const { data } = await editContact(formData).unwrap();
-      const { name, email, birthdate, phone, city } = data.user;
-      setUserInfo({ name, email, birthdate, phone, city });
+      await editContact(formData).unwrap();
       toast.success('Your info is edited');
-      seIsConfirmFileBox(false);
-      return;
+      setSelectedInputName('');
+      setAvatarData();
     } catch (error) {
       requestErrorPopUp(error);
     }
@@ -116,37 +107,15 @@ export const UserData = () => {
   const handleFile = e => {
     const file = e.target.files[0];
     handleUploadFile(file, setAvatar, setAvatarData);
-    seIsConfirmFileBox(true);
-  };
-
-  const handleDisable = e => {
-    const name = e.currentTarget.getAttribute('name');
-    let inputValue = e.currentTarget.parentNode.firstChild.value;
-    if (name === 'birthdate') {
-      inputValue = document.querySelector('#birthdate-add-notice').value;
-    }
-    if (name === 'phone') {
-      const value = e.currentTarget.parentNode.firstChild.value;
-      inputValue = value.split(/[-()]+/).join('');
-    }
-    if (name === selectedInputName) {
-      setSelectedInputName('');
-      console.log(inputValue);
-      console.log(userInfo[name]);
-      console.log(userData[name]);
-      if (inputValue === userInfo[name] || inputValue === userData[name]) {
-        return;
-      }
-      e.currentTarget.setAttribute('type', 'submit');
-      return;
-    }
-    setSelectedInputName(name);
   };
 
   const onCancelSubmit = () => {
     setAvatar();
     setAvatarData();
-    seIsConfirmFileBox(false);
+  };
+
+  const handleCurrentInput = e => {
+    setSelectedInputName(e.currentTarget.name);
   };
 
   return (
@@ -162,9 +131,9 @@ export const UserData = () => {
                 e.target.src = imageNotFound;
               }}
             />
-            {(!avatarData || !isConfirmFileBox) && (
+            {!avatarData && (
               <UploadLabel>
-                <HiCamera size={20} color={theme.colors.accent} />
+                <HiCamera size={26} />
                 <UploadInput
                   type="file"
                   name="photo"
@@ -172,10 +141,10 @@ export const UserData = () => {
                   accept=".png, .jpeg, .jpg, .webp"
                   onChange={handleFile}
                 />
-                <p>Edit photo</p>
+                Edit photo
               </UploadLabel>
             )}
-            {avatarData && isConfirmFileBox && (
+            {avatarData && (
               <BtnBox>
                 <Btn type="button" onClick={() => onCancelSubmit()}>
                   <CloseIcon style={{ fill: 'black' }} />
@@ -186,133 +155,140 @@ export const UserData = () => {
               </BtnBox>
             )}
           </AvatarWrapper>
-          <div>
-            <Label disabled={!(selectedInputName === 'name')}>
-              Name:
-              <InputWrapper>
-                <Controller
-                  name="name"
-                  control={control}
-                  render={({ field }) => (
-                    <input
-                      {...field}
-                      type="text"
-                      disabled={!(selectedInputName === 'name')}
-                    />
-                  )}
-                />
-                <InfoEditBtn
+          <MainWrap>
+            <InputWrapper first>
+              <Label>Name:</Label>
+              <Controller
+                name="name"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    type="text"
+                    disabled={selectedInputName !== 'name'}
+                  />
+                )}
+              />
+              {selectedInputName !== 'name' ? (
+                <EditBtn type="button" name="name" onClick={handleCurrentInput}>
+                  <MdEdit />
+                </EditBtn>
+              ) : (
+                <SubmitBtn type="submit">
+                  <BsCheckLg />
+                </SubmitBtn>
+              )}
+            </InputWrapper>
+            <InputErrorBox>{errors?.name?.message}</InputErrorBox>
+
+            <InputWrapper>
+              <Label>Email:</Label>
+              <Controller
+                name="email"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    type="email"
+                    disabled={selectedInputName !== 'email'}
+                  />
+                )}
+              />
+              {selectedInputName !== 'email' ? (
+                <EditBtn
                   type="button"
-                  name="name"
-                  onClick={handleDisable}
-                  disabled={selectedButtonName === 'name'}
-                  focused={selectedInputName === 'name'}
-                >
-                  {selectedInputName === 'name' ? <BsCheckLg /> : <MdEdit />}
-                </InfoEditBtn>
-              </InputWrapper>
-            </Label>
-            <Label disabled={!(selectedInputName === 'email')}>
-              Email:
-              <InputWrapper>
-                <Controller
                   name="email"
-                  control={control}
-                  render={({ field }) => (
-                    <input
-                      {...field}
-                      type="email"
-                      disabled={!(selectedInputName === 'email')}
-                    />
-                  )}
-                />
-                <InfoEditBtn
-                  type="button"
-                  name="email"
-                  onClick={handleDisable}
-                  disabled={selectedButtonName === 'email'}
-                  focused={selectedInputName === 'email'}
+                  onClick={handleCurrentInput}
                 >
-                  {selectedInputName === 'email' ? <BsCheckLg /> : <MdEdit />}
-                </InfoEditBtn>
-              </InputWrapper>
-            </Label>
-            <Label disabled={!(selectedInputName === 'birthdate')}>
-              Birthday:
-              <InputWrapper>
-                <InputBirthdate
-                  control={control}
-                  birthdate={birthdateParse}
-                  disabled={!(selectedInputName === 'birthdate')}
-                />
-                <InfoEditBtn
+                  <MdEdit />
+                </EditBtn>
+              ) : (
+                <SubmitBtn type="submit">
+                  <BsCheckLg />
+                </SubmitBtn>
+              )}
+            </InputWrapper>
+            <InputErrorBox>{errors?.email?.message}</InputErrorBox>
+
+            <InputWrapper>
+              <Label>Birthday:</Label>
+              <InputBirthdate
+                control={control}
+                birthdate={userData.birthdate}
+                disabled={selectedInputName !== 'birthdate'}
+              />
+              {selectedInputName !== 'birthdate' ? (
+                <EditBtn
                   type="button"
                   name="birthdate"
-                  onClick={handleDisable}
-                  disabled={selectedButtonName === 'birthdate'}
-                  focused={selectedInputName === 'birthdate'}
+                  onClick={handleCurrentInput}
                 >
-                  {selectedInputName === 'birthday' ? (
-                    <BsCheckLg />
-                  ) : (
-                    <MdEdit />
-                  )}
-                </InfoEditBtn>
-              </InputWrapper>
-            </Label>
-            <Label disabled={!(selectedInputName === 'phone')}>
-              Phone:
-              <InputWrapper>
-                <Controller
-                  name="phone"
-                  control={control}
-                  render={({ field }) => (
-                    <InputMask
-                      {...field}
-                      mask={'+38(099)999-99-99'}
-                      type="text"
-                      alwaysShowMask={true}
-                      disabled={!(selectedInputName === 'phone')}
-                    />
-                  )}
-                />
-                <InfoEditBtn
+                  <MdEdit />
+                </EditBtn>
+              ) : (
+                <SubmitBtn type="submit">
+                  <BsCheckLg />
+                </SubmitBtn>
+              )}
+            </InputWrapper>
+            <InputErrorBox>{errors?.birthdate?.message}</InputErrorBox>
+
+            <InputWrapper>
+              <Label>Phone:</Label>
+              <Controller
+                name="phone"
+                control={control}
+                render={({ field }) => (
+                  <InputMask
+                    {...field}
+                    mask={'+38(099)999-99-99'}
+                    type="text"
+                    alwaysShowMask={true}
+                    disabled={selectedInputName !== 'phone'}
+                  />
+                )}
+              />
+              {selectedInputName !== 'phone' ? (
+                <EditBtn
                   type="button"
                   name="phone"
-                  onClick={handleDisable}
-                  disabled={selectedButtonName === 'phone'}
-                  focused={selectedInputName === 'phone'}
+                  onClick={handleCurrentInput}
                 >
-                  {selectedInputName === 'phone' ? <BsCheckLg /> : <MdEdit />}
-                </InfoEditBtn>
-              </InputWrapper>
-            </Label>
-            <Label disabled={!(selectedInputName === 'city')}>
-              City:
-              <InputWrapper>
-                <Controller
-                  name="city"
-                  control={control}
-                  render={({ field }) => (
-                    <input
-                      {...field}
-                      type="text"
-                      disabled={!(selectedInputName === 'city')}
-                    />
-                  )}
-                />
-                <InfoEditBtn
-                  type="button"
-                  name="city"
-                  disabled={selectedButtonName === 'city'}
-                  onClick={handleDisable}
-                  focused={selectedInputName === 'city'}
-                >
-                  {selectedInputName === 'city' ? <BsCheckLg /> : <MdEdit />}
-                </InfoEditBtn>
-              </InputWrapper>
-            </Label>
-          </div>
+                  <MdEdit />
+                </EditBtn>
+              ) : (
+                <SubmitBtn type="submit">
+                  <BsCheckLg />
+                </SubmitBtn>
+              )}
+            </InputWrapper>
+            <InputErrorBox>{errors?.phone?.message}</InputErrorBox>
+
+            <InputWrapper>
+              <Label>City:</Label>
+              <Controller
+                name="city"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    type="text"
+                    disabled={selectedInputName !== 'city'}
+                  />
+                )}
+              />
+              {selectedInputName !== 'city' ? (
+                <EditBtn type="button" name="city" onClick={handleCurrentInput}>
+                  <MdEdit />
+                </EditBtn>
+              ) : (
+                <SubmitBtn type="submit">
+                  <BsCheckLg />
+                </SubmitBtn>
+              )}
+            </InputWrapper>
+            <InputErrorBox>{errors?.city?.message}</InputErrorBox>
+          </MainWrap>
         </Form>
         <Logout />
       </Wrap>

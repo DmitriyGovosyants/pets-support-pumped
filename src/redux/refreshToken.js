@@ -14,7 +14,7 @@ export const GetCurrentUser = async () => {
   try {
     unwrapResult(data);
   } catch (error) {
-    if (error.status === 401) {
+    if (error.status === 498) {
       window.localStorage.setItem('persist:auth', null);
       window.location.reload();
     }
