@@ -3,7 +3,7 @@ import { Controller } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
 import { InputStyles } from './InputBirthdate.styled';
 
-export const InputBirthdate = ({ control, birthdate }) => {
+export const InputBirthdate = ({ control, birthdate, disabled }) => {
   return (
     <InputStyles>
       <Controller
@@ -25,6 +25,7 @@ export const InputBirthdate = ({ control, birthdate }) => {
             showYearDropdown={true}
             scrollableYearDropdown={true}
             yearDropdownItemNumber={100}
+            disabled={disabled}
             autoComplete="off"
           />
         )}
@@ -36,4 +37,5 @@ export const InputBirthdate = ({ control, birthdate }) => {
 InputBirthdate.propTypes = {
   control: PropTypes.object.isRequired,
   birthdate: PropTypes.number,
+  disabled: PropTypes.bool,
 };

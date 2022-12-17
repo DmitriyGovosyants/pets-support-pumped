@@ -18,10 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <BrowserRouter basename="">
           <ThemeProvider theme={theme}>
             <Global styles={GlobalStyles} />
-            <ToastContainer
-              autoClose={2500}
-              position="bottom-right"
-            />
+            <ToastContainer autoClose={2500} position={'top-center'} />
             <App />
           </ThemeProvider>
         </BrowserRouter>

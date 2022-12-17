@@ -19,6 +19,7 @@ export const InputSelect = ({
         width: '150px',
         height: '44px',
         borderRadius: '20px',
+        cursor: 'pointer',
       }),
     }}
     theme={theme => ({

@@ -2,11 +2,9 @@ import styled from '@emotion/styled';
 import { device } from 'styles/mediaquery';
 
 export const LogoutButton = styled.button`
-  position: absolute;
-  right: 12px;
-  bottom: 20px;
   display: flex;
   align-items: center;
+  margin-left: auto;
   width: 90px;
   height: 22px;
   gap: 8px;

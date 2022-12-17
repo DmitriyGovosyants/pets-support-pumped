@@ -20,7 +20,6 @@ export * from './notices/ModalAddNotice/ModalAddNotice';
 export * from './notices/ModalDeleteNotice/ModalDeleteNotice';
 
 export * from './userPage/UserData/UserData';
-export * from './userPage/UserDataItem/UserDataItem';
 export * from './userPage/Logout/Logout';
 export * from './userPage/PetsData/PetsData';
 export * from './userPage/PetsList/PetsList';
