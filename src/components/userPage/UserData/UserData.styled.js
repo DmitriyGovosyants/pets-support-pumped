@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { device } from 'styles/mediaquery';
-import { theme } from 'styles';
 
 export const UserDataTitle = styled.p`
   display: flex;
@@ -62,17 +61,51 @@ export const Form = styled.form`
   ${device.desktop} {
     margin-bottom: 41px;
   }
-  & label + label {
-    margin-top: 15px;
-  }
 `;
 
+export const MainWrap = styled.div`
+  width: 100%;
+
+  ${device.tabletOnly} {
+    margin-right: 52px;
+  }
+
+  & input {
+    width: 140px;
+    height: 25px;
+    margin-right: 8px;
+    padding: 4px 4px;
+
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1.33;
+    letter-spacing: 0.04em;
+    color: ${p => p.theme.colors.textMain};
+
+    background-color: ${p => p.theme.colors.bgMain};
+
+    border: 1px solid rgba(245, 146, 86, 0.5);
+    border-radius: 40px;
+    
+    :focus {
+      outline: none;
+    }
+    :disabled {
+      background-color: ${p => p.theme.colors.bgSecond};
+      border: 1px solid ${p => p.theme.colors.bgSecond};
+    }
+
+    ${device.tablet} {
+      width: 230px;
+      padding: 4px 12px;
+      font-size: 18px;
+      line-height: 1.39px;
+    }
+  }
+`
+
 export const Label = styled.label`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 252px;
-  height: 25px;
+  width: 100%;
 
   color: ${p => p.theme.colors.black};
   font-size: 12px;
@@ -82,68 +115,34 @@ export const Label = styled.label`
   ${device.tablet} {
     font-size: 18px;
   }
-
-  ${device.tablet} {
-    width: 100%;
-  }
-
-  & input {
-    width: 140px;
-    height: 25px;
-    padding: 4px 4px;
-
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 1.33;
-    letter-spacing: 0.04em;
-    color: ${theme.colors.textMain};
-
-    background-color: ${({ disabled, theme }) =>
-      disabled ? theme.colors.bgSecond : theme.colors.bgMain};
-
-    border: 1px solid
-      ${({ disabled, theme }) =>
-        disabled ? theme.colors.bgSecond : 'rgba(245, 146, 86, 0.5)'};
-    border-radius: 40px;
-
-    ${device.tablet} {
-      width: 230px;
-      padding: 4px 12px;
-      font-size: 18px;
-      line-height: 1.39px;
-    }
-
-    &:focus {
-      outline: none;
-    }
-  }
 `;
 
 export const InputWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 190px;
-
-  ${device.tablet} {
-    justify-content: space-between;
-    width: 290px;
-  }
+  margin-top: ${p => p.first ? '0' : '8px'};
 `;
 
-export const InfoEditBtn = styled.button`
+export const EditBtn = styled.button`
   display: flex;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
   width: 20px;
   height: 20px;
-  color: ${props =>
-    props.focused ? theme.colors.accent : 'rgba(17, 17, 17, 0.6)'};
-  background-color: ${theme.colors.bgMain};
+  color: ${p => p.theme.colors.textMain};
+  background-color: ${p => p.theme.colors.bgMain};
   border-radius: 50%;
   cursor: pointer;
-  transition: color ${theme.animation.cubicBezier};
+  transition: color ${p => p.theme.animation.cubicBezier},
+   background-color ${p => p.theme.animation.cubicBezier};
+
+  :hover,
+  :focus {
+    color: ${p => p.theme.colors.textSecond};
+    background-color: ${p => p.theme.colors.accent};
+  }
 
   ${device.tablet} {
     width: 32px;
@@ -160,6 +159,16 @@ export const InfoEditBtn = styled.button`
   }
 `;
 
+export const SubmitBtn = styled(EditBtn)`
+  color: ${p => p.theme.colors.textSecond};
+  background-color: ${p => p.theme.colors.accent};
+
+  :hover,
+  :focus {
+    background-color: ${p => p.theme.colors.hover};
+  }
+`
+
 export const AvatarWrapper = styled.div`
   display: flex;
   align-items: flex-end;
@@ -167,6 +176,8 @@ export const AvatarWrapper = styled.div`
 
   ${device.mobileOnly} {
     margin-bottom: 34px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   ${device.tabletOnly} {
@@ -186,6 +197,7 @@ export const UserAvatar = styled.img`
   width: 233px;
   height: 233px;
   object-fit: cover;
+  flex-shrink: 1;
 
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.11);
   border-radius: 50%;
@@ -200,29 +212,35 @@ export const UserAvatar = styled.img`
 `;
 
 export const UploadLabel = styled.label`
-  display: flex;
   position: relative;
+  display: flex;
+  gap: 4px;
+
+  font-size: 16px;
+  line-height: 1.66;
+  letter-spacing: 0.04em;
+  color: ${p => p.theme.colors.textMain};
+
   cursor: pointer;
   outline: none;
 
-  & svg {
-    position: absolute;
-    left: 5px;
+  ${device.notDesktop} {
+    width: 100%;
+    justify-content: flex-end;
   }
 
-  & p {
-    position: absolute;
-    left: 30px;
-    font-size: 12px;
-    line-height: 1.8;
-    letter-spacing: 0.04em;
-    color: ${p => p.theme.colors.textMain};
+  ${device.desktop} {
+    min-width: 120px;
+  }
+
+  & svg {
+    fill: ${p => p.theme.colors.accent};
   }
 `;
 
 export const UploadInput = styled.input`
-  width: 100px;
-  height: 22px;
+  width: 0;
+  height: 32px;
   visibility: hidden;
 `;
 
@@ -231,21 +249,22 @@ export const BtnBox = styled.div`
   width: 100px;
   justify-content: space-around;
   align-items: center;
+
+  ${device.desktop} {
+    min-width: 120px;
+  }
 `;
 
 export const Btn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
+
   color: ${p => p.theme.colors.accent};
+
   background-color: ${p => p.theme.colors.bgMain};
   border-radius: 50%;
   cursor: pointer;
-
-  ${device.tablet} {
-    width: 32px;
-    height: 32px;
-  }
 `;
